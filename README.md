@@ -81,8 +81,8 @@ python -m http.server 8000
 
 ```
 seasonal-menu/
-├── index.html              # 全部代码（CSS + 161 道菜数据 + 配餐算法 + 渲染）
-└── sample-weekly-menu.pdf  # 生成的 PDF 样例（19 页）
+├── index.html         # 全部代码（CSS + 161 道菜数据 + 配餐算法 + 渲染）
+└── seasonal-menu.pdf  # 由 pk deploy 自动生成的 PDF（19 页）
 ```
 
 `index.html` 内部分五段：菜谱数据库 → 价格表 → 配餐算法 → 渲染 → 交互。
