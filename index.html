@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四季养生菜谱 · 一周营养配餐生成器</title>
+<style>
+:root{
+  --bg:#120D0A; --bg2:#1A120E;
+  --panel:#2A1C15; --panel2:#33221A; --panel3:#3E2A20;
+  --line:rgba(255,180,120,.19); --line2:rgba(255,175,115,.26); --line3:rgba(255,185,135,.42);
+  --text:#FBF4EC; --text2:#DCCBBC; --dim:#AB9585; --dim2:#7E6B5C;
+  --accent:#FF7A3D; --accent2:#FFB347; --accent3:#E85A2A;
+  --warm:#FFCF9E; --ok:#A3C46E; --gold:#F5C26B; --berry:#E86B7A; --leaf:#8FAF5C;
+  --r:16px; --r2:24px; --r3:32px; --pill:999px;
+  --shadow:0 10px 34px rgba(0,0,0,.42), 0 1px 0 rgba(255,190,140,.07) inset;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{
+  background:var(--bg); color:var(--text); font-family:var(--sans);
+  font-size:14px; line-height:1.68; -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(1300px 640px at 6% -10%, rgba(255,122,61,.26), transparent 60%),
+    radial-gradient(1000px 560px at 98% 0%, rgba(255,179,71,.19), transparent 56%),
+    radial-gradient(900px 500px at 44% 106%, rgba(232,90,42,.14), transparent 64%);
+  background-attachment:fixed;
+}
+::selection{background:rgba(255,122,61,.30)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#3B2B22;border-radius:8px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#4E3A2E}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 22px 96px;width:100%}
+
+/* ---------- header ---------- */
+header{padding:46px 0 26px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.02em;
+  color:#FFD3AE;border:1px solid rgba(255,150,90,.34);background:rgba(255,122,61,.13);
+  padding:6px 14px;border-radius:var(--pill);font-weight:600;margin-bottom:18px}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 10px var(--accent);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+h1{font-size:clamp(26px,3.6vw,44px);line-height:1.15;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;background:linear-gradient(100deg,#FFC76B 0%,#FF8A44 45%,#F25E2B 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--text2);max-width:840px;font-size:14.5px;line-height:1.78;margin:0 0 20px}
+.sub b{color:var(--warm);font-weight:600}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--dim)}
+.meta-row span{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:100%;
+  background:rgba(255,255,255,.035);border:1px solid var(--line);padding:4px 12px;border-radius:var(--pill)}
+.meta-row b{color:#FFD3AE;font-weight:600}
+
+/* ---------- panel ---------- */
+.panel{background:linear-gradient(168deg,#422E24,#2E2018);border:1px solid var(--line);
+  border-radius:var(--r2);position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.panel::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,180,130,.34) 25%,rgba(255,180,130,.34) 75%,transparent)}
+.p-head{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.p-title{display:flex;align-items:center;gap:11px;font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+.p-title .idx{font-family:var(--mono);font-size:11px;color:#FFB894;border:1px solid rgba(255,150,90,.34);
+  background:rgba(255,122,61,.13);padding:2px 8px;border-radius:var(--pill)}
+.p-body{padding:24px}
+
+/* ---------- config ---------- */
+.cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(236px,1fr));gap:22px 26px}
+@media(min-width:1040px){.cfg-grid{grid-template-columns:repeat(3,1fr);gap:24px 30px}}
+.seg button{max-width:100%}
+.field{display:flex;flex-direction:column;gap:10px}
+.flabel{font-size:12.5px;font-weight:700;color:var(--dim);letter-spacing:.02em;display:flex;align-items:center;gap:6px}
+.flabel .hint{font-weight:400;color:var(--dim2);font-size:11px}
+.seg{display:flex;background:rgba(0,0,0,.30);border:1px solid var(--line);border-radius:var(--pill);
+  padding:4px;flex-wrap:wrap;gap:2px}
+.seg button{flex:1;min-width:44px;background:transparent;border:0;color:var(--dim);font-family:inherit;
+  font-size:12.5px;padding:7px 8px;border-radius:var(--pill);cursor:pointer;transition:.18s;font-weight:600;white-space:nowrap}
+.seg button:hover{color:var(--warm)}
+.seg button.on{background:linear-gradient(180deg,#FF8F52,#F0662C);color:#fff;
+  box-shadow:0 3px 14px rgba(255,102,44,.42),0 1px 0 rgba(255,255,255,.24) inset}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12.5px;padding:6px 14px;border-radius:var(--pill);border:1px solid var(--line2);
+  background:rgba(255,255,255,.04);color:var(--dim);cursor:pointer;transition:.18s;user-select:none;font-weight:600}
+.chip:hover{border-color:var(--line3);color:var(--warm);transform:translateY(-1px)}
+.chip.on{background:rgba(255,122,61,.20);border-color:rgba(255,122,61,.62);color:#FFB88F}
+.chip.on.g{background:rgba(163,196,110,.18);border-color:rgba(163,196,110,.55);color:#C4DE96}
+
+.actions{display:flex;gap:12px;align-items:center;padding:18px 24px;border-top:1px solid var(--line);
+  background:rgba(0,0,0,.26);flex-wrap:wrap}
+.btn{border:1px solid var(--line2);background:rgba(255,255,255,.05);color:var(--text);font-family:inherit;
+  font-size:13.5px;font-weight:700;padding:12px 22px;border-radius:var(--pill);cursor:pointer;transition:.18s;
+  display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:rgba(255,255,255,.10);border-color:var(--line3);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.primary{background:linear-gradient(135deg,#FF9448,#F0602A);border-color:#FF9448;color:#fff;
+  box-shadow:0 6px 24px rgba(255,110,45,.42),0 1px 0 rgba(255,255,255,.26) inset}
+.btn.primary:hover{background:linear-gradient(135deg,#FFA35C,#FF6B2E);box-shadow:0 8px 30px rgba(255,110,45,.56)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:8px 15px;font-size:12.5px}
+.spacer{flex:1}
+
+/* ---------- summary ---------- */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:linear-gradient(165deg,#453026,#332219);border:1px solid var(--line);
+  border-radius:var(--r);padding:15px 17px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.stat::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.stat.g::after{background:var(--ok)} .stat.o::after{background:var(--accent2)}
+.stat.t::after{background:var(--gold)} .stat.r::after{background:var(--berry)}
+.stat .k{font-size:11.5px;color:var(--dim);letter-spacing:.03em;margin-bottom:6px;font-weight:700}
+.stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em;font-family:var(--mono);line-height:1.2}
+.stat .v small{font-size:11.5px;color:var(--dim);font-weight:600;margin-left:3px;font-family:var(--sans)}
+.stat .n{font-size:11px;color:var(--dim2);margin-top:4px}
+
+/* ---------- season banner ---------- */
+.season-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 20px}
+.season-chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;
+  padding:7px 15px;border-radius:var(--pill);background:rgba(255,255,255,.05);border:1px solid var(--line2);color:var(--text2)}
+.season-chip.on{background:linear-gradient(135deg,rgba(255,148,72,.28),rgba(240,96,42,.22));
+  border-color:rgba(255,140,80,.62);color:#FFCBA6;box-shadow:0 3px 16px rgba(255,110,45,.26)}
+.season-chip .d{width:7px;height:7px;border-radius:50%;background:currentColor}
+
+/* ---------- day cards ---------- */
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(346px,1fr));gap:17px}
+.day{background:linear-gradient(168deg,#442F25,#312119);border:1px solid var(--line);
+  border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);
+  animation:rise .45s cubic-bezier(.22,.9,.3,1) backwards}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.99)}to{opacity:1;transform:none}}
+.day-h{display:flex;align-items:baseline;justify-content:space-between;padding:15px 20px 13px;
+  border-bottom:1px solid var(--line);gap:10px;position:relative}
+.day-h::after{content:"";position:absolute;left:20px;right:20px;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,rgba(255,140,80,.42),transparent)}
+.day-h .dn{font-weight:800;font-size:16px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.day-h .dn i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 10px currentColor}
+.day-h .dk{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.day-h .dk b{color:#FFB894}
+.meals{padding:6px 0;flex:1}
+.meal{padding:11px 20px;border-bottom:1px dashed rgba(255,180,130,.09)}
+.meal:last-child{border-bottom:0}
+.meal-l{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.meal-l .tag{font-size:10.5px;font-weight:800;letter-spacing:.05em;padding:3px 10px;border-radius:var(--pill);
+  background:rgba(255,179,71,.16);color:#FFCC8A;border:1px solid rgba(255,179,71,.28)}
+.meal-l .tag.l{background:rgba(255,122,61,.18);color:#FFA87A;border-color:rgba(255,122,61,.32)}
+.meal-l .tag.d{background:rgba(232,107,122,.16);color:#F09AA6;border-color:rgba(232,107,122,.30)}
+.meal-l .tag.b{background:rgba(245,194,107,.15);color:#F8D493;border-color:rgba(245,194,107,.28)}
+.meal-l .tag.m{background:rgba(163,196,110,.16);color:#C4DE96;border-color:rgba(163,196,110,.30)}
+.meal-l .k{font-size:10.5px;color:var(--dim2);font-family:var(--mono);margin-left:auto}
+.dish-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 4px}
+.dish{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;color:#FFFBF6;cursor:pointer;
+  border-bottom:1px dashed rgba(255,180,130,.28);padding:1px 0;transition:.16s;font-weight:600}
+.dish:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.dish .w{font-size:10px;color:#FF9256;font-weight:800}
+.dish .f{font-size:10px;color:#8FD0C0;font-weight:800}
+.dish .m{font-size:10px;color:#B7D77E;font-weight:800}
+.swap{background:transparent;border:1px solid var(--line);color:var(--dim2);border-radius:var(--pill);
+  width:23px;height:23px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:12px;transition:.16s;padding:0;line-height:1;margin-left:2px}
+.swap:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,122,61,.14)}
+.day-f{display:flex;gap:14px;padding:11px 20px;background:rgba(0,0,0,.26);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--dim);flex-wrap:wrap}
+.day-f b{color:var(--warm);font-weight:700}
+
+/* ---------- shopping ---------- */
+.shop-cats{columns:3 300px;column-gap:15px}
+.shop-cat{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:rgba(0,0,0,.22);
+  break-inside:avoid;page-break-inside:avoid;display:inline-block;width:100%;margin:0 0 15px;vertical-align:top}
+.shop-cat h4{margin:0;padding:11px 15px;font-size:12px;font-weight:800;letter-spacing:.04em;
+  border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,180,130,.045);color:var(--warm)}
+.shop-cat h4 em{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--dim);font-weight:600}
+.shop-list{padding:6px 0}
+.shop-item{display:flex;align-items:center;gap:10px;padding:6px 15px;font-size:12.5px}
+.shop-item:hover{background:rgba(255,255,255,.028)}
+.shop-item .nm{flex:1;color:var(--text2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shop-item .qt{font-family:var(--mono);font-size:11.5px;color:#FFB894;white-space:nowrap;font-weight:600}
+.shop-item .pr{font-family:var(--mono);font-size:11.5px;color:var(--dim2);white-space:nowrap;min-width:44px;text-align:right}
+
+/* ---------- appendix ---------- */
+.sec-title{display:flex;align-items:center;gap:12px;margin:38px 0 18px;font-size:19px;font-weight:800;letter-spacing:-.01em}
+.sec-title .idx{font-family:var(--mono);font-size:11px;color:#FFB894;border:1px solid rgba(255,150,90,.34);
+  background:rgba(255,122,61,.13);padding:3px 9px;border-radius:var(--pill);font-weight:600}
+.sec-title .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,150,90,.30),transparent)}
+.des-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:15px}
+.des-card{background:linear-gradient(168deg,#453026,#332219);border:1px solid var(--line);
+  border-radius:var(--r2);padding:18px 20px;box-shadow:var(--shadow);cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.des-card:hover{border-color:var(--line3);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.des-card::after{content:"";position:absolute;right:-30px;top:-30px;width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,150,80,.16),transparent 70%)}
+.des-card h5{margin:0 0 7px;font-size:15px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.des-card .eff{font-size:11.5px;color:#C4DE96;background:rgba(163,196,110,.14);border:1px solid rgba(163,196,110,.28);
+  padding:2px 9px;border-radius:var(--pill);font-weight:700;white-space:nowrap}
+.des-card p{margin:0;font-size:12.5px;color:var(--dim);line-height:1.66}
+.des-card .warn{margin-top:9px;font-size:11.5px;color:#E8A87C;background:rgba(232,90,42,.09);
+  border-left:2px solid rgba(232,90,42,.5);border-radius:0 8px 8px 0;padding:7px 11px;line-height:1.6}
+
+/* ---------- modal ---------- */
+.mask{position:fixed;inset:0;background:rgba(10,6,4,.80);backdrop-filter:blur(8px);z-index:90;
+  display:none;align-items:center;justify-content:center;padding:20px}
+.mask.show{display:flex}
+.modal{background:linear-gradient(168deg,#2B1F19,#1B130F);border:1px solid var(--line2);border-radius:var(--r3);
+  max-width:640px;width:100%;max-height:86vh;overflow:auto;box-shadow:0 34px 100px rgba(0,0,0,.76);
+  animation:pop .26s cubic-bezier(.2,.9,.3,1);position:relative}
+@keyframes pop{from{opacity:0;transform:scale(.955) translateY(12px)}to{opacity:1;transform:none}}
+.m-h{padding:24px 28px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;
+  background:linear-gradient(168deg,#2B1F19,#241A15);z-index:2;border-radius:var(--r3) var(--r3) 0 0}
+.m-h h3{margin:0 0 10px;font-size:21px;letter-spacing:-.015em;font-weight:800;padding-right:38px}
+.m-tags{display:flex;flex-wrap:wrap;gap:7px}
+.mtag{font-size:11px;padding:3px 10px;border-radius:var(--pill);background:rgba(255,255,255,.05);
+  border:1px solid var(--line2);color:var(--dim);font-weight:600}
+.mtag.hot{color:#FFAF8A;border-color:rgba(255,122,61,.38);background:rgba(255,122,61,.14)}
+.mtag.ok{color:#C4DE96;border-color:rgba(163,196,110,.34);background:rgba(163,196,110,.12)}
+.mtag.se{color:#F8D493;border-color:rgba(245,194,107,.34);background:rgba(245,194,107,.12)}
+.m-b{padding:22px 28px 30px}
+.m-sec{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--dim);margin:0 0 11px}
+.m-b ul.ing{list-style:none;margin:0 0 24px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.m-b ul.ing li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:13px;
+  border-bottom:1px dashed rgba(255,180,130,.11);color:var(--text2)}
+.m-b ul.ing li .amt{text-align:right;white-space:nowrap}
+.m-b ul.ing li b{font-family:var(--mono);font-size:12px;color:#FFB894;font-weight:700}
+.m-b ul.ing li s{display:block;font-size:10.5px;color:var(--dim2);text-decoration:none;margin-top:1px}
+.m-b ol.steps{margin:0 0 22px;padding:0;list-style:none;counter-reset:s}
+.m-b ol.steps li{counter-increment:s;position:relative;padding:0 0 15px 34px;font-size:13.5px;
+  color:var(--text2);line-height:1.72}
+.m-b ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:23px;height:23px;
+  border-radius:var(--pill);background:linear-gradient(135deg,rgba(255,148,72,.26),rgba(240,96,42,.18));
+  border:1px solid rgba(255,140,80,.42);color:#FFC49E;font-family:var(--mono);font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center}
+.tip-box{border-left:3px solid var(--accent2);background:rgba(255,179,71,.09);border-radius:0 12px 12px 0;
+  padding:12px 16px;font-size:12.5px;color:#FFDCB4;line-height:1.7}
+.tip-box b{color:var(--accent2)}
+.eff-box{border-left:3px solid var(--ok);background:rgba(163,196,110,.09);border-radius:0 12px 12px 0;
+  padding:12px 16px;font-size:12.5px;color:#D6E8B8;line-height:1.7;margin-bottom:18px}
+.eff-box b{color:var(--ok)}
+.m-close{position:absolute;right:17px;top:17px;width:32px;height:32px;border-radius:var(--pill);
+  border:1px solid var(--line2);background:rgba(255,255,255,.06);color:var(--dim);cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;transition:.16s}
+.m-close:hover{color:#fff;border-color:var(--line3);background:rgba(255,122,61,.2)}
+
+/* ---------- misc ---------- */
+.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,22px);
+  background:linear-gradient(135deg,#3A281F,#2A1C16);border:1px solid var(--line3);color:var(--text);
+  padding:11px 22px;border-radius:var(--pill);font-size:13px;font-weight:600;
+  opacity:0;pointer-events:none;transition:.3s;z-index:120;box-shadow:0 12px 44px rgba(0,0,0,.66)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.note{font-size:11.5px;color:var(--dim2);line-height:1.85;margin-top:18px;
+  border-top:1px solid var(--line);padding-top:16px}
+.note b{color:var(--dim)}
+.empty{text-align:center;padding:64px 20px;color:var(--dim2);font-size:13.5px}
+
+@media(max-width:720px){
+  .wrap{padding:0 14px 74px}
+  header{padding:30px 0 18px}
+  .p-body{padding:17px}
+  .days{grid-template-columns:1fr}
+  .cfg-grid{grid-template-columns:1fr;gap:17px}
+  .m-b ul.ing{grid-template-columns:1fr}
+  .actions{padding:15px 17px}
+  .btn{padding:11px 16px;font-size:13px}
+  .shop-cats{columns:1}
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .des-grid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff;color:#111;background-image:none}
+  .no-print{display:none!important}
+  .panel,.day,.stat,.shop-cat,.des-card{background:#fff!important;border-color:#d8d8d8!important;
+    box-shadow:none!important;break-inside:avoid}
+  body, body *{color:#1c1c1c !important}
+  h1 em{-webkit-text-fill-color:#111;color:#111}
+  .kicker{color:#a34400!important;border-color:#f0c8a8!important;background:#fff6ee!important}
+  .sub,.stat .n,.note,.day-h .dk,.shop-item .pr,.des-card p{color:#5a5a5a!important}
+  .meal-l .tag{background:#f6f0ea!important;color:#444!important;border-color:#ddd!important}
+  .meal-l .k,.stat .k{color:#666!important}
+  .dish{color:#111!important;border-bottom-color:#bbb}
+  .day-f,.shop-cat h4{background:#f8f4f0!important;color:#333!important}
+  .shop-item .qt{color:#a34400!important}
+  .des-card .eff{background:#eef4e4!important;color:#3f5a1f!important}
+  .des-card .warn{background:#fdf0e8!important;color:#7a3a10!important}
+  .m-h,.mask{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker"><span class="dot"></span>四季时令 · 药膳养生 · 菜市场可买</div>
+  <h1>四季养生<em>一周菜谱生成器</em></h1>
+  <p class="sub">
+    按<b>当前节气自动匹配当季食材</b>，从 160+ 道菜里排出 7 天 21 餐。营养遵循《中国居民膳食指南（2022）》，
+    搭配遵循中医食性（温／凉／平），并按季节加入<b>药膳汤羹与食疗甜品</b>——
+    老人、小孩、病后调养都能吃。所有主料在成都任意菜市场买得到，做法都是家常可复刻的。
+  </p>
+  <div class="meta-row">
+    <span>时令基准 <b id="metaSeason">—</b></span>
+    <span>营养基准 <b>中国营养学会 2022</b></span>
+    <span>菜谱库 <b id="metaCount">—</b></span>
+    <span>价格基准 <b>成都 2026-11 菜市场行情</b></span>
+  </div>
+</header>
+
+<section class="panel no-print" style="margin-bottom:22px">
+  <div class="p-head">
+    <div class="p-title"><span class="idx">01</span>配餐参数</div>
+    <div style="font-size:11.5px;color:var(--dim2)">改动后自动重算</div>
+  </div>
+  <div class="p-body">
+    <div class="cfg-grid">
+      <div class="field">
+        <div class="flabel">用餐人数 <span class="hint">按人份缩放</span></div>
+        <div class="seg" id="segPeople"></div>
+      </div>
+      <div class="field">
+        <div class="flabel">季节 <span class="hint">自动＝按今天日期</span></div>
+        <div class="seg" id="segSeason"></div>
+      </div>
+      <div class="field">
+        <div class="flabel">辣度上限</div>
+        <div class="seg" id="segSpicy"></div>
+      </div>
+      <div class="field">
+        <div class="flabel">预算档位</div>
+        <div class="seg" id="segBudget"></div>
+      </div>
+      <div class="field">
+        <div class="flabel">餐次结构</div>
+        <div class="seg" id="segMode"></div>
+      </div>
+      <div class="field">
+        <div class="flabel">吃饭的人 <span class="hint">影响口感与食材</span></div>
+        <div class="chips" id="chipsCrowd"></div>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <div class="flabel">忌口 / 排除 <span class="hint">可多选</span></div>
+        <div class="chips" id="chipsAvoid"></div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn primary" id="btnGen">生成一周菜谱</button>
+    <button class="btn" id="btnReroll">换一版搭配</button>
+    <button class="btn ghost" id="btnPrint">打印 / 存 PDF</button>
+    <div class="spacer"></div>
+    <button class="btn ghost sm" id="btnCopy">复制采购清单</button>
+  </div>
+</section>
+
+<div class="season-bar no-print" id="seasonBar"></div>
+
+<div id="result">
+  <div class="empty">正在按当前时令配餐…</div>
+</div>
+
+<div id="appendix"></div>
+
+<div class="note no-print">
+  <b>说明</b>：① 热量、蛋白质为按食材克数估算的近似值（生重），用于看结构是否均衡，不作医学依据。
+  ② 用量同时标注克数与生活单位（个／根／把／块），买菜按生活单位估更靠谱；克数用于营养计算。
+  ③ 深色蔬菜指深绿／深黄／紫红蔬菜（豌豆尖、菠菜、胡萝卜、南瓜、番茄、木耳等），指南要求占蔬菜总量一半以上。
+  ④ 药膳与食疗方标注了适用人群与禁忌，<b>慢病用药者、孕妇、婴幼儿请遵医嘱</b>，本工具不替代医疗建议。
+  ⑤ 采购量已按菜市场购买粒度向上取整。
+</div>
+
+</div>
+
+<div class="mask" id="mask"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   菜谱数据库
+   se: 时令 sp春 su夏 au秋 wi冬 all全年
+   gentle: 温和软烂，适合老人／小孩／病后
+   ing: [名称, 数量, 单位, 生活单位说明]
+   ============================================================ */
+const DB = [
+/* ================= 荤菜 · 猪肉 ================= */
+{id:'huiguo',name:'回锅肉',kind:'meat',src:'pork',spicy:2,t:25,veg:80,kcal:540,prot:22,dark:false,se:'au,wi',gentle:false,
+ ing:[['五花肉',150,'g','约1块掌心大'],['蒜苗',80,'g','约4根'],['郫县豆瓣',12,'g','约1汤匙'],['甜面酱',6,'g','约半汤匙'],['豆豉',5,'g','约10粒'],['姜',5,'g','2片'],['菜籽油',10,'ml','约1汤匙']],
+ steps:['五花肉整块冷水下锅，加姜片、花椒、料酒，水开后煮 20 分钟，筷子能扎透不出血水即捞出。',
+        '捞出晾凉、最好冷藏 30 分钟再切——热肉切必碎，冷肉才能切出 2mm 薄片。',
+        '锅烧热放少许油，中小火下肉片慢煸，炒到卷曲成"灯盏窝"、边缘微焦出油。',
+        '肉片拨到一边，下剁细的豆瓣小火炒出红油（约 40 秒），加豆豉、甜面酱炒匀。',
+        '倒蒜苗斜刀段，大火快炒 15 秒断生出锅。'],
+ tip:'三个关键：肉要凉透再切、豆瓣必须剁细且小火炒（大火必苦）、蒜苗最后 15 秒下锅。'},
+
+{id:'hongshaorou',name:'红烧肉',kind:'meat',src:'pork',spicy:0,t:80,veg:60,kcal:620,prot:20,dark:false,se:'au,wi',gentle:true,
+ ing:[['五花肉',180,'g','约1块方块'],['冰糖',15,'g','约8粒'],['生抽',15,'ml','约1汤匙'],['老抽',5,'ml','约1茶匙'],['料酒',15,'ml','约1汤匙'],['姜',8,'g','3片'],['八角',1,'g','1颗'],['桂皮',2,'g','1小段']],
+ steps:['五花肉切 3cm 见方块，冷水下锅加姜、料酒焯水 3 分钟，捞出温水冲净。',
+        '锅中少油，小火下冰糖慢慢炒到融化变枣红色冒小泡（糖色），立刻下肉块翻炒上色。',
+        '加姜片、八角、桂皮炒香，烹料酒，加生抽、老抽翻匀。',
+        '掺 800ml 热水没过肉，大火烧开转小火炖 50 分钟。',
+        '开盖转中大火收汁，收到汤汁浓稠挂勺、油亮发红即可。'],
+ tip:'炒糖色是小火慢功夫，颜色到枣红就得马上下肉，晚 5 秒就发苦。炖的过程中不加水，一次性给足热水。'},
+
+{id:'fenzhengrou',name:'粉蒸肉',kind:'meat',src:'pork',spicy:1,t:70,veg:150,kcal:560,prot:20,dark:true,se:'au,wi',gentle:true,
+ ing:[['五花肉',160,'g','约10片'],['红薯',150,'g','约1个小的'],['蒸肉米粉',50,'g','约5汤匙'],['郫县豆瓣',12,'g','约1汤匙'],['豆腐乳',10,'g','约半块'],['姜',5,'g','2片'],['料酒',10,'ml','约2茶匙']],
+ steps:['五花肉切 0.5cm 厚片，加剁细豆瓣、豆腐乳汁、姜末、料酒抓匀腌 30 分钟。',
+        '倒入蒸肉米粉拌匀，每片都裹上粉，加 2 汤匙水抓润（不加水蒸出来会干）。',
+        '红薯去皮切滚刀块，铺在蒸碗底部吸油。',
+        '肉片整齐码在红薯上，水开后中火蒸 60 分钟至软糯。',
+        '出锅倒扣入盘，撒葱花。'],
+ tip:'米粉要粗、加水抓润；红薯垫底吸油是四川吃法，老人小孩都好嚼。'},
+
+{id:'suanibabaorou',name:'蒜泥白肉',kind:'meat',src:'pork',spicy:1,t:45,veg:60,kcal:420,prot:21,dark:false,se:'sp,su',gentle:true,
+ ing:[['猪后腿肉',160,'g','约1块'],['黄瓜',60,'g','半根'],['蒜',15,'g','约4瓣'],['生抽',12,'ml','约1汤匙'],['辣椒油',15,'ml','约1汤匙'],['香醋',6,'ml','约1茶匙'],['白糖',5,'g','约1茶匙'],['香油',3,'ml','几滴']],
+ steps:['后腿肉（二刀肉最佳）冷水下锅，加姜葱、花椒、料酒，煮 20 分钟后关火泡 10 分钟。',
+        '捞出放冰箱冷藏 1 小时——这是能切出薄而不碎的大薄片的前提。',
+        '黄瓜切细丝垫盘底。肉切 1.5mm 大薄片，一片片叠码在黄瓜上。',
+        '蒜捣成泥，加生抽、糖、醋、辣椒油、香油调成蒜泥红油汁。',
+        '淋汁上桌，吃时拌开。'],
+ tip:'夏天没胃口时最合适。肉煮好别急切，冷藏后才能片薄；蒜要现捣，拍碎和捣泥是两个味。'},
+
+{id:'yuxiangrousi',name:'鱼香肉丝',kind:'meat',src:'pork',spicy:2,t:25,veg:110,kcal:430,prot:24,dark:true,se:'all',gentle:false,
+ ing:[['猪里脊',150,'g','约1条'],['干木耳',8,'g','约1小把泡发'],['胡萝卜',50,'g','半根'],['莴笋',60,'g','半根'],['泡椒',15,'g','约3个'],['姜蒜',15,'g','各2瓣'],['香醋',12,'ml','约1汤匙'],['白糖',12,'g','约1汤匙'],['淀粉',10,'g','约1汤匙']],
+ steps:['里脊切二粗丝，加盐、水、淀粉抓上浆，封油静置 10 分钟。木耳、胡萝卜、莴笋切丝。',
+        '先兑碗汁（关键）：糖 2 勺 + 醋 2 勺 + 生抽 1 勺 + 淀粉半勺 + 水 4 勺，搅匀。糖醋基本 1:1。',
+        '热锅宽油，肉丝下锅快速滑散至变白，立刻盛出。',
+        '底油小火炒泡椒末、姜蒜末，炒出红油和"鱼香"味。',
+        '下三丝翻炒 1 分钟，倒回肉丝，沿锅边淋碗汁，大火快速翻匀收汁，撒葱花出锅。'],
+ tip:'醋不能早下锅，久煮挥发就只剩甜；碗汁提前兑好，下锅后全程不超过 40 秒。'},
+
+{id:'shuizhuroupian',name:'水煮肉片',kind:'meat',src:'pork',spicy:3,t:30,veg:150,kcal:480,prot:26,dark:true,se:'au,wi',gentle:false,
+ ing:[['猪里脊',160,'g','约1条'],['绿豆芽',120,'g','一大把'],['莴笋尖',80,'g','约3根'],['郫县豆瓣',18,'g','约1.5汤匙'],['干辣椒',6,'g','约8个'],['花椒',3,'g','约1茶匙'],['淀粉',10,'g','约1汤匙'],['蛋清',15,'g','半个蛋的'],['菜籽油',30,'ml','约3汤匙']],
+ steps:['里脊逆纹切 2mm 薄片，加盐、料酒、蛋清、淀粉和 1 汤匙清水抓匀上浆，封油腌 15 分钟。',
+        '豆芽、莴笋尖沸水汆 30 秒，铺在深碗底。',
+        '干辣椒、花椒温油小火炸到棕红发脆，捞出剁成刀口辣椒。',
+        '锅里下豆瓣、姜蒜末小火炒出红油，掺 500ml 开水烧沸，打去料渣。',
+        '转小火，肉片逐片抖散下锅不搅动，变色伸展（约 40 秒）连汤倒入碗中。',
+        '表面铺刀口辣椒、蒜末、花椒面，浇一勺滚油激香。'],
+ tip:'上浆要薄、水要打进去；泼油必须够热，油温低了只有油腻没有香。'},
+
+{id:'tangcupaigu',name:'糖醋排骨',kind:'meat',src:'pork',spicy:0,t:50,veg:20,kcal:520,prot:24,dark:false,se:'sp,su,au',gentle:false,
+ ing:[['猪肋排',250,'g','约8小块'],['冰糖',20,'g','约10粒'],['香醋',25,'ml','约2汤匙'],['生抽',15,'ml','1汤匙'],['料酒',15,'ml','1汤匙'],['姜',8,'g','3片']],
+ steps:['排骨剁 4cm 段，冷水下锅加姜、料酒焯水 3 分钟，捞出冲净。',
+        '锅中少油，下冰糖小火炒成糖色，倒排骨翻炒均匀上色。',
+        '烹料酒，加生抽、一半的醋，掺 500ml 热水没过排骨，小火炖 30 分钟。',
+        '开盖大火收汁，汁快干时倒入剩下的醋（醋分两次放，香气才立体）。',
+        '收到糖醋汁裹满排骨、油亮发亮即出锅。'],
+ tip:'醋一定要分两次：炖时放一半让味道进肉，收汁前放一半保留酸香。'},
+
+{id:'qingjiaorousi',name:'青椒肉丝',kind:'meat',src:'pork',spicy:1,t:15,veg:150,kcal:340,prot:22,dark:true,se:'su,au',gentle:false,
+ ing:[['猪里脊',150,'g','约1条'],['青椒',180,'g','约4个'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙'],['淀粉',8,'g','约1汤匙'],['菜籽油',20,'ml','2汤匙']],
+ steps:['里脊切丝，加生抽、水、淀粉抓上浆，封油腌 10 分钟。青椒去籽切丝。',
+        '热锅宽油，肉丝滑散至变白盛出。',
+        '底油下青椒丝大火炒 60 秒至表皮起虎皮、有焦香。',
+        '倒回肉丝，加盐、少许生抽，翻匀出锅。'],
+ tip:'青椒一定要炒到起虎皮才香；怕辣可以用薄皮青椒或者把籽去干净。'},
+
+{id:'suanthairousi',name:'蒜薹炒肉丝',kind:'meat',src:'pork',spicy:1,t:18,veg:150,kcal:360,prot:22,dark:true,se:'sp',gentle:false,
+ ing:[['猪后腿肉',140,'g','约1小块'],['蒜薹',180,'g','约1把'],['郫县豆瓣',8,'g','约1汤匙'],['生抽',8,'ml','2茶匙'],['淀粉',6,'g','约2茶匙'],['菜籽油',18,'ml','2汤匙']],
+ steps:['肉切丝，加生抽、淀粉腌 10 分钟。蒜薹掐去老根，切 4cm 段。',
+        '热锅少油，肉丝炒散至变色盛出。',
+        '底油下豆瓣炒香，倒蒜薹大火炒 90 秒，加 2 汤匙水焖 30 秒。',
+        '倒回肉丝，加盐翻匀出锅。'],
+ tip:'春天的蒜薹最嫩最香。先炒后加少量水焖，才能熟透又不发黄。'},
+
+{id:'lianoudunpaigu',name:'莲藕炖排骨',kind:'meat',src:'pork',spicy:0,t:70,veg:200,kcal:420,prot:24,dark:false,se:'au,wi',gentle:true,
+ ing:[['猪肋排',220,'g','约8小块'],['莲藕',300,'g','约1节'],['姜',10,'g','4片'],['料酒',15,'ml','1汤匙'],['盐',3,'g','约半茶匙']],
+ steps:['排骨冷水下锅加姜、料酒焯水 3 分钟，撇净浮沫捞出温水冲洗。',
+        '莲藕去皮切滚刀块，泡清水防氧化。',
+        '排骨入砂锅加 1200ml 热水、姜片，大火烧开转小火炖 40 分钟。',
+        '下莲藕再炖 25 分钟至藕粉糯拉丝。',
+        '只加盐调味即可，撒葱花。'],
+ tip:'秋天的新藕粉糯、有丝，炖汤最润。全程只放盐，汤才清甜。'},
+
+{id:'chunsunshaorou',name:'春笋烧肉',kind:'meat',src:'pork',spicy:1,t:60,veg:220,kcal:490,prot:21,dark:false,se:'sp',gentle:false,
+ ing:[['五花肉',150,'g','约1块'],['春笋',250,'g','约2根'],['生抽',15,'ml','1汤匙'],['老抽',4,'ml','1茶匙'],['冰糖',8,'g','4粒'],['姜',8,'g','3片'],['料酒',15,'ml','1汤匙']],
+ steps:['春笋剥壳切滚刀块，沸水汆 5 分钟去涩（这步不能省，否则发麻）。',
+        '五花肉切块焯水，捞出冲净。',
+        '锅中少油炒冰糖成糖色，下肉块上色，加姜片、料酒、生抽、老抽。',
+        '掺 700ml 热水烧开，小火炖 25 分钟。',
+        '下春笋再炖 20 分钟，大火收汁。'],
+ tip:'春笋是春天最鲜的东西，但必须焯水去草酸和涩味。谷雨前的笋最嫩。'},
+
+{id:'candouchaorou',name:'蚕豆炒肉末',kind:'meat',src:'pork',spicy:1,t:20,veg:180,kcal:320,prot:18,dark:true,se:'sp',gentle:true,
+ ing:[['鲜蚕豆',200,'g','约1小碗'],['猪肉末',60,'g','约2汤匙'],['蒜苗',40,'g','2根'],['生抽',8,'ml','2茶匙'],['菜籽油',16,'ml','2汤匙']],
+ steps:['蚕豆剥壳，沸水汆 2 分钟捞出（去豆腥、也更容易熟）。',
+        '锅中下油，肉末炒散出油至微酥。',
+        '倒蚕豆翻炒 2 分钟，加 3 汤匙水焖 2 分钟至软糯。',
+        '加生抽、盐，下蒜苗段炒 20 秒出锅。'],
+ tip:'春天的鲜蚕豆最甜，冷冻的也行。蚕豆要煮熟，生蚕豆会引起不适（蚕豆病患者禁食）。'},
+
+{id:'kuguachaorou',name:'苦瓜炒肉片',kind:'meat',src:'pork',spicy:1,t:18,veg:200,kcal:300,prot:19,dark:true,se:'su',gentle:false,
+ ing:[['猪里脊',120,'g','约1小块'],['苦瓜',250,'g','约1根'],['蒜',8,'g','2瓣'],['豆豉',5,'g','10粒'],['生抽',8,'ml','2茶匙'],['淀粉',6,'g','2茶匙']],
+ steps:['苦瓜对半剖开、去瓤去白膜（白膜是苦味主要来源），切薄片，撒盐抓 5 分钟挤水。',
+        '肉切薄片，加生抽、淀粉抓匀。',
+        '热锅下油，肉片炒到变色盛出。',
+        '底油下豆豉、蒜片炒香，倒苦瓜大火炒 90 秒。',
+        '倒回肉片，加盐翻匀出锅。'],
+ tip:'夏天解暑去火。怕苦就去净白膜 + 盐腌挤水，能去掉七成苦味。'},
+
+{id:'dongguaniangrou',name:'冬瓜酿肉',kind:'meat',src:'pork',spicy:0,t:35,veg:250,kcal:280,prot:18,dark:false,se:'su',gentle:true,
+ ing:[['冬瓜',300,'g','约1圈'],['猪肉末',100,'g','约3汤匙'],['姜',4,'g','1片'],['葱',10,'g','1根'],['生抽',10,'ml','2茶匙'],['淀粉',6,'g','2茶匙'],['香油',3,'ml','几滴']],
+ steps:['肉末加姜末、葱末、生抽、淀粉、少许水，顺一个方向搅打上劲。',
+        '冬瓜去皮，切 3cm 厚的圆片，中间挖一个小凹槽。',
+        '每片冬瓜酿入一勺肉馅，压平。',
+        '水开后上锅蒸 15 分钟，蒸出的汤汁倒出备用。',
+        '汤汁加少许生抽、淀粉勾薄芡，淋在冬瓜上。'],
+ tip:'清淡软烂，老人小孩都好入口。冬瓜蒸出的水别倒掉，那是鲜味。'},
+
+{id:'shanyaochaomuer',name:'山药木耳炒肉片',kind:'meat',src:'pork',spicy:1,t:20,veg:220,kcal:310,prot:18,dark:true,se:'au,wi',gentle:true,
+ ing:[['猪里脊',120,'g','约1小块'],['山药',200,'g','约1段'],['干木耳',8,'g','1小把泡发'],['胡萝卜',50,'g','半根'],['蒜',6,'g','2瓣'],['淀粉',6,'g','2茶匙']],
+ steps:['山药去皮切片（戴手套防痒），泡淡醋水防发黑；木耳泡发撕小朵。',
+        '肉片加生抽、淀粉抓匀，滑炒至变色盛出。',
+        '底油下蒜片、胡萝卜片炒 1 分钟。',
+        '下山药、木耳大火炒 2 分钟，加 2 汤匙水略焖。',
+        '倒回肉片，加盐翻匀出锅。'],
+ tip:'秋燥时节最合适，山药健脾、木耳润燥。山药黏液会让手痒，一定戴手套。'},
+
+{id:'nanguazhengrou',name:'南瓜蒸肉',kind:'meat',src:'pork',spicy:0,t:45,veg:250,kcal:380,prot:19,dark:true,se:'au',gentle:true,
+ ing:[['五花肉',120,'g','约8片'],['老南瓜',280,'g','约1/4个'],['蒸肉米粉',35,'g','3汤匙'],['生抽',10,'ml','2茶匙'],['姜',4,'g','1片'],['料酒',8,'ml','2茶匙']],
+ steps:['五花肉切薄片，加生抽、姜末、料酒腌 20 分钟。',
+        '拌入蒸肉米粉，加 2 汤匙水抓润。',
+        '南瓜去皮切厚片，铺在碗底。',
+        '肉片铺在南瓜上，水开后中火蒸 40 分钟。',
+        '出锅撒葱花，南瓜吸了肉汁特别甜。'],
+ tip:'秋天南瓜最甜。南瓜垫底吸油，比传统红薯版更清爽。'},
+
+/* ================= 荤菜 · 牛羊 ================= */
+{id:'fanqieniunan',name:'番茄牛腩',kind:'meat',src:'beef',spicy:0,t:90,veg:220,kcal:420,prot:28,dark:true,se:'au,wi',gentle:true,
+ ing:[['牛腩',180,'g','约1小碗'],['番茄',250,'g','约2个'],['洋葱',60,'g','约1/4个'],['姜',8,'g','3片'],['番茄酱',20,'g','1汤匙'],['料酒',12,'ml','1汤匙'],['白糖',5,'g','1茶匙']],
+ steps:['牛腩切 3cm 块，冷水下锅加姜、料酒焯水，撇净浮沫捞出用温水冲净。',
+        '番茄划十字，开水烫 30 秒去皮；两个切块、一个切碎。',
+        '锅中少油炒香洋葱、姜片，下切碎的番茄炒到出沙成糊，加番茄酱炒匀。',
+        '倒牛腩翻炒 2 分钟，掺 1200ml 热水，烧开转小火炖 60 分钟。',
+        '下番茄块再炖 20 分钟，加盐、少许糖调味。'],
+ tip:'番茄分两次下：碎的炒成汤底、块的保留口感；炖牛肉中途千万别加冷水。'},
+
+{id:'tudoushaoniurou',name:'土豆烧牛肉',kind:'meat',src:'beef',spicy:1,t:75,veg:230,kcal:460,prot:27,dark:false,se:'au,wi',gentle:true,
+ ing:[['牛腩',180,'g','约1小碗'],['土豆',200,'g','约2个'],['胡萝卜',60,'g','半根'],['郫县豆瓣',12,'g','1汤匙'],['姜',8,'g','3片'],['八角',1,'g','1颗'],['生抽',12,'ml','1汤匙']],
+ steps:['牛腩切块冷水下锅焯水，撇沫捞出温水洗净。',
+        '锅中少油，下豆瓣、姜片、八角小火炒香，倒牛腩翻炒上色。',
+        '加生抽、料酒，掺 1000ml 热水，烧开转小火炖 50 分钟。',
+        '土豆、胡萝卜切滚刀块，下锅再炖 20 分钟至土豆边缘粉糯。',
+        '大火收汁至浓稠挂勺。'],
+ tip:'土豆晚放 20 分钟，早放会炖成泥；收汁时轻推锅别翻炒，土豆易碎。'},
+
+{id:'heijiaoniuliu',name:'黑椒牛柳',kind:'meat',src:'beef',spicy:1,t:20,veg:120,kcal:360,prot:30,dark:true,se:'all',gentle:false,
+ ing:[['牛里脊',180,'g','约1条'],['洋葱',80,'g','1/3个'],['青椒',60,'g','1个'],['黑胡椒',3,'g','约1茶匙'],['蚝油',12,'ml','1汤匙'],['淀粉',8,'g','1汤匙'],['黄油',8,'g','1小块']],
+ steps:['牛里脊逆纹切 1cm 粗条，加盐、黑胡椒、淀粉、1 汤匙水抓匀，封油腌 15 分钟。',
+        '锅烧到冒烟，下油，牛柳铺开煎 40 秒不翻动，翻面再 30 秒，盛出（七成熟）。',
+        '下黄油、洋葱丝炒软，加青椒条炒 30 秒。',
+        '倒回牛柳，加蚝油、现磨黑胡椒，大火翻匀 20 秒出锅。'],
+ tip:'牛柳全程不超过 2 分钟，炒久了就柴。锅一定要够热，才能煎出焦壳。'},
+
+{id:'luoboyangrou',name:'萝卜炖羊肉',kind:'meat',src:'lamb',spicy:0,t:90,veg:280,kcal:400,prot:26,dark:false,se:'wi',gentle:true,
+ ing:[['羊肉',250,'g','约1小碗'],['白萝卜',300,'g','约1根'],['姜',15,'g','5片'],['葱',20,'g','2根'],['花椒',2,'g','约1茶匙'],['料酒',15,'ml','1汤匙'],['白胡椒',2,'g','半茶匙'],['香菜',10,'g','1小把']],
+ steps:['羊肉切块冷水浸泡 30 分钟去血水，再冷水下锅加姜、料酒焯水，撇沫捞出。',
+        '砂锅放羊肉、姜块、花椒、葱段，加 1500ml 热水，烧开转小火炖 60 分钟。',
+        '白萝卜切滚刀块下锅，再炖 20 分钟至透明软糯。',
+        '加盐、白胡椒，撒香菜。'],
+ tip:'冬至前后成都家家都炖。花椒和白胡椒是去膻关键；萝卜后放，早放会炖散。'},
+
+{id:'congbaoyangrou',name:'葱爆羊肉',kind:'meat',src:'lamb',spicy:1,t:15,veg:130,kcal:390,prot:28,dark:true,se:'wi,sp',gentle:false,
+ ing:[['羊肉片',200,'g','约1小碗'],['大葱',150,'g','约2根'],['姜',5,'g','2片'],['生抽',12,'ml','1汤匙'],['香醋',5,'ml','1茶匙'],['料酒',10,'ml','2茶匙'],['香油',3,'ml','几滴']],
+ steps:['羊肉切薄片（半冻状态最好切），加生抽、料酒、少许淀粉抓匀。',
+        '大葱斜切 3cm 段，葱白葱绿分开。',
+        '锅烧到冒青烟，宽油下羊肉大火爆炒 40 秒至变色。',
+        '下葱白炒 20 秒，烹料酒、香醋。',
+        '下葱绿，淋香油，翻两下立刻出锅。'],
+ tip:'全程最大火、90 秒内完成。葱要炒到半透明还带脆，炒软就没魂了。'},
+
+/* ================= 荤菜 · 禽 ================= */
+{id:'banlichi',name:'白切鸡',kind:'meat',src:'chicken',spicy:0,t:45,veg:30,kcal:340,prot:30,dark:false,se:'su',gentle:true,
+ ing:[['三黄鸡',400,'g','约半只'],['姜',20,'g','1块'],['葱',30,'g','3根'],['盐',5,'g','1茶匙'],['生抽',15,'ml','1汤匙'],['香油',5,'ml','1茶匙'],['沙姜粉',2,'g','半茶匙']],
+ steps:['整鸡洗净，锅中水加姜片、葱段烧开，提着鸡颈把鸡浸入水中 10 秒提起，重复 3 次（让鸡皮收紧）。',
+        '整鸡入锅，水要没过，保持水面微微冒泡（不要大滚）浸煮 25 分钟。',
+        '捞出立刻放入冰水中浸 10 分钟——皮才会爽脆、肉才嫩。',
+        '晾凉斩件摆盘。姜蓉、葱花加盐，浇热油，加生抽、香油调成蘸料。',
+        '蘸着吃。'],
+ tip:'"三提三放"和冰水激是白切鸡皮爽肉滑的两个关键。水一定不能大滚，否则肉柴。'},
+
+{id:'banlishaoji',name:'板栗烧鸡',kind:'meat',src:'chicken',spicy:0,t:50,veg:180,kcal:440,prot:26,dark:true,se:'au,wi',gentle:true,
+ ing:[['鸡肉',350,'g','约半只'],['板栗',200,'g','约15颗'],['姜',8,'g','3片'],['生抽',15,'ml','1汤匙'],['老抽',5,'ml','1茶匙'],['冰糖',8,'g','4粒'],['料酒',15,'ml','1汤匙']],
+ steps:['板栗用刀划十字，沸水煮 5 分钟，趁热剥壳（凉了就难剥）。',
+        '鸡肉剁块焯水，捞出冲净。',
+        '锅中少油炒冰糖成糖色，下鸡块翻炒上色，加姜片、料酒、生抽、老抽。',
+        '掺 600ml 热水烧开，小火焖 20 分钟。',
+        '下板栗再焖 15 分钟，大火收汁。'],
+ tip:'秋天板栗上市时做最合适。板栗后放，早放会炖成糊。'},
+
+{id:'gongbaojiding',name:'宫保鸡丁',kind:'meat',src:'chicken',spicy:2,t:25,veg:60,kcal:450,prot:28,dark:false,se:'all',gentle:false,
+ ing:[['鸡腿肉',180,'g','约2个鸡腿'],['花生米',30,'g','约2汤匙'],['大葱',40,'g','1根'],['干辣椒',6,'g','约8个'],['花椒',2,'g','1茶匙'],['香醋',12,'ml','1汤匙'],['白糖',12,'g','1汤匙'],['淀粉',8,'g','1汤匙']],
+ steps:['鸡腿肉去骨切 1.5cm 丁，加盐、料酒、水、淀粉上浆，封油腌 15 分钟。',
+        '碗汁：糖 2 勺、醋 2 勺、生抽 1 勺、料酒 1 勺、淀粉半勺、水 3 勺。',
+        '温油下干辣椒段、花椒，小火煸成"糊辣壳"——棕红发脆、香味出来但绝不能黑。',
+        '下鸡丁转中大火炒到变色，加姜蒜片、葱段，倒碗汁快速翻匀收芡。',
+        '关火，最后撒花生米翻两下——花生最后放才脆。'],
+ tip:'糊辣荔枝味＝先辣后酸甜回甜。辣椒花椒必须温油小火，油温高了一秒就糊。'},
+
+{id:'xiangguhuaji',name:'香菇滑鸡',kind:'meat',src:'chicken',spicy:0,t:35,veg:150,kcal:380,prot:28,dark:true,se:'au,wi',gentle:true,
+ ing:[['鸡腿肉',300,'g','约2个鸡腿'],['香菇',100,'g','约6朵'],['姜',8,'g','3片'],['葱',20,'g','2根'],['生抽',15,'ml','1汤匙'],['蚝油',10,'ml','2茶匙'],['淀粉',8,'g','1汤匙']],
+ steps:['鸡腿肉切块，加生抽、蚝油、淀粉、姜片抓匀腌 20 分钟。',
+        '香菇泡软切块（泡香菇的水留着）。',
+        '锅中少油，下鸡块中火煎到两面微黄。',
+        '加香菇、泡香菇的水 200ml，小火焖 15 分钟。',
+        '大火收汁，撒葱段出锅。'],
+ tip:'滑嫩的关键是淀粉抓匀腌够时间；泡香菇的水是天然高汤，别倒。'},
+
+{id:'huangmenji',name:'黄焖鸡',kind:'meat',src:'chicken',spicy:1,t:40,veg:180,kcal:420,prot:28,dark:true,se:'all',gentle:true,
+ ing:[['鸡腿肉',300,'g','约2个鸡腿'],['香菇',80,'g','约5朵'],['青椒',60,'g','1个'],['土豆',120,'g','约1个'],['生抽',20,'ml','1.5汤匙'],['老抽',5,'ml','1茶匙'],['冰糖',8,'g','4粒'],['姜',8,'g','3片']],
+ steps:['鸡腿肉剁块，冷水下锅焯水后冲净。',
+        '锅中少油炒冰糖成色，下鸡块翻炒上色。',
+        '加姜片、生抽、老抽，掺 600ml 热水，下香菇，小火焖 20 分钟。',
+        '下土豆块再焖 12 分钟。',
+        '下青椒块，大火收汁到浓稠。'],
+ tip:'一锅出的家常菜，配米饭最香。汤汁收到能挂在鸡块上就对了。'},
+
+{id:'pijiaya',name:'啤酒鸭',kind:'meat',src:'duck',spicy:2,t:55,veg:150,kcal:450,prot:26,dark:true,se:'su,au',gentle:false,
+ ing:[['鸭肉',350,'g','约半只'],['啤酒',330,'ml','1罐'],['郫县豆瓣',15,'g','1汤匙'],['姜',10,'g','4片'],['蒜',10,'g','3瓣'],['青椒',60,'g','1个'],['生抽',15,'ml','1汤匙']],
+ steps:['鸭肉剁块，冷水下锅加姜、料酒焯水，煮 3 分钟去腥，捞出洗净。',
+        '锅中下油，炒香豆瓣、姜蒜出红油，倒鸭块中火煸炒 5 分钟至出油。',
+        '倒入整罐啤酒（不加水），加生抽，烧开转小火焖 30 分钟。',
+        '下青椒块，大火收汁至浓稠。'],
+ tip:'啤酒代替水，去腥又增香，酒精会挥发掉。鸭肉一定要煸出油才不腥。'},
+
+{id:'xiaojidunmogu',name:'小鸡炖蘑菇',kind:'meat',src:'chicken',spicy:0,t:60,veg:150,kcal:430,prot:29,dark:true,se:'au,wi',gentle:true,
+ ing:[['鸡肉',350,'g','约半只'],['干榛蘑',30,'g','1小把'],['粉条',50,'g','1小把'],['姜',10,'g','4片'],['大葱',30,'g','1根'],['生抽',20,'ml','1.5汤匙'],['八角',1,'g','1颗']],
+ steps:['榛蘑提前用温水泡 30 分钟，反复洗去泥沙（泡蘑水静置后取上层清液备用）。',
+        '鸡块焯水冲净。',
+        '锅中少油，下姜、葱、八角炒香，倒鸡块煸炒上色，加生抽。',
+        '掺 1000ml 热水和泡蘑水，下榛蘑，小火炖 40 分钟。',
+        '下泡软的粉条再煮 8 分钟，加盐出锅。'],
+ tip:'东北家常名菜，秋冬吃最暖。榛蘑泥沙多，一定要多洗几遍。'},
+
+/* ================= 荤菜 · 水产 ================= */
+{id:'qingzhengluyu',name:'清蒸鲈鱼',kind:'meat',src:'fish',spicy:0,t:20,veg:30,kcal:230,prot:30,dark:false,se:'sp,su,au',gentle:true,
+ ing:[['鲈鱼',400,'g','约1条'],['葱',30,'g','3根'],['姜',12,'g','4片'],['蒸鱼豉油',25,'ml','2汤匙'],['料酒',10,'ml','2茶匙'],['菜籽油',12,'ml','1汤匙']],
+ steps:['鲈鱼处理干净，两面各划两刀，用料酒和盐抹匀腌 8 分钟，盘底垫姜片葱段把鱼架空。',
+        '水开后上锅，大火蒸 8 分钟（1 斤鱼 8 分钟，每多 2 两加 1 分钟），关火虚蒸 2 分钟。',
+        '倒掉盘里的腥水——这一步不能省，否则整道菜腥。',
+        '铺上新鲜葱丝、姜丝，淋蒸鱼豉油。',
+        '烧一勺热油泼在葱丝上激香。'],
+ tip:'最清淡的一道，老人小孩病后都合适。蒸鱼的水一定要倒掉；豉油别提前淋。'},
+
+{id:'suancaiyu',name:'酸菜鱼',kind:'meat',src:'fish',spicy:2,t:40,veg:150,kcal:390,prot:32,dark:false,se:'au,wi',gentle:false,
+ ing:[['草鱼',350,'g','约半条'],['酸菜',120,'g','约1小把'],['泡椒',15,'g','约3个'],['姜',8,'g','3片'],['蒜',10,'g','3瓣'],['蛋清',15,'g','半个'],['淀粉',10,'g','1汤匙'],['干辣椒',4,'g','5个']],
+ steps:['草鱼请摊主片成鱼片、鱼骨剁块（菜市场免费处理，一定要提）。鱼片加盐、蛋清、淀粉抓匀腌 15 分钟。',
+        '鱼骨用少许油煎到两面金黄，掺 800ml 开水大火滚 8 分钟，汤变奶白，滤出鱼汤。',
+        '另起锅下油，炒香姜蒜、泡椒、挤干切段的酸菜（多炒 2 分钟出酸香）。',
+        '倒入鱼汤烧沸，下鱼骨煮 3 分钟，捞出垫碗底。',
+        '转小火，鱼片逐片下锅汆 30–40 秒变白立刻连汤倒入碗中。',
+        '表面撒干辣椒段、花椒，泼一勺热油。'],
+ tip:'鱼片 30 秒就熟，别煮；鱼骨先煎再冲开水，汤才白。'},
+
+{id:'hongshaojiyu',name:'红烧鲫鱼',kind:'meat',src:'fish',spicy:1,t:30,veg:80,kcal:350,prot:30,dark:false,se:'sp,su',gentle:true,
+ ing:[['鲫鱼',400,'g','约1条'],['郫县豆瓣',15,'g','1汤匙'],['姜',8,'g','3片'],['蒜',10,'g','3瓣'],['葱',25,'g','2根'],['料酒',12,'ml','1汤匙'],['白糖',5,'g','1茶匙'],['香醋',6,'ml','1茶匙']],
+ steps:['鲫鱼处理干净，两面各划 3 刀，用盐、料酒、姜片腌 10 分钟，擦干表面水分。',
+        '锅烧至冒烟再下油（热锅冷油不粘），鱼下锅两面各煎 3 分钟至定型微黄。',
+        '底油小火炒豆瓣出红油，加姜蒜末，掺 300ml 开水，加糖、醋、料酒。',
+        '鱼回锅，中小火烧 8 分钟，用勺把汤汁不断浇在鱼身上（别翻鱼）。',
+        '鱼盛盘，汤汁勾薄芡收浓，撒葱花淋上。'],
+ tip:'煎鱼前锅要够热、鱼要擦干，这两点决定鱼皮破不破。鲫鱼刺多，给老人小孩吃要挑净。'},
+
+{id:'duojiaoyutou',name:'剁椒鱼头',kind:'meat',src:'fish',spicy:2,t:30,veg:40,kcal:290,prot:28,dark:true,se:'all',gentle:false,
+ ing:[['鱼头',450,'g','半个花鲢头'],['剁椒',40,'g','3汤匙'],['蒜',15,'g','4瓣'],['姜',10,'g','4片'],['蒸鱼豉油',20,'ml','1.5汤匙'],['料酒',15,'ml','1汤匙'],['葱',20,'g','2根']],
+ steps:['鱼头从中间劈开不切断，洗净血水，用料酒、姜片腌 15 分钟去腥。',
+        '剁椒加蒜末、少许糖拌匀（糖能中和咸辣）。',
+        '鱼头摊开摆盘，铺满剁椒。',
+        '水开后大火蒸 12 分钟，关火虚蒸 2 分钟。',
+        '撒葱花，淋蒸鱼豉油，泼热油。'],
+ tip:'鱼头胶质多、价格便宜。剁椒本身咸，别再加盐。'},
+
+{id:'ganshaodaiyu',name:'干烧带鱼',kind:'meat',src:'fish',spicy:1,t:30,veg:60,kcal:370,prot:28,dark:false,se:'au,wi',gentle:false,
+ ing:[['带鱼',350,'g','约4段'],['姜',8,'g','3片'],['蒜',10,'g','3瓣'],['郫县豆瓣',12,'g','1汤匙'],['料酒',15,'ml','1汤匙'],['白糖',5,'g','1茶匙'],['香醋',6,'ml','1茶匙'],['面粉',15,'g','1汤匙']],
+ steps:['带鱼洗净切段，用盐、料酒、姜腌 15 分钟，擦干后薄薄拍一层面粉。',
+        '锅中多放点油，中火把带鱼两面煎到金黄硬壳，盛出。',
+        '底油炒香豆瓣、姜蒜末，加 200ml 水、糖、醋烧开。',
+        '带鱼回锅，中小火烧 8 分钟收汁至浓稠裹住鱼身。',
+        '撒葱花出锅。'],
+ tip:'拍面粉能防止煎的时候粘锅破皮；带鱼刺少肉厚，适合不擅长挑刺的人。'},
+
+{id:'youmenxia',name:'油焖大虾',kind:'meat',src:'shrimp',spicy:0,t:20,veg:40,kcal:260,prot:26,dark:false,se:'su,au',gentle:true,
+ ing:[['鲜虾',300,'g','约12只'],['姜',8,'g','3片'],['葱',20,'g','2根'],['番茄酱',15,'g','1汤匙'],['白糖',8,'g','半汤匙'],['料酒',12,'ml','1汤匙'],['生抽',10,'ml','2茶匙']],
+ steps:['鲜虾剪去虾枪虾须，从背部划开挑出虾线。',
+        '锅中下油，虾下锅两面煎到变红、虾壳微焦，盛出。',
+        '底油炒香姜葱，加番茄酱、糖、料酒、生抽和 100ml 水烧开。',
+        '虾回锅，中火烧 3 分钟，大火收汁至油亮裹壳。'],
+ tip:'虾壳煎到微焦才香，虾油会渗到汤汁里。虾线一定要挑，否则有沙。'},
+
+{id:'suanrongfensizhengxia',name:'蒜蓉粉丝蒸虾',kind:'meat',src:'shrimp',spicy:1,t:25,veg:40,kcal:280,prot:26,dark:false,se:'all',gentle:true,
+ ing:[['鲜虾',280,'g','约10只'],['粉丝',40,'g','1小把'],['蒜',25,'g','1整头'],['生抽',15,'ml','1汤匙'],['蚝油',8,'ml','2茶匙'],['葱花',10,'g','1把']],
+ steps:['粉丝温水泡软，铺在盘底。',
+        '虾开背去虾线，摆在粉丝上。',
+        '蒜切末，一半用热油炸香、一半留生，混在一起加生抽、蚝油调成蒜蓉酱。',
+        '蒜蓉铺在虾上，水开后大火蒸 7 分钟。',
+        '撒葱花，泼一勺热油。'],
+ tip:'蒜分两半（一半炸香、一半生）是蒜蓉菜的灵魂，香气有层次。'},
+
+/* ================= 荤菜 · 创新家常 ================= */
+{id:'ningmengjixiong',name:'柠檬香煎鸡胸',kind:'meat',src:'chicken',spicy:0,t:20,veg:80,kcal:280,prot:32,dark:false,se:'sp,su',gentle:false,
+ ing:[['鸡胸肉',220,'g','约1块'],['柠檬',40,'g','半个'],['黑胡椒',2,'g','半茶匙'],['橄榄油',10,'ml','2茶匙'],['蜂蜜',8,'g','1茶匙'],['蒜',6,'g','2瓣']],
+ steps:['鸡胸横刀片成两片薄的（更容易熟、不柴），用刀背轻拍松。',
+        '加盐、黑胡椒、蒜末、柠檬汁、蜂蜜抓匀腌 20 分钟。',
+        '平底锅少油中火，鸡胸下锅每面煎 3 分钟至金黄。',
+        '关火盖盖焖 3 分钟（利用余温让内部熟透还嫩）。',
+        '切片装盘，挤柠檬汁。'],
+ tip:'低脂高蛋白，健身减脂首选。鸡胸最怕柴——片薄 + 关火焖是诀窍。'},
+
+{id:'fanqielongliyu',name:'番茄龙利鱼',kind:'meat',src:'fish',spicy:0,t:25,veg:200,kcal:260,prot:26,dark:true,se:'all',gentle:true,
+ ing:[['龙利鱼柳',250,'g','约2片'],['番茄',250,'g','约2个'],['鸡蛋',1,'个','1个'],['淀粉',8,'g','1汤匙'],['番茄酱',20,'g','1汤匙'],['姜',5,'g','2片'],['白糖',5,'g','1茶匙']],
+ steps:['龙利鱼解冻切块，用盐、蛋清、淀粉抓匀腌 10 分钟（龙利鱼无刺，最适合老人小孩）。',
+        '番茄去皮切块，锅中少油炒到出沙，加番茄酱、糖炒匀。',
+        '掺 400ml 水烧开，煮 3 分钟成番茄汤底。',
+        '鱼块逐块下锅，小火煮 3 分钟至变白。',
+        '加盐调味，撒葱花出锅。'],
+ tip:'龙利鱼柳完全无刺、肉质细嫩，是老人和小孩吃鱼的最佳选择。酸甜口最下饭。'},
+
+{id:'zhaoshaoji',name:'照烧鸡腿',kind:'meat',src:'chicken',spicy:0,t:30,veg:60,kcal:400,prot:29,dark:false,se:'all',gentle:true,
+ ing:[['鸡腿',300,'g','约2个'],['生抽',20,'ml','1.5汤匙'],['味淋',15,'ml','1汤匙'],['白糖',10,'g','2茶匙'],['姜',5,'g','2片'],['白芝麻',3,'g','1茶匙']],
+ steps:['鸡腿去骨（用剪刀沿骨剪开最方便），用叉子在皮上戳几个孔防卷。',
+        '锅中不放油，鸡皮朝下小火煎 8 分钟，逼出鸡油、皮变金黄酥脆。',
+        '翻面煎 3 分钟，倒掉多余的油。',
+        '加生抽、味淋、糖、姜片，小火烧 4 分钟，不断把汁浇在鸡腿上。',
+        '收汁到浓稠挂勺，切块装盘撒芝麻。'],
+ tip:'不用放油，鸡皮自身的油足够。皮朝下慢煎是脆皮的关键。'},
+
+{id:'shousijigao',name:'手撕鸡丝',kind:'meat',src:'chicken',spicy:1,t:30,veg:120,kcal:250,prot:28,dark:true,se:'su',gentle:true,
+ ing:[['鸡胸肉',250,'g','约1块'],['黄瓜',100,'g','1根'],['胡萝卜',50,'g','半根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',10,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙'],['香油',3,'ml','几滴']],
+ steps:['鸡胸冷水下锅，加姜片、料酒，水开后小火煮 12 分钟，关火再焖 5 分钟。',
+        '捞出晾凉，用手顺纹撕成细丝（手撕比刀切更入味）。',
+        '黄瓜、胡萝卜切细丝垫底。',
+        '蒜末加生抽、醋、辣椒油、香油调汁。',
+        '鸡丝铺上，淋汁拌匀。'],
+ tip:'夏天没胃口时最合适。煮鸡胸"煮 12 分钟 + 焖 5 分钟"保证不柴。'},
+
+{id:'suancaitudousi',name:'酸菜炒土豆丝',kind:'meat',src:'pork',spicy:1,t:18,veg:200,kcal:290,prot:12,dark:false,se:'au,wi',gentle:false,
+ ing:[['酸菜',100,'g','1小把'],['土豆',250,'g','约2个'],['猪肉末',40,'g','1汤匙'],['干辣椒',3,'g','4个'],['蒜',6,'g','2瓣'],['菜籽油',18,'ml','2汤匙']],
+ steps:['土豆切细丝，泡清水洗去淀粉（这样才脆）。酸菜挤干切碎。',
+        '锅中下油，肉末炒散，加干辣椒、蒜末炒香。',
+        '下酸菜炒 1 分钟出酸香。',
+        '倒土豆丝大火快炒 90 秒，加少许盐出锅。'],
+ tip:'土豆丝要脆，泡水去淀粉 + 大火快炒，全程不超过 2 分钟。'},
+
+{id:'mizhikaorou',name:'蜜汁叉烧肉',kind:'meat',src:'pork',spicy:0,t:60,veg:20,kcal:480,prot:26,dark:false,se:'all',gentle:true,
+ ing:[['猪梅肉',300,'g','约1块'],['叉烧酱',40,'g','3汤匙'],['蜂蜜',20,'g','1.5汤匙'],['生抽',10,'ml','2茶匙'],['料酒',10,'ml','2茶匙'],['蒜',6,'g','2瓣']],
+ steps:['梅肉（梅花肉，肥瘦相间最嫩）切长条，加叉烧酱、生抽、料酒、蒜末抓匀，冷藏腌 4 小时以上（隔夜更好）。',
+        '烤箱 200℃ 预热，肉放烤架，下层接烤盘。',
+        '烤 20 分钟后翻面，刷一层蜂蜜。',
+        '再烤 15 分钟，取出再刷蜂蜜。',
+        '晾 5 分钟再切（热切会散），切厚片。'],
+ tip:'梅肉是叉烧的灵魂部位。蜂蜜要分次刷，早刷会烤焦。没有烤箱可用平底锅小火慢煎。'},
+
+{id:'doufuhaixianbao',name:'豆腐海鲜煲',kind:'meat',src:'shrimp',spicy:0,t:30,veg:150,kcal:310,prot:26,dark:false,se:'au,wi',gentle:true,
+ ing:[['嫩豆腐',300,'g','约1盒'],['虾仁',100,'g','约8只'],['鲜贝',60,'g','约5个'],['香菇',50,'g','3朵'],['姜',5,'g','2片'],['蚝油',12,'ml','1汤匙'],['淀粉',6,'g','2茶匙']],
+ steps:['嫩豆腐切块，淡盐水泡 5 分钟定形。虾仁去虾线。',
+        '砂锅少油炒香姜片、香菇片。',
+        '掺 300ml 水或高汤烧开，下豆腐小火煮 3 分钟。',
+        '下虾仁、鲜贝煮 2 分钟至变色。',
+        '加蚝油、盐，勾薄芡，撒葱花。'],
+ tip:'一锅端的鲜味菜，老人小孩都好入口。海鲜别久煮，虾仁变红蜷起就好了。'},
+
+{id:'xiangjianhuangyukua',name:'香煎黄鱼块',kind:'meat',src:'fish',spicy:0,t:25,veg:40,kcal:300,prot:28,dark:false,se:'au,wi,sp',gentle:true,
+ ing:[['小黄鱼',350,'g','约4条'],['姜',8,'g','3片'],['葱',20,'g','2根'],['面粉',20,'g','2汤匙'],['料酒',12,'ml','1汤匙'],['盐',3,'g','半茶匙']],
+ steps:['小黄鱼处理干净，用盐、料酒、姜片腌 15 分钟。',
+        '擦干水分，两面薄薄拍一层面粉。',
+        '平底锅少油中火，鱼下锅每面煎 4 分钟至金黄酥脆。',
+        '出锅撒葱花。'],
+ tip:'小黄鱼只有一根主刺，肉呈蒜瓣状，特别适合老人小孩。拍粉煎不粘锅不破皮。'},
+
+/* ================= 半荤 ================= */
+{id:'fanqiechaodan',name:'番茄炒蛋',kind:'half',src:'egg',spicy:0,t:12,veg:180,kcal:280,prot:15,dark:true,se:'all',gentle:true,
+ ing:[['番茄',250,'g','约2个'],['鸡蛋',2,'个','2个'],['葱',12,'g','1根'],['白糖',4,'g','1茶匙'],['菜籽油',18,'ml','2汤匙']],
+ steps:['番茄划十字，开水烫 30 秒去皮，切滚刀块；鸡蛋打散加 1 汤匙清水（更嫩）。',
+        '热锅热油，蛋液下锅，用铲子从边缘往中间推，七成熟（还有一点湿）就盛出。',
+        '底油下番茄，中火炒 3 分钟至出沙、软烂出汁。',
+        '加糖（提鲜、中和酸）、盐，倒回鸡蛋翻炒 20 秒让蛋吸汁。',
+        '撒葱花出锅。'],
+ tip:'最家常也最容易做老的一道。蛋七成熟盛出、最后回锅，才嫩。'},
+
+{id:'jiucaichaodan',name:'韭菜炒蛋',kind:'half',src:'egg',spicy:0,t:10,veg:150,kcal:250,prot:14,dark:true,se:'sp',gentle:false,
+ ing:[['韭菜',180,'g','约1把'],['鸡蛋',2,'个','2个'],['菜籽油',16,'ml','2汤匙']],
+ steps:['韭菜洗净沥干、切 4cm 段（一定要干，带水会出汤）。鸡蛋打散。',
+        '热锅热油，倒蛋液炒成大块，盛出。',
+        '底油大火，韭菜下锅炒 20 秒。',
+        '倒回鸡蛋，加盐快速翻匀，立刻出锅。'],
+ tip:'春天头刀韭菜最香。下锅到出锅不超过 40 秒。'},
+
+{id:'xiarenzhengdan',name:'虾仁蒸蛋',kind:'half',src:'shrimp',spicy:0,t:18,veg:20,kcal:220,prot:22,dark:false,se:'all',gentle:true,
+ ing:[['鸡蛋',2,'个','2个'],['虾仁',60,'g','约5只'],['温水',180,'ml','约大半碗'],['生抽',6,'ml','1茶匙'],['香油',3,'ml','几滴']],
+ steps:['鸡蛋打散，加 1.5 倍温水（约 180ml）和少许盐，搅匀后过筛两遍去泡沫。',
+        '蛋液倒入碗中，盖保鲜膜或盘子，戳几个小孔。',
+        '水开后中小火蒸 8 分钟，蛋液刚凝固时摆上虾仁，再蒸 4 分钟。',
+        '出锅淋生抽、香油，撒葱花。'],
+ tip:'蛋水比 1:1.5 + 过筛 + 盖膜，三条做到就是饭店级镜面蒸蛋。老人小孩最合适。'},
+
+{id:'mapodoufu',name:'麻婆豆腐',kind:'half',src:'tofu',spicy:3,t:20,veg:40,kcal:330,prot:20,dark:false,se:'all',gentle:false,
+ ing:[['嫩豆腐',350,'g','约1盒'],['牛肉末',50,'g','2汤匙'],['郫县豆瓣',15,'g','1汤匙'],['豆豉',5,'g','10粒'],['辣椒面',3,'g','1茶匙'],['花椒面',2,'g','半茶匙'],['蒜苗',25,'g','1根'],['淀粉',8,'g','1汤匙']],
+ steps:['嫩豆腐切 2cm 见方块，淡盐水泡 3 分钟去豆腥、也让豆腐紧实不易碎。',
+        '热锅下油，中火把牛肉末炒到酥香发干、粒粒分明。',
+        '转小火，下剁细的豆瓣炒出红油，加豆豉、辣椒面、姜蒜末炒香。',
+        '掺 250ml 开水烧沸，轻推入豆腐，小火"督"3–4 分钟——用勺背推、不要翻炒。',
+        '分两次勾芡，汁才能挂住豆腐发亮。起锅撒花椒面、蒜苗花。'],
+ tip:'花椒面一定最后撒，早放麻味挥发。分两次勾芡是豆腐不脱芡的诀窍。'},
+
+{id:'jiachangdoufu',name:'家常豆腐',kind:'half',src:'tofu',spicy:1,t:20,veg:80,kcal:300,prot:18,dark:true,se:'all',gentle:true,
+ ing:[['老豆腐',300,'g','约1块'],['猪肉片',50,'g','约3片'],['青椒',50,'g','1个'],['郫县豆瓣',12,'g','1汤匙'],['蒜',6,'g','2瓣'],['淀粉',6,'g','2茶匙']],
+ steps:['老豆腐切 1cm 厚三角片，用厨房纸吸干表面水。',
+        '平底锅少油，中火把豆腐两面煎到金黄微硬（约 4 分钟），盛出。',
+        '底油炒肉片至变色，下豆瓣、蒜末炒出红油。',
+        '加 200ml 水、生抽烧开，下豆腐小火煨 3 分钟。',
+        '下青椒块，勾薄芡，翻匀出锅。'],
+ tip:'豆腐煎定型后再烧才不碎、也更香，比嫩豆腐更适合这道菜。'},
+
+{id:'roumoqiezi',name:'肉末茄子',kind:'half',src:'pork',spicy:1,t:25,veg:230,kcal:340,prot:14,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',250,'g','约2根'],['猪肉末',60,'g','2汤匙'],['郫县豆瓣',10,'g','1汤匙'],['蒜',8,'g','2瓣'],['葱',15,'g','1根'],['淀粉',6,'g','2茶匙']],
+ steps:['茄子切滚刀块，撒少许盐抓匀腌 10 分钟，挤出水分。',
+        '茄子拌少许淀粉，热锅少油中火煎到表面微黄发软，盛出。',
+        '底油下肉末炒散出油，加豆瓣、姜蒜末炒香出红油。',
+        '倒回茄子，加生抽、半碗水，中火焖 3 分钟至入味。',
+        '勾薄芡收汁，撒葱花出锅。'],
+ tip:'茄子先盐腌挤水 + 裹淀粉，能少吸一半油，比传统油炸健康很多。'},
+
+{id:'ganbiansijidou',name:'干煸四季豆',kind:'half',src:'pork',spicy:2,t:22,veg:200,kcal:320,prot:14,dark:true,se:'su,au',gentle:false,
+ ing:[['四季豆',250,'g','约1把'],['猪肉末',50,'g','2汤匙'],['宜宾芽菜',25,'g','1汤匙'],['干辣椒',5,'g','6个'],['花椒',2,'g','1茶匙'],['蒜',6,'g','2瓣']],
+ steps:['四季豆掐头去尾撕筋，掰 5cm 段，洗净后彻底擦干水分——带水下锅会爆油。',
+        '锅中放稍多的油，中小火下四季豆慢煸 6–8 分钟，煸到表皮起皱、颜色变深发软。',
+        '留底油，下肉末炒酥出油，加芽菜、干辣椒段、花椒、蒜末炒香。',
+        '倒回四季豆，加生抽、盐，中火翻炒 1 分钟。'],
+ tip:'四季豆必须彻底煸熟——半生的含皂苷会中毒，宁可多煸 2 分钟。'},
+
+{id:'ercaichaoroupian',name:'儿菜炒肉片',kind:'half',src:'pork',spicy:1,t:18,veg:200,kcal:290,prot:16,dark:true,se:'wi',gentle:true,
+ ing:[['猪后腿肉',80,'g','约5片'],['儿菜',250,'g','约4个'],['郫县豆瓣',8,'g','2茶匙'],['蒜',6,'g','2瓣'],['淀粉',5,'g','2茶匙']],
+ steps:['儿菜掰下小芽包，削去老皮，斜切 3mm 薄片（不用焯水，直接炒才脆甜）。',
+        '肉切薄片，加少许生抽、淀粉抓匀。',
+        '热锅下油，肉片炒散至变色，下豆瓣、蒜片炒出红油。',
+        '倒入儿菜大火炒 2 分钟，加 2 汤匙水焖 1 分钟至断生。',
+        '加盐调味出锅。'],
+ tip:'成都冬天的招牌菜。炒到"脆中带糯"就对了，炒塌了就没魂。'},
+
+{id:'suanmiaochaolarou',name:'蒜苗炒腊肉',kind:'half',src:'pork',spicy:1,t:20,veg:150,kcal:380,prot:16,dark:true,se:'wi,sp',gentle:false,
+ ing:[['腊肉',80,'g','约1小块'],['蒜苗',150,'g','约6根'],['干辣椒',3,'g','4个'],['白糖',2,'g','半茶匙']],
+ steps:['腊肉整块冷水下锅煮 10 分钟（去表面烟尘、让肉回软），捞出切 2mm 薄片。',
+        '蒜苗斜刀切段，蒜白和蒜叶分开放。',
+        '锅中不放油，中小火下腊肉片煸 2 分钟，逼出透明油脂。',
+        '下干辣椒炒香，先下蒜白炒 30 秒。',
+        '再下蒜叶，加少许糖平衡咸味，大火炒 20 秒出锅。'],
+ tip:'腊肉先煮再切，不咸不硬；蒜白先下、蒜叶后下。腊肉偏咸，高血压人群少吃。'},
+
+{id:'paojiaozhugan',name:'泡椒猪肝',kind:'half',src:'pork',spicy:2,t:18,veg:120,kcal:290,prot:22,dark:true,se:'all',gentle:false,
+ ing:[['猪肝',180,'g','约1小块'],['泡椒',20,'g','约4个'],['芹菜',80,'g','2根'],['姜蒜',12,'g','各2瓣'],['料酒',12,'ml','1汤匙'],['淀粉',8,'g','1汤匙']],
+ steps:['猪肝切薄片，清水冲洗 3 遍至水清（去血水才不腥），加料酒、盐、淀粉抓匀腌 10 分钟。',
+        '泡椒切碎，芹菜切段。',
+        '锅烧到冒烟宽油，猪肝下锅大火爆炒 30 秒至变色，立刻盛出。',
+        '底油下泡椒、姜蒜炒香，倒芹菜炒 30 秒。',
+        '倒回猪肝，烹料酒，大火翻匀出锅。'],
+ tip:'补铁最好的一道，但猪肝要炒嫩（30 秒），过火就变硬。胆固醇高者适量。'},
+
+{id:'jiucaichaohexia',name:'韭菜炒河虾',kind:'half',src:'shrimp',spicy:1,t:15,veg:120,kcal:240,prot:20,dark:true,se:'sp',gentle:false,
+ ing:[['小河虾',150,'g','约1小碗'],['韭菜',150,'g','约1把'],['姜',5,'g','2片'],['料酒',10,'ml','2茶匙']],
+ steps:['小河虾剪去虾枪，洗净沥干；韭菜切段。',
+        '锅烧热宽油，河虾下锅大火爆 1 分钟至壳红酥脆，盛出。',
+        '底油下姜丝、韭菜翻炒 20 秒。',
+        '倒回河虾，烹料酒，加盐翻匀出锅。'],
+ tip:'春天河虾最肥。虾要爆到壳酥，整只连壳吃补钙。'},
+
+{id:'siguachaodan',name:'丝瓜炒蛋',kind:'half',src:'egg',spicy:0,t:12,veg:200,kcal:230,prot:14,dark:true,se:'su',gentle:true,
+ ing:[['丝瓜',250,'g','约1根'],['鸡蛋',2,'个','2个'],['蒜',6,'g','2瓣'],['菜籽油',16,'ml','2汤匙']],
+ steps:['丝瓜去皮切滚刀块（切好马上炒，放久了发黑）。',
+        '鸡蛋打散，热锅热油炒成大块盛出。',
+        '底油下蒜末，倒丝瓜大火炒 2 分钟至微软出水。',
+        '倒回鸡蛋，加盐翻匀出锅。'],
+ tip:'夏天的清甜菜。丝瓜易出水，不要加水，它自身的水就够。'},
+
+{id:'kuguachaodan',name:'苦瓜炒蛋',kind:'half',src:'egg',spicy:0,t:12,veg:200,kcal:230,prot:14,dark:true,se:'su',gentle:false,
+ ing:[['苦瓜',250,'g','约1根'],['鸡蛋',2,'个','2个'],['蒜',6,'g','2瓣'],['菜籽油',16,'ml','2汤匙']],
+ steps:['苦瓜剖开去瓤去白膜，切薄片，撒盐抓 5 分钟挤水。',
+        '鸡蛋打散炒成大块盛出。',
+        '底油下蒜末，倒苦瓜大火炒 90 秒。',
+        '倒回鸡蛋，加盐翻匀出锅。'],
+ tip:'夏天消暑去火。白膜是苦味来源，去干净就不苦了。'},
+
+{id:'zhengshuidangeng',name:'蒸水蛋羹',kind:'half',src:'egg',spicy:0,t:15,veg:0,kcal:150,prot:13,dark:false,se:'all',gentle:true,
+ ing:[['鸡蛋',2,'个','2个'],['温水',200,'ml','约大半碗'],['生抽',6,'ml','1茶匙'],['香油',2,'ml','几滴'],['葱花',5,'g','少许']],
+ steps:['鸡蛋打散，加 1.5 倍温水和少许盐，搅匀过筛两遍。',
+        '倒入碗中，盖保鲜膜扎孔。',
+        '水开后中小火蒸 10 分钟。',
+        '淋生抽、香油，撒葱花。'],
+ tip:'最温和的一道，牙口不好、病后、断奶期都能吃。蛋水比 1:1.5 最嫩。'},
+
+{id:'xiangguroumoidoufu',name:'香菇肉末烧豆腐',kind:'half',src:'tofu',spicy:0,t:20,veg:100,kcal:290,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['嫩豆腐',300,'g','约1盒'],['猪肉末',50,'g','2汤匙'],['香菇',50,'g','3朵'],['葱',10,'g','1根'],['蚝油',10,'ml','2茶匙'],['淀粉',6,'g','2茶匙']],
+ steps:['豆腐切块，淡盐水泡 5 分钟。香菇切小丁。',
+        '锅中少油，肉末炒散至变色，加香菇丁炒香。',
+        '掺 250ml 水烧开，下豆腐小火煮 3 分钟（用勺背推）。',
+        '加蚝油、盐，勾薄芡，撒葱花。'],
+ tip:'鲜味来自香菇和肉末，不用味精。豆腐用勺背推不碎。'},
+
+{id:'roumosuansuandou',name:'肉末酸豇豆',kind:'half',src:'pork',spicy:2,t:15,veg:120,kcal:260,prot:12,dark:false,se:'su,au',gentle:false,
+ ing:[['酸豇豆',150,'g','约1把'],['猪肉末',60,'g','2汤匙'],['干辣椒',4,'g','5个'],['蒜',6,'g','2瓣'],['生抽',6,'ml','1茶匙']],
+ steps:['酸豇豆（菜市场泡菜摊有卖）冲洗挤干，切 0.5cm 小粒。',
+        '干锅不放油，下酸豇豆小火干煸 2 分钟，煸出水汽和酸香。',
+        '下油，肉末炒散出油至微酥。',
+        '加干辣椒、蒜末炒香，倒回酸豇豆大火翻炒 1 分钟，加少许生抽出锅。'],
+ tip:'酸豇豆先干煸去水才脆爽；本身很咸，生抽只放一点点。'},
+
+{id:'jiuhuangchaorousi',name:'韭黄炒肉丝',kind:'half',src:'pork',spicy:1,t:15,veg:150,kcal:280,prot:18,dark:true,se:'sp,wi',gentle:false,
+ ing:[['猪里脊',120,'g','约1小块'],['韭黄',180,'g','约1把'],['淀粉',5,'g','2茶匙'],['生抽',8,'ml','2茶匙']],
+ steps:['肉切丝，加生抽、淀粉腌 10 分钟。韭黄切段。',
+        '热锅下油，肉丝炒散至变色盛出。',
+        '底油大火下韭黄炒 25 秒。',
+        '倒回肉丝，加盐翻匀立刻出锅。'],
+ tip:'韭黄比韭菜更嫩更甜，但更怕久炒——25 秒足够。'},
+
+{id:'yangcongchaodan',name:'洋葱炒蛋',kind:'half',src:'egg',spicy:0,t:12,veg:200,kcal:250,prot:14,dark:false,se:'all',gentle:true,
+ ing:[['洋葱',200,'g','约1个'],['鸡蛋',2,'个','2个'],['生抽',6,'ml','1茶匙'],['菜籽油',16,'ml','2汤匙']],
+ steps:['洋葱切丝（切之前刀沾点水不辣眼）。',
+        '鸡蛋打散炒成块盛出。',
+        '底油下洋葱中火炒 3 分钟至变软透明、出甜味。',
+        '倒回鸡蛋，加生抽、盐翻匀出锅。'],
+ tip:'洋葱炒到透明才出甜味，别炒太生。洋葱对血脂友好，三高人群可常吃。'},
+
+{id:'baicaidoufupi',name:'白菜炒豆腐皮',kind:'half',src:'tofu',spicy:1,t:15,veg:250,kcal:220,prot:16,dark:false,se:'au,wi',gentle:true,
+ ing:[['大白菜',280,'g','约1/4棵'],['豆腐皮',80,'g','约2张'],['干辣椒',3,'g','4个'],['蒜',6,'g','2瓣'],['生抽',8,'ml','2茶匙']],
+ steps:['豆腐皮温水泡软切条。白菜帮斜刀片薄、菜叶撕块，分开放。',
+        '热锅下油、干辣椒、蒜片炒香。',
+        '先下白菜帮大火炒 90 秒。',
+        '下豆腐皮和菜叶炒 1 分钟，加生抽、盐出锅。'],
+ tip:'植物蛋白 + 蔬菜一盘搞定，成本不到 5 元。菜帮先下、菜叶后下。'},
+
+{id:'oupiangchaorou',name:'藕片炒肉',kind:'half',src:'pork',spicy:1,t:18,veg:220,kcal:300,prot:17,dark:false,se:'au,wi',gentle:false,
+ ing:[['莲藕',250,'g','约1节'],['猪肉片',80,'g','约5片'],['青椒',50,'g','1个'],['蒜',6,'g','2瓣'],['生抽',10,'ml','2茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['莲藕去皮切薄片，泡清水（加几滴醋）防发黑。',
+        '肉片加生抽、淀粉抓匀。',
+        '热锅下油，肉片炒至变色，加蒜片炒香。',
+        '下藕片、青椒大火炒 2 分钟，加 2 汤匙水略焖。',
+        '加盐翻匀出锅。'],
+ tip:'秋天的藕脆甜。切片后马上泡醋水，否则变黑。'},
+
+/* ================= 素菜 ================= */
+{id:'qianglianbai',name:'炝炒莲白',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:130,prot:5,dark:false,se:'au,wi',gentle:true,
+ ing:[['莲花白',280,'g','约1/4棵'],['干辣椒',4,'g','5个'],['花椒',2,'g','1茶匙'],['蒜',6,'g','2瓣'],['香醋',6,'ml','1茶匙'],['菜籽油',15,'ml','2汤匙']],
+ steps:['莲白去硬芯，手撕成大片（手撕比刀切更易入味），洗净沥干。',
+        '锅烧到冒烟，下油、干辣椒段、花椒、蒜片，小火炸香 10 秒。',
+        '转最大火，倒莲白快速翻炒 60 秒，沿锅边淋醋。',
+        '加盐，翻匀立刻出锅。'],
+ tip:'成都冬天最便宜的菜。全程大火，锅气足才香。'},
+
+{id:'culiubaicai',name:'醋溜白菜',kind:'veg',src:'none',spicy:1,t:12,veg:250,kcal:120,prot:5,dark:false,se:'au,wi',gentle:true,
+ ing:[['大白菜',300,'g','约1/4棵'],['干辣椒',3,'g','4个'],['蒜',5,'g','2瓣'],['香醋',12,'ml','1汤匙'],['生抽',6,'ml','1茶匙'],['白糖',4,'g','1茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['白菜帮斜刀片薄、菜叶撕块，分开放。',
+        '碗汁：醋 2 勺、生抽 1 勺、糖 1 勺、淀粉半勺、水 3 勺。',
+        '热锅下油、干辣椒、蒜片炒香，先下菜帮大火炒 90 秒。',
+        '再下菜叶炒 30 秒，倒碗汁快速翻匀收芡出锅。'],
+ tip:'菜帮先下、菜叶后下；醋分两次（炒时一次、起锅前一次）酸香更立体。'},
+
+{id:'qingchaowandoujian',name:'清炒豌豆尖',kind:'veg',src:'none',spicy:0,t:6,veg:200,kcal:90,prot:7,dark:true,se:'wi,sp',gentle:true,
+ ing:[['豌豆尖',250,'g','约1大把'],['蒜',6,'g','2瓣'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['豌豆尖掐去老梗，只留嫩尖嫩叶，洗净后彻底沥干（带水会出汤、变黄）。',
+        '锅烧到冒青烟，下油和蒜片。',
+        '豌豆尖下锅，最大火翻炒 20–25 秒，看到叶片刚塌软立刻加盐。',
+        '翻两下出锅，全程不超过 40 秒。'],
+ tip:'成都人的"心尖尖"。只有 40 秒的机会——炒久发黄出水就废了。'},
+
+{id:'suanrongbocai',name:'蒜蓉菠菜',kind:'veg',src:'none',spicy:0,t:8,veg:250,kcal:110,prot:6,dark:true,se:'sp,au,wi',gentle:true,
+ ing:[['菠菜',300,'g','约1把'],['蒜',12,'g','3瓣'],['菜籽油',15,'ml','2汤匙']],
+ steps:['菠菜洗净，根部剖开一刀。',
+        '沸水中加几滴油和少许盐，菠菜汆 15 秒立刻捞出过凉水，挤干。',
+        '锅中下油，小火炒香一半蒜末。',
+        '下菠菜大火翻炒 30 秒，加盐、剩下的生蒜末，翻匀出锅。'],
+ tip:'菠菜必须焯水去草酸（影响钙吸收）；蒜末分两次放，熟蒜香 + 生蒜冲。'},
+
+{id:'qingchaoyoucaitai',name:'清炒油菜尖',kind:'veg',src:'none',spicy:0,t:8,veg:250,kcal:100,prot:6,dark:true,se:'wi,sp',gentle:true,
+ ing:[['油菜尖',300,'g','约1大把'],['蒜',8,'g','2瓣'],['干辣椒',2,'g','3个'],['菜籽油',15,'ml','2汤匙']],
+ steps:['油菜尖洗净，粗梗用刀背拍一下便于入味。',
+        '热锅下油，干辣椒、蒜片小火炒香。',
+        '最大火下油菜尖，快速翻炒 60 秒至刚断生。',
+        '加盐翻匀出锅。'],
+ tip:'冬末红油菜薹上市后可替换，微苦回甜。'},
+
+{id:'baiyouwosun',name:'白油莴笋',kind:'veg',src:'none',spicy:0,t:10,veg:230,kcal:110,prot:5,dark:false,se:'sp,su',gentle:true,
+ ing:[['莴笋',300,'g','约1根'],['蒜',6,'g','2瓣'],['淀粉',4,'g','1茶匙'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['莴笋去皮切菱形片，嫩叶留用。',
+        '热锅下油、蒜片炒香，下莴笋片大火炒 90 秒。',
+        '加 2 汤匙水、盐，加盖焖 1 分钟至刚熟透。',
+        '勾极薄的芡，让汤汁挂在笋片上，出锅。'],
+ tip:'"白油"指不用酱油，吃的是莴笋本身的清甜。'},
+
+{id:'ganbianluobosi',name:'干煸萝卜丝',kind:'veg',src:'none',spicy:1,t:18,veg:250,kcal:140,prot:5,dark:false,se:'wi',gentle:true,
+ ing:[['白萝卜',320,'g','约1根'],['干辣椒',4,'g','5个'],['花椒',1,'g','半茶匙'],['蒜',6,'g','2瓣'],['葱',12,'g','1根'],['生抽',8,'ml','2茶匙']],
+ steps:['白萝卜去皮切细丝，撒少许盐腌 10 分钟，用手挤干水分。',
+        '锅中下油，中火下萝卜丝慢煸 5 分钟，煸到丝变软、边缘微黄。',
+        '拨到一边，下干辣椒、花椒、蒜末炒香。',
+        '混合翻炒，加生抽、少许糖，大火 1 分钟收干，撒葱花。'],
+ tip:'萝卜丝必须挤干水再煸，才有一丝丝的韧劲和甜味。'},
+
+{id:'hongshaoluobo',name:'红烧萝卜',kind:'veg',src:'none',spicy:0,t:25,veg:280,kcal:160,prot:5,dark:false,se:'wi',gentle:true,
+ ing:[['白萝卜',350,'g','约1根'],['姜',5,'g','2片'],['葱',15,'g','1根'],['生抽',12,'ml','1汤匙'],['老抽',3,'ml','半茶匙'],['白糖',5,'g','1茶匙']],
+ steps:['白萝卜去皮切 2cm 厚滚刀块。',
+        '锅中下油，姜片炒香，倒萝卜块中火煎到表面微黄（约 3 分钟）。',
+        '加生抽、老抽、糖，掺 300ml 水没过萝卜，烧开转小火焖 15 分钟。',
+        '大火收汁至浓稠发亮，撒葱花。'],
+ tip:'"霜打萝卜抿抿甜"——12 月打过霜的萝卜最甜，红烧比肉还下饭。'},
+
+{id:'suanihuangguo',name:'蒜泥黄瓜',kind:'veg',src:'none',spicy:1,t:8,veg:200,kcal:80,prot:4,dark:false,se:'su',gentle:true,
+ ing:[['黄瓜',250,'g','约2根'],['蒜',12,'g','3瓣'],['生抽',8,'ml','2茶匙'],['香醋',8,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙'],['白糖',3,'g','半茶匙']],
+ steps:['黄瓜洗净，用刀背拍裂后切段（拍过的断面粗糙，更挂味）。',
+        '撒盐腌 5 分钟，倒掉渗出的水。',
+        '蒜捣成泥，加生抽、醋、糖、辣椒油、香油调汁。',
+        '淋在黄瓜上拌匀，静置 3 分钟入味。'],
+ tip:'拍不切——凉拌黄瓜的铁律。'},
+
+{id:'liangbanzheergen',name:'凉拌折耳根',kind:'veg',src:'none',spicy:2,t:10,veg:150,kcal:70,prot:4,dark:true,se:'sp,su',gentle:false,
+ ing:[['折耳根',180,'g','约1把'],['蒜',8,'g','2瓣'],['小米辣',6,'g','2个'],['生抽',10,'ml','2茶匙'],['香醋',10,'ml','2茶匙'],['辣椒油',10,'ml','2茶匙'],['白糖',3,'g','半茶匙']],
+ steps:['折耳根掐成 4cm 段，只用嫩根嫩叶。',
+        '清水冲洗 3 遍（泥沙多），再用淡盐水泡 5 分钟，沥干。',
+        '小米辣切圈、蒜切末，加生抽、醋、糖、辣椒油、香油调汁。',
+        '淋汁拌匀，腌 5 分钟即可。'],
+ tip:'折耳根是成都人的"入门考试"。怕腥的可以先用开水快汆 5 秒减味。'},
+
+{id:'liangbanmuer',name:'凉拌木耳',kind:'veg',src:'none',spicy:1,t:15,veg:150,kcal:90,prot:6,dark:true,se:'all',gentle:true,
+ ing:[['干木耳',15,'g','约1小把'],['青椒',40,'g','半个'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙'],['香醋',10,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙']],
+ steps:['干木耳用冷水泡 2 小时（别用热水，会发黏），去根撕小朵。',
+        '沸水汆 2 分钟，捞出过凉水沥干。',
+        '青椒切丝，蒜切末。',
+        '加生抽、醋、糖、辣椒油拌匀，冷藏 10 分钟更爽口。'],
+ tip:'木耳泡发别超过 4 小时、别室温过夜（会产生米酵菌酸）。木耳润肠，便秘者可常吃。'},
+
+{id:'tangcuoupian',name:'糖醋藕片',kind:'veg',src:'none',spicy:0,t:15,veg:230,kcal:150,prot:5,dark:false,se:'au,wi',gentle:true,
+ ing:[['莲藕',300,'g','约1节'],['香醋',14,'ml','1汤匙'],['白糖',10,'g','1汤匙'],['生抽',6,'ml','1茶匙'],['淀粉',5,'g','2茶匙'],['蒜',5,'g','1瓣']],
+ steps:['莲藕去皮切 2mm 薄片，立刻泡进清水（加几滴醋）防氧化发黑。',
+        '沸水汆 1 分钟捞出沥干。',
+        '碗汁：醋 2 勺、糖 1.5 勺、生抽 1 勺、淀粉半勺、水 3 勺。',
+        '热锅下油、蒜末炒香，倒藕片大火炒 1 分钟，淋碗汁翻匀收芡出锅。'],
+ tip:'藕片要脆，汆水 1 分钟足够，别煮软。'},
+
+{id:'suanronghuacai',name:'蒜蓉花菜',kind:'veg',src:'none',spicy:1,t:15,veg:250,kcal:130,prot:7,dark:false,se:'all',gentle:true,
+ ing:[['花菜',300,'g','约半颗'],['蒜',15,'g','4瓣'],['干辣椒',3,'g','4个'],['生抽',8,'ml','2茶匙']],
+ steps:['花菜掰小朵，淡盐水泡 10 分钟（去虫），沸水汆 1 分钟捞出。',
+        '热锅下油，小火炒香蒜末和干辣椒。',
+        '倒花菜大火翻炒 2 分钟，加生抽、盐。',
+        '沿锅边淋 2 汤匙水，加盖焖 1 分钟至熟透。'],
+ tip:'花菜汆水后再炒，熟得快、少吸油，比干锅版健康得多。'},
+
+{id:'qingchaoercai',name:'清炒儿菜',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:100,prot:6,dark:true,se:'wi',gentle:true,
+ ing:[['儿菜',300,'g','约5个'],['蒜',6,'g','2瓣'],['干辣椒',3,'g','4个'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['儿菜掰成小芽包，削去外层老皮，大的对半切开。',
+        '热锅下油、蒜片和干辣椒炒香。',
+        '下儿菜大火炒 2 分钟，加 3 汤匙水加盖焖 1.5 分钟。',
+        '加盐，收干水分出锅。'],
+ tip:'儿菜的微苦回甘是它的性格，清炒最能吃出本味。'},
+
+{id:'xianggushanghaiqing',name:'香菇上海青',kind:'veg',src:'none',spicy:0,t:12,veg:230,kcal:110,prot:6,dark:true,se:'all',gentle:true,
+ ing:[['上海青',250,'g','约6棵'],['鲜香菇',80,'g','4朵'],['蒜',6,'g','2瓣'],['蚝油',8,'ml','2茶匙'],['淀粉',4,'g','1茶匙']],
+ steps:['上海青对半剖开洗净，香菇切片。',
+        '沸水加几滴油，上海青汆 20 秒捞出摆盘。',
+        '锅中下油、蒜末、香菇片炒 2 分钟至微软出香。',
+        '加蚝油、100ml 水烧开，勾薄芡，浇在上海青上。'],
+ tip:'上海青先汆后摆，翠绿挺立；香菇单独烧汁，味不混。'},
+
+{id:'zhenglaonangua',name:'清蒸老南瓜',kind:'veg',src:'none',spicy:0,t:25,veg:250,kcal:120,prot:3,dark:true,se:'au',gentle:true,
+ ing:[['老南瓜',300,'g','约1/4个'],['红枣',10,'g','3颗']],
+ steps:['老南瓜去皮去瓤，切 1.5cm 厚片；红枣去核撕开。',
+        '南瓜片整齐码入盘中，红枣撒在上面，不用加任何调料。',
+        '水开后大火蒸 15 分钟至筷子轻松插透。',
+        '出锅即可。'],
+ tip:'完全不用油盐，用来平衡整桌的油和盐最合适。南瓜对血糖友好，糖尿病人可适量。'},
+
+{id:'qianglvdouya',name:'炝炒绿豆芽',kind:'veg',src:'none',spicy:1,t:8,veg:220,kcal:90,prot:6,dark:false,se:'su',gentle:true,
+ ing:[['绿豆芽',280,'g','约1大把'],['干辣椒',3,'g','4个'],['花椒',1,'g','半茶匙'],['蒜',5,'g','2瓣'],['香醋',6,'ml','1茶匙']],
+ steps:['豆芽洗净，掐去根须（讲究点，口感更好）。',
+        '锅烧到冒烟，下油、干辣椒、花椒、蒜片炸香。',
+        '最大火下豆芽，翻炒 40 秒，沿锅边淋醋。',
+        '加盐，翻匀立刻出锅。'],
+ tip:'全程最大火、40 秒出锅，豆芽才脆。'},
+
+{id:'qingchaotonghao',name:'清炒茼蒿',kind:'veg',src:'none',spicy:0,t:8,veg:250,kcal:95,prot:6,dark:true,se:'wi,sp',gentle:true,
+ ing:[['茼蒿',300,'g','约1把'],['蒜',8,'g','2瓣'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['茼蒿洗净，菜杆和菜叶分开切段。',
+        '锅烧到冒烟下油、蒜片炒香。',
+        '先下菜杆大火炒 30 秒，再下菜叶炒 20 秒。',
+        '加盐，翻匀立刻出锅。'],
+ tip:'茼蒿自带特殊清香，炒超过 1 分钟就出水发黄。'},
+
+{id:'qianghongyoutaitai',name:'炝炒红油菜薹',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:100,prot:6,dark:true,se:'wi,sp',gentle:true,
+ ing:[['红油菜薹',320,'g','约1把'],['干辣椒',4,'g','5个'],['花椒',2,'g','1茶匙'],['蒜',6,'g','2瓣'],['菜籽油',15,'ml','2汤匙']],
+ steps:['菜薹掐去老根和花，撕去粗皮，斜切 5cm 段。',
+        '锅烧热下油，干辣椒段、花椒、蒜片小火炸香 10 秒。',
+        '转最大火下菜薹，快炒 90 秒。',
+        '加盐，沿锅边淋 1 汤匙水，加盖焖 20 秒，出锅。'],
+ tip:'12 月至次年 2 月上市，紫红茎、微苦回甜，是成都冬末最有性格的菜。'},
+
+{id:'huluobochaosuanmiao',name:'胡萝卜炒青蒜',kind:'veg',src:'none',spicy:0,t:10,veg:270,kcal:120,prot:5,dark:true,se:'wi',gentle:true,
+ ing:[['胡萝卜',200,'g','约1根'],['蒜苗',90,'g','约4根'],['菜籽油',15,'ml','2汤匙']],
+ steps:['胡萝卜切细丝（越细越好熟），蒜苗斜切段、白叶分开。',
+        '热锅下油，胡萝卜丝中火炒 2 分钟至软、油变橙红。',
+        '下蒜苗白炒 30 秒，再下蒜苗叶炒 20 秒。',
+        '加盐翻匀出锅。'],
+ tip:'胡萝卜生吃吸收率只有 10%，过油炒后能到 90%——这是这道菜真正的价值。'},
+
+{id:'suanrongxilanhua',name:'蒜蓉西兰花',kind:'veg',src:'none',spicy:0,t:12,veg:250,kcal:120,prot:8,dark:true,se:'all',gentle:true,
+ ing:[['西兰花',300,'g','约1颗'],['蒜',15,'g','4瓣'],['蚝油',8,'ml','2茶匙'],['淀粉',4,'g','1茶匙']],
+ steps:['西兰花掰小朵，淡盐水泡 10 分钟，沸水汆 60 秒（加油和盐保持翠绿）捞出。',
+        '热锅下油，小火炒香蒜末。',
+        '下西兰花翻炒 1 分钟，加蚝油、盐。',
+        '勾薄芡，让汁挂住花球，出锅。'],
+ tip:'西兰花是抗氧化之王，汆水别超过 1 分钟，否则营养流失、发黄。'},
+
+{id:'shousibaocai',name:'手撕包菜',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:120,prot:5,dark:false,se:'all',gentle:true,
+ ing:[['包菜',300,'g','约1/4颗'],['蒜',8,'g','2瓣'],['干辣椒',4,'g','5个'],['香醋',8,'ml','2茶匙'],['生抽',6,'ml','1茶匙']],
+ steps:['包菜手撕成大片，洗净沥干（一定要干）。',
+        '锅烧到冒烟，下油、蒜片、干辣椒炒香。',
+        '最大火下包菜，翻炒 90 秒至边缘微焦。',
+        '沿锅边淋醋、生抽，加盐翻匀出锅。'],
+ tip:'手撕不切——断面粗糙才挂得住味。全程大火，锅气是灵魂。'},
+
+{id:'liangbansansi',name:'凉拌三丝',kind:'veg',src:'none',spicy:1,t:15,veg:230,kcal:110,prot:6,dark:true,se:'su',gentle:true,
+ ing:[['粉丝',40,'g','1小把'],['黄瓜',100,'g','1根'],['胡萝卜',80,'g','半根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',10,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙']],
+ steps:['粉丝温水泡软，沸水煮 1 分钟，捞出过凉水。',
+        '黄瓜、胡萝卜切细丝。',
+        '蒜末加生抽、醋、糖、辣椒油调汁。',
+        '三丝混合，淋汁拌匀，冷藏 10 分钟。'],
+ tip:'夏天开胃小菜。粉丝煮好过凉水才不粘坨。'},
+
+{id:'culiutudousi',name:'醋溜土豆丝',kind:'veg',src:'none',spicy:1,t:12,veg:230,kcal:170,prot:4,dark:false,se:'all',gentle:true,
+ ing:[['土豆',300,'g','约2个'],['干辣椒',3,'g','4个'],['花椒',1,'g','半茶匙'],['蒜',5,'g','2瓣'],['香醋',12,'ml','1汤匙']],
+ steps:['土豆切细丝，泡清水反复洗去淀粉（这样才脆）。',
+        '热锅下油，干辣椒、花椒、蒜片炸香。',
+        '倒土豆丝大火快炒 90 秒，沿锅边淋一半醋。',
+        '加盐，出锅前再点几滴醋。'],
+ tip:'两次放醋是脆爽的关键；淀粉必须洗净，否则粘锅。'},
+
+{id:'suanrongkongxincai',name:'蒜蓉空心菜',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:100,prot:6,dark:true,se:'su',gentle:true,
+ ing:[['空心菜',300,'g','约1把'],['蒜',15,'g','4瓣'],['干辣椒',3,'g','4个'],['菜籽油',16,'ml','2汤匙']],
+ steps:['空心菜摘成 6cm 段，梗和叶分开，洗净沥干。',
+        '热锅下油，蒜末、干辣椒小火炒香。',
+        '先下菜梗大火炒 40 秒，再下菜叶炒 20 秒。',
+        '加盐翻匀出锅。'],
+ tip:'空心菜极易出水，全程大火、1 分钟内出锅，梗先叶后。'},
+
+{id:'qingchaosigua',name:'清炒丝瓜',kind:'veg',src:'none',spicy:0,t:10,veg:250,kcal:95,prot:6,dark:true,se:'su',gentle:true,
+ ing:[['丝瓜',300,'g','约2根'],['蒜',8,'g','2瓣'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['丝瓜去皮切滚刀块（切好马上炒，放久发黑）。',
+        '热锅下油、蒜末炒香。',
+        '下丝瓜大火炒 2 分钟至微软出水。',
+        '加盐，收一下汁出锅。'],
+ tip:'丝瓜自身出水多，不用加水。夏天吃清热解暑。'},
+
+{id:'liangbanzhengqie',name:'凉拌蒸茄子',kind:'veg',src:'none',spicy:1,t:20,veg:250,kcal:110,prot:5,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',300,'g','约2根'],['蒜',15,'g','4瓣'],['生抽',12,'ml','1汤匙'],['香醋',8,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙'],['葱花',8,'g','1根']],
+ steps:['茄子对半剖开，上锅大火蒸 15 分钟至软烂。',
+        '取出晾凉，用手撕成粗条（挤出多余水）。',
+        '蒜捣泥，加生抽、醋、糖、辣椒油调汁。',
+        '淋汁拌匀，撒葱花。'],
+ tip:'蒸茄子几乎不用油，比红烧健康得多，最适合需要控油的人。'},
+
+{id:'fanqiechaohuacai',name:'番茄炒花菜',kind:'veg',src:'none',spicy:0,t:15,veg:250,kcal:130,prot:6,dark:true,se:'all',gentle:true,
+ ing:[['花菜',250,'g','约半颗'],['番茄',200,'g','约1.5个'],['蒜',6,'g','2瓣'],['番茄酱',10,'g','2茶匙'],['菜籽油',15,'ml','2汤匙']],
+ steps:['花菜掰小朵，沸水汆 1 分钟。番茄去皮切块。',
+        '热锅下油、蒜末，倒番茄炒到出沙。',
+        '加番茄酱炒匀，下花菜翻炒 2 分钟。',
+        '加盐，收汁出锅。'],
+ tip:'酸甜开胃，小孩最爱。番茄的酸能让花菜更入味。'},
+
+{id:'ganhuahuacai',name:'干锅花菜',kind:'veg',src:'none',spicy:2,t:18,veg:250,kcal:160,prot:7,dark:false,se:'au,wi',gentle:false,
+ ing:[['花菜',300,'g','约半颗'],['五花肉',40,'g','约2片'],['干辣椒',5,'g','6个'],['蒜',8,'g','2瓣'],['郫县豆瓣',8,'g','2茶匙'],['生抽',8,'ml','2茶匙']],
+ steps:['花菜掰小朵，不汆水，直接干锅小火煸 4 分钟至边缘微焦（干香的关键）。',
+        '另起锅下油，五花肉片煸出油。',
+        '下豆瓣、干辣椒、蒜片炒香。',
+        '倒花菜，加生抽、盐，大火翻炒 2 分钟出锅。'],
+ tip:'花菜不汆水直接干煸，才有干锅的焦香。怕油可以省略五花肉。'},
+
+{id:'qingchaohelangdou',name:'清炒荷兰豆',kind:'veg',src:'none',spicy:0,t:10,veg:230,kcal:100,prot:7,dark:true,se:'sp,su',gentle:true,
+ ing:[['荷兰豆',250,'g','约1把'],['蒜',8,'g','2瓣'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['荷兰豆撕去两侧老筋，洗净沥干。',
+        '沸水汆 30 秒（保持翠绿脆嫩），捞出。',
+        '热锅下油、蒜片炒香，下荷兰豆大火翻炒 60 秒。',
+        '加盐翻匀出锅。'],
+ tip:'荷兰豆必须炒熟（含皂苷），但别超过 2 分钟，否则发黄。'},
+
+/* ================= 汤 ================= */
+{id:'dongguapaigu',name:'冬瓜排骨汤',kind:'soup',src:'pork',spicy:0,t:60,veg:200,kcal:230,prot:16,dark:false,se:'su,au',gentle:true,
+ ing:[['猪肋排',180,'g','约6小块'],['冬瓜',250,'g','约1圈'],['姜',8,'g','3片'],['葱',15,'g','1根'],['料酒',10,'ml','2茶匙']],
+ steps:['排骨冷水下锅，加姜片、料酒，水开后撇净浮沫煮 3 分钟，捞出用温水冲洗。',
+        '排骨放入砂锅，加 1200ml 热水、姜片，大火烧开转小火炖 40 分钟。',
+        '冬瓜去皮切 0.8cm 厚片，下锅再炖 12 分钟至透明。',
+        '加盐调味，撒葱花。全程只放盐。'],
+ tip:'排骨焯水后用温水冲，冷水冲会让肉紧缩、汤不白。冬瓜后下，久煮会化。'},
+
+{id:'zicaidanhuatang',name:'紫菜蛋花汤',kind:'soup',src:'egg',spicy:0,t:8,veg:60,kcal:90,prot:8,dark:true,se:'all',gentle:true,
+ ing:[['紫菜',6,'g','约1小把'],['鸡蛋',1,'个','1个'],['虾皮',5,'g','1小撮'],['葱',10,'g','1根'],['香油',2,'ml','几滴']],
+ steps:['紫菜撕小块放碗底，加虾皮。',
+        '锅中 700ml 水烧开，加盐。',
+        '转小火，蛋液细线状淋入，10 秒后轻推成蛋花。',
+        '冲入放紫菜的碗中，淋香油、撒葱花。'],
+ tip:'5 分钟搞定的快手汤。紫菜和虾皮都补碘补钙，适合长身体的孩子。'},
+
+{id:'fanqiedantang',name:'番茄蛋汤',kind:'soup',src:'egg',spicy:0,t:12,veg:150,kcal:120,prot:9,dark:true,se:'all',gentle:true,
+ ing:[['番茄',200,'g','约1.5个'],['鸡蛋',1,'个','1个'],['葱',10,'g','1根'],['淀粉',4,'g','1茶匙'],['香油',2,'ml','几滴']],
+ steps:['番茄去皮切小块，鸡蛋打散。',
+        '锅中少油，下番茄炒 3 分钟至出沙。',
+        '加 800ml 水烧开，煮 3 分钟。',
+        '勾极薄的芡（让蛋花能悬浮），转小火，蛋液从高处细细淋入，静置 10 秒再推散。',
+        '加盐、香油、葱花。'],
+ tip:'勾薄芡再淋蛋，蛋花才成片不沉底；淋完别马上搅。'},
+
+{id:'jiyudoufutang',name:'鲫鱼豆腐汤',kind:'soup',src:'fish',spicy:0,t:35,veg:120,kcal:250,prot:24,dark:false,se:'sp,su',gentle:true,
+ ing:[['鲫鱼',300,'g','约1条'],['嫩豆腐',200,'g','约半盒'],['姜',10,'g','4片'],['葱',15,'g','1根'],['料酒',10,'ml','2茶匙'],['白胡椒',1,'g','半茶匙']],
+ steps:['鲫鱼处理干净，擦干水分，两面各划两刀。',
+        '锅烧到冒烟下油，鱼下锅中火煎至两面金黄（定型再翻）。',
+        '沿锅边烹料酒，立刻冲入 1000ml 开水，大火滚 10 分钟——汤色转奶白。',
+        '转中小火，下豆腐块煮 8 分钟。',
+        '加盐、白胡椒，撒葱花。'],
+ tip:'汤白的唯一秘诀：鱼煎透 + 冲滚烫开水 + 大火滚。给老人小孩喝要用滤网滤掉鱼刺。'},
+
+{id:'yumipaigutang',name:'玉米排骨汤',kind:'soup',src:'pork',spicy:0,t:70,veg:180,kcal:280,prot:17,dark:true,se:'all',gentle:true,
+ ing:[['猪肋排',180,'g','约6小块'],['甜玉米',200,'g','约1根'],['胡萝卜',80,'g','半根'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙']],
+ steps:['排骨冷水下锅焯水 3 分钟，撇沫捞出温水洗净。',
+        '砂锅放排骨、姜片、1200ml 热水，烧开转小火 40 分钟。',
+        '玉米切段、胡萝卜切滚刀块下锅，再炖 20 分钟。',
+        '加盐调味即可。'],
+ tip:'玉米和胡萝卜都带甜，这汤不用放任何调料就很好喝，小孩最爱。'},
+
+{id:'shanyaodunji',name:'山药炖鸡',kind:'soup',src:'chicken',spicy:0,t:75,veg:200,kcal:320,prot:26,dark:false,se:'au,wi',gentle:true,
+ ing:[['鸡肉',300,'g','约1/4只'],['山药',200,'g','约1段'],['红枣',15,'g','4颗'],['姜',10,'g','4片'],['枸杞',5,'g','1小撮'],['料酒',12,'ml','1汤匙']],
+ steps:['鸡肉剁块，冷水下锅焯水去血沫。',
+        '砂锅放鸡块、姜片、红枣，加 1300ml 热水，烧开转小火炖 45 分钟。',
+        '山药去皮切段（戴手套防痒），下锅再炖 20 分钟。',
+        '加枸杞煮 2 分钟，加盐调味。'],
+ tip:'山药健脾，秋末冬初最好的平补汤。山药后下别久炖，否则化在汤里。'},
+
+{id:'bangcaipaigu',name:'棒菜排骨汤',kind:'soup',src:'pork',spicy:0,t:65,veg:250,kcal:240,prot:16,dark:false,se:'wi',gentle:true,
+ ing:[['猪肋排',180,'g','约6小块'],['棒菜',300,'g','约1根'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙'],['白胡椒',1,'g','半茶匙']],
+ steps:['棒菜剥去老皮，切厚片。',
+        '排骨冷水下锅焯水 3 分钟，捞出温水洗净。',
+        '砂锅放排骨、姜片、1200ml 热水，烧开转小火 40 分钟。',
+        '下棒菜再炖 15 分钟至软糯微甜。',
+        '加盐、白胡椒调味。'],
+ tip:'棒菜 12 月上市，清甜带一点芥菜回甘，是成都冬天的"隐形宝藏菜"。'},
+
+{id:'suancaifansitang',name:'酸菜粉丝汤',kind:'soup',src:'none',spicy:1,t:18,veg:120,kcal:130,prot:4,dark:false,se:'au,wi',gentle:true,
+ ing:[['酸菜',80,'g','约1小把'],['粉丝',40,'g','1小把'],['泡椒',8,'g','2个'],['姜',5,'g','2片'],['白胡椒',1,'g','半茶匙']],
+ steps:['酸菜挤干水分切碎，粉丝温水泡 15 分钟。',
+        '锅中少油，炒香姜蒜、泡椒、酸菜 2 分钟出酸香。',
+        '加 800ml 水烧开，煮 5 分钟。',
+        '下粉丝煮 2 分钟，加白胡椒、盐调味。'],
+ tip:'酸菜本身咸，先尝再放盐。开胃解腻，配油腻的肉菜最合适。'},
+
+{id:'pingguroupian',name:'平菇肉片汤',kind:'soup',src:'pork',spicy:0,t:20,veg:150,kcal:200,prot:16,dark:false,se:'all',gentle:true,
+ ing:[['平菇',150,'g','约1小把'],['猪里脊',80,'g','约5片'],['姜',5,'g','2片'],['葱',12,'g','1根'],['淀粉',5,'g','2茶匙'],['白胡椒',1,'g','半茶匙']],
+ steps:['平菇撕小朵洗净；里脊切薄片，加盐、淀粉抓匀。',
+        '锅中 800ml 水加姜片烧开，下平菇煮 5 分钟出鲜味。',
+        '转小火，肉片逐片下锅，煮 1 分钟变白。',
+        '加盐、白胡椒，撒葱花。'],
+ tip:'平菇鲜味物质高，煮汤不用任何高汤块。'},
+
+{id:'luosongtang',name:'罗宋汤',kind:'soup',src:'beef',spicy:0,t:70,veg:280,kcal:300,prot:20,dark:true,se:'au,wi',gentle:true,
+ ing:[['牛腩',150,'g','约1小碗'],['番茄',200,'g','约1.5个'],['土豆',120,'g','约1个'],['胡萝卜',80,'g','半根'],['洋葱',60,'g','1/4个'],['包菜',100,'g','约1/8颗'],['番茄酱',25,'g','2汤匙']],
+ steps:['牛腩切块焯水，撇沫冲净。',
+        '锅中少油炒香洋葱，下番茄炒出沙，加番茄酱炒匀。',
+        '倒入牛腩，掺 1200ml 热水，小火炖 40 分钟。',
+        '下土豆、胡萝卜、包菜再炖 20 分钟。',
+        '加盐、少许糖调味。'],
+ tip:'一锅蔬菜极多，是补充膳食纤维的好办法。给孩子吃可以加一小块黄油更香。'},
+
+{id:'lianouhuashengpaigu',name:'莲藕花生排骨汤',kind:'soup',src:'pork',spicy:0,t:80,veg:250,kcal:330,prot:19,dark:false,se:'au,wi',gentle:true,
+ ing:[['猪肋排',180,'g','约6小块'],['莲藕',250,'g','约1节'],['花生米',30,'g','约2汤匙'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙']],
+ steps:['花生米提前泡 1 小时。排骨焯水冲净。',
+        '所有材料入砂锅，加 1400ml 热水，大火烧开转小火炖 60 分钟。',
+        '莲藕炖到粉糯拉丝、花生软烂。',
+        '加盐调味。'],
+ tip:'秋藕配花生，润燥又补血。花生带红衣一起炖，补血效果更好。'},
+
+{id:'siguadantang',name:'丝瓜蛋汤',kind:'soup',src:'egg',spicy:0,t:12,veg:200,kcal:110,prot:8,dark:true,se:'su',gentle:true,
+ ing:[['丝瓜',250,'g','约1根'],['鸡蛋',1,'个','1个'],['姜',4,'g','2片'],['香油',2,'ml','几滴']],
+ steps:['丝瓜去皮切滚刀块。',
+        '锅中少油，下姜丝、丝瓜炒 1 分钟。',
+        '加 700ml 水烧开，煮 3 分钟。',
+        '淋蛋液成蛋花，加盐、香油。'],
+ tip:'夏天清甜解暑，5 分钟上桌。'},
+
+{id:'dongguanwanzi',name:'冬瓜丸子汤',kind:'soup',src:'pork',spicy:0,t:30,veg:250,kcal:240,prot:18,dark:false,se:'su',gentle:true,
+ ing:[['冬瓜',300,'g','约1圈'],['猪肉末',120,'g','约4汤匙'],['姜',5,'g','2片'],['葱',10,'g','1根'],['淀粉',8,'g','1汤匙'],['白胡椒',1,'g','半茶匙']],
+ steps:['肉末加姜末、盐、淀粉、1 汤匙水，顺一个方向搅打上劲。',
+        '冬瓜去皮切薄片。',
+        '锅中 800ml 水烧到微沸（不要大滚），用勺子把肉馅团成丸子下锅。',
+        '丸子浮起后下冬瓜，煮 8 分钟。',
+        '加盐、白胡椒，撒葱花。'],
+ tip:'水微沸时下丸子才不散。冬瓜利尿消肿，夏天消暑好选择。'},
+
+{id:'sanxiandoufutang',name:'三鲜豆腐汤',kind:'soup',src:'shrimp',spicy:0,t:20,veg:150,kcal:190,prot:18,dark:false,se:'all',gentle:true,
+ ing:[['嫩豆腐',250,'g','约半盒'],['虾仁',60,'g','约5只'],['香菇',40,'g','2朵'],['青菜',80,'g','2棵'],['姜',4,'g','2片'],['淀粉',4,'g','1茶匙']],
+ steps:['豆腐切小块，淡盐水泡 5 分钟。',
+        '锅中 800ml 水加姜片烧开，下香菇煮 3 分钟。',
+        '下豆腐、虾仁煮 3 分钟。',
+        '下青菜煮 1 分钟，勾薄芡，加盐调味。'],
+ tip:'鲜味全来自食材本身。老人小孩补蛋白又补钙。'},
+
+{id:'laoyatang',name:'酸萝卜老鸭汤',kind:'soup',src:'duck',spicy:1,t:100,veg:250,kcal:380,prot:25,dark:false,se:'au,wi',gentle:true,
+ ing:[['鸭肉',300,'g','约1/4只'],['酸萝卜',150,'g','约1小碗'],['姜',12,'g','4片'],['花椒',2,'g','1茶匙'],['料酒',15,'ml','1汤匙'],['白胡椒',2,'g','半茶匙']],
+ steps:['鸭肉剁块，冷水下锅加姜、料酒焯水 3 分钟去腥，捞出洗净。',
+        '砂锅放鸭块、姜片、花椒，加 1500ml 热水，烧开转小火炖 70 分钟。',
+        '下酸萝卜再炖 25 分钟。',
+        '加白胡椒、盐调味。'],
+ tip:'酸萝卜解腻去腥，鸭肉性凉，秋燥时吃最合适。老鸭比嫩鸭更适合炖汤。'},
+
+{id:'fanqieniunantang',name:'番茄土豆牛腩汤',kind:'soup',src:'beef',spicy:0,t:90,veg:280,kcal:340,prot:22,dark:true,se:'au,wi',gentle:true,
+ ing:[['牛腩',180,'g','约1小碗'],['番茄',200,'g','约1.5个'],['土豆',150,'g','约1个'],['洋葱',50,'g','1/5个'],['姜',8,'g','3片'],['料酒',12,'ml','1汤匙']],
+ steps:['牛腩切块焯水，撇沫冲净。',
+        '锅中少油炒香洋葱、番茄出沙。',
+        '倒牛腩，掺 1300ml 热水，小火炖 60 分钟。',
+        '下土豆再炖 20 分钟，加盐调味。'],
+ tip:'汤菜一体，配一碗米饭就是完整一餐。番茄的酸能软化牛肉纤维。'},
+
+{id:'huangdouzhutitang',name:'黄豆猪蹄汤',kind:'soup',src:'pork',spicy:0,t:110,veg:100,kcal:420,prot:26,dark:false,se:'wi',gentle:true,
+ ing:[['猪蹄',300,'g','约半只'],['黄豆',50,'g','约3汤匙'],['姜',12,'g','4片'],['料酒',20,'ml','1.5汤匙'],['白胡椒',2,'g','半茶匙']],
+ steps:['黄豆提前泡 4 小时。猪蹄剁块冷水下锅，加姜、料酒焯水 5 分钟，捞出洗净。',
+        '砂锅放猪蹄、黄豆、姜片，加 1500ml 热水，烧开转小火炖 90 分钟。',
+        '炖到猪蹄软糯脱骨、黄豆粉烂。',
+        '加盐、白胡椒调味。'],
+ tip:'胶原蛋白丰富，冬天皮肤干时喝最合适。撇去浮油再喝更清爽。'},
+
+{id:'baicaidoufutang',name:'白菜豆腐汤',kind:'soup',src:'tofu',spicy:0,t:20,veg:250,kcal:120,prot:12,dark:false,se:'au,wi',gentle:true,
+ ing:[['大白菜',250,'g','约1/4棵'],['老豆腐',200,'g','约半块'],['姜',4,'g','2片'],['葱',10,'g','1根'],['香油',2,'ml','几滴']],
+ steps:['白菜切块、豆腐切块。',
+        '锅中少油，下姜丝、白菜帮炒 2 分钟。',
+        '加 800ml 水烧开，下豆腐煮 8 分钟。',
+        '下白菜叶煮 2 分钟，加盐、香油、葱花。'],
+ tip:'最朴素的一道，清淡养胃。肠胃不舒服、吃不下油腻时最合适。'},
+
+{id:'jungutang',name:'菌菇汤',kind:'soup',src:'none',spicy:0,t:25,veg:200,kcal:110,prot:9,dark:true,se:'all',gentle:true,
+ ing:[['香菇',50,'g','3朵'],['平菇',60,'g','1小把'],['金针菇',60,'g','半把'],['姜',4,'g','2片'],['葱',10,'g','1根'],['白胡椒',1,'g','半茶匙']],
+ steps:['各种菌菇洗净撕小朵。',
+        '锅中少油，下姜片和菌菇中火干煸 3 分钟出香。',
+        '加 900ml 水烧开，转小火煮 12 分钟。',
+        '加盐、白胡椒，撒葱花。'],
+ tip:'菌菇的鲜味物质（鸟苷酸）是天然味精。低热量高纤维，减脂期最合适。'},
+
+/* ================= 早餐 ================= */
+{id:'bf1',name:'小米粥 + 水煮蛋 + 馒头',kind:'bf',src:'egg',spicy:0,t:30,veg:80,kcal:420,prot:18,dark:false,se:'all',gentle:true,
+ ing:[['小米',40,'g','约3汤匙'],['鸡蛋',2,'个','2个'],['馒头',100,'g','约1个'],['榨菜',15,'g','1小碟']],
+ steps:['小米淘洗后加 8 倍水，大火烧开转小火煮 25 分钟，中途搅两次防粘底。',
+        '鸡蛋冷水下锅，水开后煮 6 分钟（溏心）或 8 分钟（全熟），捞出泡冷水好剥壳。',
+        '馒头蒸锅上汽后蒸 5 分钟。',
+        '配一碟榨菜丝，一杯温牛奶（每日奶已单独计入采购）。'],
+ tip:'小米养胃，这套早餐蛋白质约 18g，成本不到 6 元。'},
+
+{id:'bf2',name:'蔬菜鸡蛋面',kind:'bf',src:'egg',spicy:0,t:15,veg:150,kcal:450,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['面条',100,'g','约1把'],['鸡蛋',1,'个','1个'],['小白菜',100,'g','3棵'],['番茄',80,'g','半个'],['生抽',6,'ml','1茶匙']],
+ steps:['番茄切块，锅中少油炒出汁，加 600ml 水烧开。',
+        '下面条煮 3 分钟。',
+        '打入鸡蛋（荷包蛋或蛋花）。',
+        '下小白菜煮 30 秒，加生抽、盐，撒葱花。'],
+ tip:'一碗搞定主食+蛋白+蔬菜，冬天早上最暖。'},
+
+{id:'bf3',name:'红薯粥 + 蒸蛋 + 拌黄瓜',kind:'bf',src:'egg',spicy:0,t:35,veg:120,kcal:400,prot:15,dark:true,se:'au,wi',gentle:true,
+ ing:[['大米',40,'g','约3汤匙'],['红薯',150,'g','约1个小的'],['鸡蛋',2,'个','2个'],['黄瓜',80,'g','半根']],
+ steps:['大米淘洗加 8 倍水烧开；红薯去皮切小块一起下锅。',
+        '小火煮 25 分钟至红薯软烂、粥稠。',
+        '鸡蛋加 1.5 倍温水打散过筛，蒸 8 分钟成嫩蛋羹。',
+        '黄瓜拍碎加少许盐、香油拌一下。'],
+ tip:'红薯提供膳食纤维和 β-胡萝卜素，配蛋羹，一顿早餐 15g 蛋白。'},
+
+{id:'bf4',name:'担担面',kind:'bf',src:'pork',spicy:2,t:20,veg:60,kcal:520,prot:18,dark:true,se:'all',gentle:false,
+ ing:[['面条',100,'g','约1把'],['猪肉末',40,'g','1.5汤匙'],['宜宾芽菜',20,'g','1汤匙'],['芝麻酱',15,'g','1汤匙'],['辣椒油',10,'ml','2茶匙'],['花椒面',1,'g','半茶匙'],['花生碎',8,'g','1汤匙']],
+ steps:['锅中少油，下肉末炒酥，加芽菜炒香，做成脆臊子。',
+        '碗底调汁：芝麻酱用温水化开，加生抽、醋、辣椒油、花椒面。',
+        '面条煮熟捞入碗中，加 2 汤匙面汤。',
+        '铺上臊子、花生碎、葱花，拌开吃。'],
+ tip:'成都名小吃。芝麻酱要用温水慢慢化开，否则结块。'},
+
+{id:'bf5',name:'红油抄手',kind:'bf',src:'pork',spicy:2,t:25,veg:80,kcal:480,prot:20,dark:true,se:'all',gentle:false,
+ ing:[['抄手皮',100,'g','约20张'],['猪肉末',100,'g','约3汤匙'],['姜',4,'g','1片'],['生抽',10,'ml','2茶匙'],['辣椒油',12,'ml','1汤匙'],['小白菜',80,'g','2棵']],
+ steps:['肉末加姜末、葱末、生抽、少许水，顺一个方向搅打上劲。',
+        '抄手皮包入肉馅，对折捏成元宝状。',
+        '碗底放蒜泥、辣椒油、花椒面、生抽、香油，冲入一勺热汤。',
+        '水开下抄手，煮到浮起再煮 1 分钟；下小白菜同煮。',
+        '捞入碗中，撒葱花。'],
+ tip:'肉馅打水上劲才嫩；抄手皮菜市场面摊有现成的。'},
+
+{id:'bf6',name:'燕麦牛奶 + 煎蛋 + 苹果',kind:'bf',src:'egg',spicy:0,t:10,veg:0,kcal:430,prot:20,dark:false,se:'all',gentle:true,
+ ing:[['燕麦片',50,'g','约5汤匙'],['牛奶',250,'ml','1盒'],['鸡蛋',2,'个','2个'],['苹果',150,'g','1个']],
+ steps:['燕麦片加牛奶，小火煮 3 分钟至浓稠（或热水冲泡焖 5 分钟）。',
+        '平底锅少油，小火煎两个蛋，撒少许盐。',
+        '苹果洗净带皮吃（皮里膳食纤维最多）。'],
+ tip:'最快的一套，10 分钟搞定；燕麦是公认能帮助降胆固醇的主食。'},
+
+{id:'bf7',name:'南瓜粥 + 茶叶蛋 + 小菜',kind:'bf',src:'egg',spicy:0,t:40,veg:150,kcal:420,prot:16,dark:true,se:'au',gentle:true,
+ ing:[['大米',40,'g','约3汤匙'],['老南瓜',200,'g','约1/6个'],['鸡蛋',2,'个','2个'],['榨菜',15,'g','1小碟']],
+ steps:['大米加水烧开，南瓜去皮切小块下锅，小火煮 25 分钟至南瓜化在粥里。',
+        '鸡蛋煮 8 分钟，敲裂壳，用酱油、八角、茶叶煮 15 分钟浸泡入味（可前一晚做好）。',
+        '配一碟榨菜。'],
+ tip:'南瓜粥天然带甜，不用放糖。茶叶蛋前一晚煮好泡一夜。'},
+
+{id:'bf8',name:'菜肉包子 + 豆浆 + 拌木耳',kind:'bf',src:'pork',spicy:0,t:15,veg:100,kcal:460,prot:19,dark:true,se:'all',gentle:true,
+ ing:[['包子',150,'g','约2个'],['豆浆',300,'ml','1杯'],['干木耳',8,'g','1小把'],['香醋',6,'ml','1茶匙'],['生抽',6,'ml','1茶匙']],
+ steps:['包子（菜市场早餐铺或超市冷冻）上锅蒸 8 分钟。',
+        '木耳提前泡发，沸水汆 2 分钟，加蒜末、醋、生抽拌成小菜。',
+        '豆浆加热（自己打或买现成无糖的）。'],
+ tip:'买现成包子最省时间，选肉馅少油、菜多的。豆浆要无糖。'},
+
+{id:'bf9',name:'山药小米粥',kind:'bf',src:'none',spicy:0,t:35,veg:120,kcal:330,prot:9,dark:false,se:'au,wi',gentle:true,
+ ing:[['小米',40,'g','约3汤匙'],['山药',120,'g','约1小段'],['红枣',10,'g','3颗'],['枸杞',3,'g','1小撮']],
+ steps:['小米淘洗加 8 倍水烧开。',
+        '山药去皮切小丁（戴手套），红枣去核。',
+        '一起下锅小火煮 25 分钟至山药软烂、粥稠。',
+        '出锅前加枸杞煮 2 分钟。'],
+ tip:'最养胃的一碗粥，脾胃虚弱、病后恢复、老人小孩都合适。'},
+
+{id:'bf10',name:'全麦三明治 + 牛奶',kind:'bf',src:'egg',spicy:0,t:10,veg:120,kcal:400,prot:20,dark:true,se:'all',gentle:false,
+ ing:[['全麦面包',80,'g','2片'],['鸡蛋',1,'个','1个'],['生菜',40,'g','2片'],['番茄',60,'g','半个'],['火腿片',30,'g','2片'],['沙拉酱',10,'g','1茶匙']],
+ steps:['鸡蛋煎成荷包蛋（或水煮切片）。',
+        '面包片烤 2 分钟至微焦。',
+        '依次铺生菜、番茄片、火腿、鸡蛋，抹沙拉酱。',
+        '盖上另一片，对角切开。'],
+ tip:'5 分钟搞定的西式早餐，蛋白质够、携带方便。火腿是加工肉，不要天天吃。'},
+
+{id:'bf11',name:'紫薯馒头 + 豆浆 + 水煮蛋',kind:'bf',src:'egg',spicy:0,t:15,veg:0,kcal:390,prot:17,dark:true,se:'au,wi',gentle:true,
+ ing:[['紫薯馒头',100,'g','约1个'],['豆浆',300,'ml','1杯'],['鸡蛋',2,'个','2个']],
+ steps:['紫薯馒头蒸锅上汽后蒸 6 分钟。',
+        '鸡蛋冷水下锅煮 8 分钟，泡冷水剥壳。',
+        '豆浆加热。'],
+ tip:'紫薯富含花青素。馒头可以一次买几个冷冻，早上蒸 6 分钟就好。'},
+
+{id:'bf12',name:'番茄鸡蛋面',kind:'bf',src:'egg',spicy:0,t:15,veg:180,kcal:440,prot:19,dark:true,se:'all',gentle:true,
+ ing:[['面条',100,'g','约1把'],['番茄',150,'g','约1个'],['鸡蛋',2,'个','2个'],['葱',8,'g','1根']],
+ steps:['番茄去皮切块，锅中少油炒出沙。',
+        '加 700ml 水烧开。',
+        '下面条煮 3 分钟。',
+        '淋蛋液成蛋花，加盐、葱花。'],
+ tip:'最经典的一碗面，酸甜开胃。番茄去皮口感好很多。'},
+
+{id:'bf13',name:'白粥 + 咸鸭蛋 + 炒青菜',kind:'bf',src:'egg',spicy:0,t:40,veg:150,kcal:360,prot:13,dark:true,se:'su,au',gentle:true,
+ ing:[['大米',50,'g','约4汤匙'],['咸鸭蛋',1,'个','1个'],['上海青',150,'g','4棵']],
+ steps:['大米加 10 倍水，大火烧开转小火煮 35 分钟至米粒开花、粥稠。',
+        '咸鸭蛋对半切开。',
+        '上海青蒜蓉快炒 1 分钟。',
+        '配着吃。'],
+ tip:'肠胃最舒服的一套。咸鸭蛋很咸，一次半个到一个就够，高血压者少吃。'},
+
+{id:'bf14',name:'玉米 + 鸡蛋 + 牛奶',kind:'bf',src:'egg',spicy:0,t:20,veg:100,kcal:340,prot:18,dark:true,se:'su,au',gentle:true,
+ ing:[['甜玉米',200,'g','约1根'],['鸡蛋',2,'个','2个'],['牛奶',250,'ml','1盒'],['小番茄',80,'g','约6个']],
+ steps:['玉米带皮煮 15 分钟（带皮煮更甜）。',
+        '鸡蛋同时下锅煮 8 分钟。',
+        '牛奶加热，小番茄洗净。',
+        '摆盘即食。'],
+ tip:'最少动手的一套，适合赶时间的早晨。玉米是粗粮，比白面包好。'},
+
+{id:'bf15',name:'馄饨汤面',kind:'bf',src:'pork',spicy:0,t:20,veg:120,kcal:430,prot:21,dark:true,se:'all',gentle:true,
+ ing:[['馄饨',150,'g','约10个'],['面条',40,'g','半把'],['紫菜',3,'g','1小撮'],['虾皮',3,'g','1小撮'],['小白菜',100,'g','3棵'],['香油',2,'ml','几滴']],
+ steps:['碗底放紫菜、虾皮、生抽、香油，冲入一勺热汤。',
+        '水开下馄饨煮 3 分钟，再下面条煮 2 分钟。',
+        '下小白菜煮 30 秒。',
+        '捞入碗中即可。'],
+ tip:'馄饨面是江南吃法，一碗有主食有肉有菜。紫菜虾皮补碘补钙。'},
+
+/* ================= 药膳（每周 2 次，温和平补） ================= */
+{id:'md_huangqi',name:'黄芪红枣炖鸡',kind:'med',src:'chicken',spicy:0,t:80,veg:120,kcal:340,prot:27,dark:false,se:'au,wi',gentle:true,
+ eff:'补气固表。适合容易疲劳、爱出虚汗、换季易感冒的人。',
+ warn:'感冒发热、咽喉肿痛期间不要吃；高血压者黄芪用量减半。',
+ ing:[['鸡肉',300,'g','约1/4只'],['黄芪',15,'g','约8片'],['红枣',20,'g','5颗'],['枸杞',5,'g','1小撮'],['姜',10,'g','4片']],
+ steps:['鸡肉剁块冷水下锅焯水，撇净浮沫捞出。',
+        '黄芪用清水冲一下，红枣去核（去核不易上火）。',
+        '所有材料（除枸杞）入砂锅，加 1300ml 热水，大火烧开转小火炖 60 分钟。',
+        '加枸杞再煮 5 分钟，加少许盐调味。'],
+ tip:'黄芪是"补气之长"，但它是温性的，秋冬吃比夏天合适。汤要清，别放重味调料。'},
+
+{id:'md_danggui',name:'当归生姜羊肉汤',kind:'med',src:'lamb',spicy:0,t:100,veg:150,kcal:420,prot:27,dark:false,se:'wi',gentle:true,
+ eff:'温中补血、驱寒止痛。手脚冰凉、经期腹痛、产后体虚最合适。',
+ warn:'体质偏热、易上火、口干便秘者不宜；感冒期间忌服。孕妇需遵医嘱。',
+ ing:[['羊肉',300,'g','约1小碗'],['当归',10,'g','约3片'],['生姜',30,'g','约1大块'],['红枣',15,'g','4颗'],['料酒',15,'ml','1汤匙']],
+ steps:['羊肉切块，冷水浸泡 30 分钟去血水，再冷水下锅焯水，撇沫捞出。',
+        '生姜切厚片（量要足，是这道汤的一半功力）。',
+        '羊肉、当归、姜片入砂锅，加 1500ml 热水，烹料酒。',
+        '大火烧开转小火炖 80 分钟至羊肉软烂。',
+        '加红枣再炖 15 分钟，加盐调味。'],
+ tip:'张仲景《金匮要略》里的方子，是最经典的冬令温补汤。当归尾偏活血、归身偏补血，日常用整片即可。'},
+
+{id:'md_shanyao',name:'山药莲子排骨汤',kind:'med',src:'pork',spicy:0,t:75,veg:220,kcal:330,prot:19,dark:false,se:'au,wi',gentle:true,
+ eff:'健脾益胃、止泻固涩。适合脾胃虚弱、吃什么都长不胖、容易拉肚子的人。',
+ warn:'便秘、腹胀气滞者少喝；莲子要去芯，芯苦且偏寒。',
+ ing:[['猪肋排',200,'g','约7小块'],['山药',200,'g','约1段'],['莲子',30,'g','约15粒'],['芡实',15,'g','1汤匙'],['姜',8,'g','3片']],
+ steps:['莲子、芡实提前泡 1 小时，莲子去芯。排骨焯水冲净。',
+        '排骨、莲子、芡实、姜片入砂锅，加 1400ml 热水，小火炖 50 分钟。',
+        '山药去皮切段下锅，再炖 20 分钟。',
+        '加盐调味。'],
+ tip:'这是"平补"的代表——不燥不寒，一年四季、老人小孩都能喝。'},
+
+{id:'md_yuzhu',name:'玉竹沙参老鸭汤',kind:'med',src:'duck',spicy:0,t:100,veg:150,kcal:350,prot:25,dark:false,se:'au',gentle:true,
+ eff:'养阴润燥、生津止渴。秋燥引起的咽干、干咳、皮肤干痒最合适。',
+ warn:'脾胃虚寒、容易腹泻、痰多清稀者不宜。',
+ ing:[['鸭肉',300,'g','约1/4只'],['玉竹',15,'g','约1小把'],['沙参',15,'g','约5根'],['麦冬',8,'g','约10粒'],['姜',10,'g','4片']],
+ steps:['鸭肉剁块冷水下锅焯水 3 分钟去腥，捞出洗净。',
+        '玉竹、沙参、麦冬冲洗干净。',
+        '全部材料入砂锅，加 1500ml 热水，大火烧开转小火炖 90 分钟。',
+        '加盐调味，撇去浮油。'],
+ tip:'秋天最该喝的一碗。鸭肉性凉、玉竹沙参滋阴，正好对付秋燥。汤要清，撇油后再喝。'},
+
+{id:'md_wuzhimaotao',name:'五指毛桃煲鸡',kind:'med',src:'chicken',spicy:0,t:85,veg:120,kcal:340,prot:27,dark:false,se:'sp,su',gentle:true,
+ eff:'健脾补气、祛湿舒筋。适合湿气重、身体困重、容易疲倦的人。',
+ warn:'感冒发热期间不宜；阴虚火旺者少喝。',
+ ing:[['鸡肉',300,'g','约1/4只'],['五指毛桃',30,'g','约1小把'],['薏米',20,'g','1汤匙'],['红枣',15,'g','4颗'],['姜',8,'g','3片']],
+ steps:['五指毛桃洗净（有淡淡椰香），薏米提前泡 1 小时（怕寒可先干炒 2 分钟）。',
+        '鸡肉剁块焯水冲净。',
+        '全部材料入砂锅，加 1400ml 热水，小火炖 70 分钟。',
+        '加盐调味。'],
+ tip:'岭南家喻户晓的祛湿汤，有天然椰奶香。春夏湿气重时每周喝一次很舒服。'},
+
+{id:'md_dangshen',name:'党参黄芪乌鸡汤',kind:'med',src:'chicken',spicy:0,t:90,veg:100,kcal:360,prot:29,dark:true,se:'au,wi',gentle:true,
+ eff:'补气养血。适合面色苍白、产后或病后体虚、月经量少的人。',
+ warn:'感冒发热、上火期间忌服；体质偏热者黄芪减量。',
+ ing:[['乌鸡',350,'g','约半只'],['党参',15,'g','约3根'],['黄芪',10,'g','约5片'],['红枣',20,'g','5颗'],['枸杞',5,'g','1小撮'],['姜',10,'g','4片']],
+ steps:['乌鸡剁块冷水下锅焯水，撇沫捞出（乌鸡血沫多，要多撇几次）。',
+        '党参切段，红枣去核。',
+        '乌鸡、党参、黄芪、红枣、姜片入砂锅，加 1500ml 热水，小火炖 80 分钟。',
+        '加枸杞煮 5 分钟，加盐调味。'],
+ tip:'乌鸡的黑色来自黑色素，铁含量比普通鸡高。这道汤偏温补，一周一次就够。'},
+
+{id:'md_gouqi',name:'枸杞猪肝汤',kind:'med',src:'pork',spicy:0,t:20,veg:120,kcal:230,prot:22,dark:true,se:'all',gentle:true,
+ eff:'补肝养血、益精明目。适合用眼过度、眼干眼涩、轻度贫血的人。',
+ warn:'猪肝胆固醇和维生素 A 都很高，一周不超过 1 次、每次不超过 100g；高血脂者慎食。',
+ ing:[['猪肝',100,'g','约1小块'],['枸杞',10,'g','约20粒'],['菠菜',100,'g','1小把'],['姜',5,'g','2片'],['料酒',10,'ml','2茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['猪肝切薄片，清水冲 3 遍去血水，加料酒、淀粉抓匀腌 10 分钟。',
+        '锅中 800ml 水加姜片烧开，转小火下猪肝汆 40 秒。',
+        '下菠菜煮 30 秒，加枸杞。',
+        '加盐、白胡椒，立刻关火。'],
+ tip:'补铁效率最高的一道，但猪肝是"解毒器官"，一定要选新鲜、来源可靠的，且不能天天吃。'},
+
+{id:'md_lianzi',name:'莲子百合瘦肉汤',kind:'med',src:'pork',spicy:0,t:60,veg:140,kcal:260,prot:22,dark:false,se:'au,su',gentle:true,
+ eff:'养心安神、润肺止咳。适合睡眠浅、多梦、心烦、干咳的人。',
+ warn:'风寒感冒、痰多者不宜；百合偏凉，脾胃虚寒者少量。',
+ ing:[['猪瘦肉',180,'g','约1小块'],['莲子',30,'g','约15粒'],['干百合',15,'g','约1小把'],['麦冬',8,'g','约10粒'],['姜',5,'g','2片']],
+ steps:['莲子去芯、百合泡软。瘦肉切块焯水。',
+        '全部材料入砂锅，加 1200ml 热水，小火炖 50 分钟。',
+        '加盐调味即可。'],
+ tip:'睡不好、心烦躁的时候连喝几天很管用。莲子芯苦寒，一定要去掉，否则汤会发苦。'},
+
+{id:'md_tianma',name:'天麻鱼头汤',kind:'med',src:'fish',spicy:0,t:45,veg:100,kcal:280,prot:24,dark:false,se:'all',gentle:true,
+ eff:'平肝息风、通络止痛。适合经常头痛头晕、久坐颈椎不适的人。',
+ warn:'天麻是药材，一次 10g 左右即可，不宜长期大量服用；低血压者慎用。',
+ ing:[['鱼头',400,'g','半个花鲢头'],['天麻',10,'g','约5片'],['川芎',5,'g','2片'],['白芷',5,'g','2片'],['姜',10,'g','4片'],['料酒',15,'ml','1汤匙']],
+ steps:['鱼头洗净劈开，用料酒、姜片腌 15 分钟，擦干。',
+        '锅中少油，鱼头两面煎至微黄。',
+        '冲入 1200ml 开水，加天麻、川芎、白芷、姜片，大火滚 10 分钟转小火 25 分钟。',
+        '汤色奶白后加盐、白胡椒调味。'],
+ tip:'经典的"头痛汤"。川芎白芷祛风止痛，天麻平肝，久坐办公室的人很适合。'},
+
+{id:'md_sishen',name:'四神汤',kind:'med',src:'pork',spicy:0,t:70,veg:150,kcal:300,prot:20,dark:false,se:'all',gentle:true,
+ eff:'健脾祛湿、固肠止泻。适合脾胃虚弱、食欲差、大便不成形、小孩体弱。',
+ warn:'便秘、腹胀者少喝；感冒期间暂停。',
+ ing:[['猪肚',200,'g','约半个'],['山药',150,'g','约1段'],['莲子',25,'g','约12粒'],['芡实',15,'g','1汤匙'],['茯苓',15,'g','约5块'],['薏米',15,'g','1汤匙']],
+ steps:['猪肚用面粉和盐反复搓洗 3 遍去黏液，焯水后切条（怕麻烦可换排骨）。',
+        '莲子去芯，薏米、芡实、茯苓泡 1 小时。',
+        '全部材料入砂锅，加 1500ml 热水，小火炖 60 分钟。',
+        '加盐调味。'],
+ tip:'台湾最普及的健脾汤，性质极平和，老人小孩都能喝。小孩胃口差、长不胖，一周两次很见效。'},
+
+{id:'md_heidou',name:'黑豆核桃排骨汤',kind:'med',src:'pork',spicy:0,t:80,veg:100,kcal:380,prot:24,dark:true,se:'wi',gentle:true,
+ eff:'补肾益精、健脑乌发。适合腰膝酸软、记忆力下降、头发早白的人。',
+ warn:'核桃油脂高，腹泻者少吃；痰湿重、舌苔厚腻者少喝。',
+ ing:[['猪肋排',200,'g','约7小块'],['黑豆',40,'g','约3汤匙'],['核桃仁',30,'g','约6个'],['红枣',15,'g','4颗'],['姜',8,'g','3片']],
+ steps:['黑豆提前泡 4 小时（不泡很难炖烂）。排骨焯水冲净。',
+        '全部材料入砂锅，加 1400ml 热水，小火炖 70 分钟。',
+        '黑豆炖到开花软烂。',
+        '加盐调味。'],
+ tip:'中医"以黑补黑"的经典搭配。核桃仁带那层薄皮一起炖，营养更全。'},
+
+{id:'md_chenpi',name:'陈皮白术鲫鱼汤',kind:'med',src:'fish',spicy:0,t:40,veg:100,kcal:250,prot:24,dark:false,se:'sp,su',gentle:true,
+ eff:'健脾开胃、理气化湿。适合食欲不振、饭后腹胀、舌苔厚腻的人。',
+ warn:'胃酸过多者少用陈皮；阴虚燥咳者不宜。',
+ ing:[['鲫鱼',300,'g','约1条'],['陈皮',5,'g','约1片'],['白术',10,'g','约3片'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙']],
+ steps:['陈皮温水泡软，刮去内层白瓤（去苦味）。',
+        '鲫鱼处理干净擦干，锅中少油两面煎至微黄。',
+        '冲入 1000ml 开水，加陈皮、白术、姜片，大火滚 8 分钟转小火 20 分钟。',
+        '加盐调味，滤渣喝汤。'],
+ tip:'春天湿气重、没胃口时喝。陈皮越陈越香，家里存三年的最好。'},
+
+{id:'md_susishen',name:'山药莲子素四神汤',kind:'med',src:'none',spicy:0,t:60,veg:200,kcal:180,prot:7,dark:false,se:'all',gentle:true,
+ eff:'健脾祛湿、养胃安神。吃素、忌肉或者肠胃虚弱时最合适的平补汤，老人小孩都能喝。',
+ warn:'便秘、腹胀气滞者少喝；感冒期间暂停。',
+ ing:[['山药',150,'g','约1段'],['莲子',25,'g','约12粒'],['芡实',15,'g','1汤匙'],['茯苓',15,'g','约5块'],['薏米',15,'g','1汤匙'],['红枣',15,'g','4颗']],
+ steps:['莲子去芯，薏米、芡实、茯苓提前泡 1 小时。',
+        '所有材料（除山药）加 1300ml 水，大火烧开转小火煮 40 分钟。',
+        '山药去皮切段下锅，再煮 20 分钟。',
+        '加少许冰糖或盐调味（甜咸皆可）。'],
+ tip:'完全不含肉，性质极平和。吃素的人想喝药膳汤，这一道最合适。'},
+
+/* ================= 甜品 / 食疗方 ================= */
+{id:'des_yinmu',name:'银耳雪梨羹',kind:'des',src:'none',spicy:0,t:60,veg:0,kcal:150,prot:2,dark:false,se:'au,wi',gentle:true,
+ eff:'润肺止咳、滋阴润燥。干咳无痰、咽干口燥、秋冬皮肤干痒最合适。',
+ warn:'痰多清稀、脾胃虚寒易腹泻者少喝；银耳必须煮透，隔夜银耳不要吃。',
+ ing:[['干银耳',10,'g','约1/3朵'],['雪梨',200,'g','1个'],['冰糖',20,'g','约1小块'],['枸杞',3,'g','1小撮'],['红枣',10,'g','3颗']],
+ steps:['银耳提前用冷水泡 1 小时，去黄根，撕成小朵（越碎越容易出胶）。',
+        '银耳加 800ml 水，大火烧开转小火炖 40 分钟至出胶黏稠。',
+        '雪梨去核切块（带皮更润），红枣去核，下锅再炖 15 分钟。',
+        '加冰糖煮 5 分钟至融化，最后撒枸杞。'],
+ tip:'出胶的关键：银耳撕得碎 + 小火慢炖 40 分钟以上。秋燥、暖气房里最该有的一碗。'},
+
+{id:'des_yancheng',name:'盐渍橙子',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:60,prot:1,dark:true,se:'wi,sp',gentle:true,
+ eff:'理气化痰、止咳平喘。适合感冒后 lingering 的咳嗽、咽喉不适、痰多。',
+ warn:'含盐量高，高血压、肾病患者不宜；只适用于寒咳（痰白稀），热咳（痰黄稠）不适合。',
+ ing:[['橙子',200,'g','1个'],['食盐',3,'g','约半茶匙']],
+ steps:['橙子用盐搓洗表皮（去果蜡），冲净擦干。',
+        '顶部切下一小片当盖子，果肉上撒薄薄一层盐，用叉子戳几下让盐渗入。',
+        '盖回橙盖，放碗中，水开后蒸 15 分钟。',
+        '连皮带肉一起吃（皮里的橙皮苷是有效成分）。'],
+ tip:'民间验方，对受寒后的咳嗽确实有效。盐别放多，一小撮就够；蒸出来的汁也要喝掉。'},
+
+{id:'des_ningmeng',name:'冰糖炖柠檬',kind:'des',src:'none',spicy:0,t:50,veg:0,kcal:80,prot:1,dark:true,se:'all',gentle:true,
+ eff:'润喉生津、化痰止咳。适合嗓子干痒、说话多、久咳的人。',
+ warn:'含糖较高，糖尿病人用代糖或减少冰糖量；胃酸过多者饭后喝。',
+ ing:[['柠檬',200,'g','约2个'],['冰糖',100,'g','约1小把'],['陈皮',2,'g','1小片']],
+ steps:['柠檬用盐搓洗表皮，切薄片去籽（籽会发苦）。',
+        '碗中一层柠檬一层冰糖铺好，最上面放陈皮。',
+        '不加水，隔水炖 40 分钟（或电饭煲保温档焖 6 小时）。',
+        '炖到柠檬透明、汤汁黏稠，装罐冷藏。喝时舀一勺兑温水。'],
+ tip:'炖好后冷藏能放两周。教师、主播这类用嗓多的人，每天一杯很舒服。'},
+
+{id:'des_chenpihongdou',name:'陈皮红豆沙',kind:'des',src:'none',spicy:0,t:90,veg:0,kcal:180,prot:6,dark:true,se:'all',gentle:true,
+ eff:'健脾祛湿、利水消肿。适合湿气重、下肢浮肿、舌苔厚腻的人。',
+ warn:'红豆利尿，尿频者少喝；含糖，糖尿病人减糖。',
+ ing:[['红豆',80,'g','约5汤匙'],['陈皮',3,'g','1小片'],['冰糖',25,'g','约1小块'],['莲子',20,'g','约10粒']],
+ steps:['红豆提前泡 4 小时（或冷冻 2 小时，更容易煮沙）。',
+        '陈皮泡软刮去白瓤。',
+        '红豆加 1000ml 水烧开，转小火煮 60 分钟至起沙。',
+        '用勺子压碎部分红豆成沙，加陈皮、莲子再煮 15 分钟。',
+        '加冰糖融化即可。'],
+ tip:'陈皮是灵魂，能中和红豆的滞气。夏天冷藏后当消暑甜品，冬天热着喝祛湿。'},
+
+{id:'des_jiangzao',name:'姜枣茶',kind:'des',src:'none',spicy:0,t:20,veg:0,kcal:70,prot:1,dark:false,se:'wi',gentle:true,
+ eff:'温中散寒、暖宫止痛。适合手脚冰凉、经期腹痛、受寒后的胃痛。',
+ warn:'体质偏热、上火、口干咽痛时不要喝；晚上不宜喝姜（影响睡眠）。',
+ ing:[['生姜',20,'g','约1大块'],['红枣',20,'g','5颗'],['红糖',15,'g','约1汤匙']],
+ steps:['生姜切片（不用去皮，皮能中和姜的燥性），红枣去核撕开。',
+        '加 600ml 水，大火烧开转小火煮 15 分钟。',
+        '加红糖煮 3 分钟融化。',
+        '趁温热喝，姜片和枣肉一起吃更好。'],
+ tip:'早上喝最好，晚上别喝。经期前一周开始每天一杯，能明显缓解痛经。'},
+
+{id:'des_jiuniang',name:'桂花酒酿圆子',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:250,prot:4,dark:false,se:'wi,sp',gentle:true,
+ eff:'温中暖胃、活血通络。适合冬天手脚冰凉、气血不畅的人。',
+ warn:'含微量酒精，孕妇、儿童、酒精过敏者不宜；驾车前不要喝。',
+ ing:[['酒酿',150,'g','约半碗'],['小圆子',60,'g','约1小碗'],['鸡蛋',1,'个','1个'],['干桂花',2,'g','1小撮'],['冰糖',10,'g','1小块']],
+ steps:['锅中 500ml 水烧开，下小圆子煮到全部浮起。',
+        '加酒酿、冰糖，小火煮 2 分钟（不要大滚，酒香会跑）。',
+        '淋入打散的蛋液，静置 10 秒推成蛋花。',
+        '盛碗撒干桂花。'],
+ tip:'江南冬日的经典甜品。酒酿别久煮，一滚就关火，酒香才在。'},
+
+{id:'des_shanzha',name:'山楂苹果水',kind:'des',src:'none',spicy:0,t:20,veg:0,kcal:60,prot:1,dark:true,se:'all',gentle:true,
+ eff:'消食化积、降脂活血。适合吃多了肉、积食腹胀、血脂偏高的人。',
+ warn:'胃酸过多、胃溃疡者不宜空腹喝；孕妇忌食山楂（可能引起宫缩）。',
+ ing:[['山楂干',15,'g','约8片'],['苹果',200,'g','1个'],['冰糖',10,'g','1小块'],['陈皮',2,'g','1小片']],
+ steps:['山楂干冲洗，苹果带皮切块去核。',
+        '加 800ml 水，大火烧开转小火煮 15 分钟。',
+        '加冰糖、陈皮再煮 5 分钟。',
+        '温热喝，苹果也一起吃。'],
+ tip:'过节吃撑了最管用。山楂活血，孕妇一定不能喝。'},
+
+{id:'des_youzi',name:'蜂蜜柚子茶',kind:'des',src:'none',spicy:0,t:70,veg:0,kcal:90,prot:1,dark:true,se:'au,wi',gentle:true,
+ eff:'润燥化痰、理气健脾。适合秋燥咽干、咳嗽、食欲不振。',
+ warn:'柚子与部分降压药、他汀类药物有相互作用，服药者请咨询医生；糖尿病人减糖。',
+ ing:[['柚子',400,'g','约半个'],['冰糖',120,'g','约1小把'],['蜂蜜',50,'g','约3汤匙'],['食盐',5,'g','1茶匙']],
+ steps:['柚子用盐搓洗表皮，削下黄色外皮（不要白瓤，会苦），切细丝，盐水泡 10 分钟去苦。',
+        '果肉撕碎去籽。',
+        '果皮丝、果肉、冰糖入锅，不加水，小火熬 40 分钟至黏稠。',
+        '放凉到 60℃ 以下再加蜂蜜（高温会破坏蜂蜜活性）。',
+        '装罐冷藏，喝时兑温水。'],
+ tip:'做一次能喝一个月。皮一定要去净白瓤，否则整罐都苦。'},
+
+{id:'des_wuhong',name:'五红汤',kind:'des',src:'none',spicy:0,t:60,veg:0,kcal:220,prot:7,dark:true,se:'all',gentle:true,
+ eff:'补气养血。适合气血不足、面色苍白、经期后、产后调理的人。',
+ warn:'体质偏热、易上火、感冒期间不宜；含糖较高，糖尿病人减糖。',
+ ing:[['红豆',40,'g','约3汤匙'],['红衣花生',30,'g','约2汤匙'],['红枣',20,'g','5颗'],['枸杞',8,'g','约15粒'],['红糖',15,'g','1汤匙']],
+ steps:['红豆、花生提前泡 4 小时。红枣去核。',
+        '红豆、花生加 900ml 水，小火煮 45 分钟。',
+        '加红枣再煮 15 分钟。',
+        '加枸杞、红糖煮 5 分钟即可。'],
+ tip:'"五红"指红豆、红衣花生、红枣、枸杞、红糖，是民间最普及的补血方。经期结束后连喝 3 天。'},
+
+{id:'des_zhima',name:'桑葚黑芝麻糊',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:260,prot:8,dark:true,se:'au,wi',gentle:true,
+ eff:'滋补肝肾、润肠乌发。适合头发早白、脱发、肠燥便秘的人。',
+ warn:'黑芝麻油脂高，腹泻者少吃；脾虚便溏者不宜多食。',
+ ing:[['黑芝麻粉',30,'g','约3汤匙'],['桑葚干',15,'g','约1汤匙'],['糯米粉',15,'g','1汤匙'],['冰糖',10,'g','1小块']],
+ steps:['桑葚干用温水泡软。',
+        '黑芝麻粉、糯米粉加 300ml 冷水调匀（先冷水调，避免结块）。',
+        '小火加热，边煮边搅，煮到浓稠冒泡。',
+        '加桑葚、冰糖，再煮 3 分钟。'],
+ tip:'现成的黑芝麻粉超市就有，5 分钟能做。当早餐或夜宵都合适。'},
+
+{id:'des_lvdou',name:'绿豆汤',kind:'des',src:'none',spicy:0,t:40,veg:0,kcal:140,prot:8,dark:true,se:'su',gentle:true,
+ eff:'清热解毒、消暑利水。夏天防中暑、解暑热、消痘疮最合适。',
+ warn:'脾胃虚寒、容易腹泻者不宜冰镇喝；服中药期间少喝（绿豆解药性）。',
+ ing:[['绿豆',80,'g','约5汤匙'],['冰糖',25,'g','1小块'],['陈皮',2,'g','1小片']],
+ steps:['绿豆洗净，加 1000ml 水大火烧开。',
+        '转小火煮 30 分钟至绿豆开花（想更沙可提前冷冻 2 小时）。',
+        '加冰糖、陈皮再煮 5 分钟。',
+        '放凉或冷藏后喝。'],
+ tip:'煮到"开花"清热效果最好，只煮 10 分钟取绿汤则解暑力更强。脾胃弱的人喝温的。'},
+
+{id:'des_huangtao',name:'冰糖黄桃',kind:'des',src:'none',spicy:0,t:25,veg:0,kcal:120,prot:1,dark:true,se:'su',gentle:true,
+ eff:'生津止渴、润肠通便。夏天食欲差、口干时最舒服。',
+ warn:'含糖较高，糖尿病人少量；腹泻时不宜。',
+ ing:[['黄桃',300,'g','约3个'],['冰糖',30,'g','1小块'],['柠檬',10,'g','2片']],
+ steps:['黄桃去皮去核，切块。',
+        '加 500ml 水和冰糖，小火煮 15 分钟。',
+        '加柠檬片再煮 3 分钟（柠檬增酸、也护色）。',
+        '放凉冷藏，冰镇更好吃。'],
+ tip:'夏天黄桃便宜时做一罐，冷藏能放 5 天。用罐头黄桃也行，但要减糖。'},
+
+{id:'des_luohanguo',name:'罗汉果菊花饮',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:30,prot:0,dark:false,se:'all',gentle:true,
+ eff:'清热润肺、利咽开音。适合咽喉肿痛、声音嘶哑、用嗓过度。',
+ warn:'性偏凉，脾胃虚寒、易腹泻者少喝；风寒感冒初期不宜。',
+ ing:[['罗汉果',15,'g','约1/4个'],['菊花',5,'g','约1小把'],['枸杞',3,'g','1小撮']],
+ steps:['罗汉果掰碎（连壳一起，壳也有效）。',
+        '加 800ml 水，大火烧开转小火煮 10 分钟。',
+        '下菊花、枸杞焖 3 分钟。',
+        '滤渣当茶喝，可反复冲泡。'],
+ tip:'罗汉果的甜来自罗汉果苷，几乎不含热量，糖尿病人也能喝。嗓子疼时一天两杯。'},
+
+{id:'des_zhengpingguo',name:'蒸苹果',kind:'des',src:'none',spicy:0,t:20,veg:0,kcal:90,prot:1,dark:true,se:'all',gentle:true,
+ eff:'收敛止泻、健脾和胃。适合轻度腹泻、肠胃不适、小孩积食。',
+ warn:'仅适用于轻度功能性腹泻；感染性腹泻、发热、便血请及时就医。',
+ ing:[['苹果',200,'g','1个']],
+ steps:['苹果洗净带皮，去核切块（皮里的果胶是止泻的关键）。',
+        '放入碗中，不加水不加糖。',
+        '水开后蒸 15 分钟至软烂。',
+        '连汤一起吃。'],
+ tip:'小孩拉肚子时的老办法，温和有效。苹果生吃通便、蒸熟止泻，作用相反。'},
+
+{id:'des_kaojuzi',name:'烤橘子',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:50,prot:1,dark:true,se:'wi',gentle:true,
+ eff:'化痰止咳。适合受寒后的咳嗽、痰白稀。',
+ warn:'只适用于寒咳；热咳（痰黄、咽痛）吃了会加重。糖尿病患者少量。',
+ ing:[['橘子',200,'g','2个']],
+ steps:['橘子洗净擦干，串在筷子上。',
+        '开小火，在炉火上不停转动烤到表皮焦黑、冒热气（约 8 分钟）。',
+        '或放入 200℃ 烤箱烤 15 分钟。',
+        '剥皮趁热吃果肉，连橘络一起吃。'],
+ tip:'民间土方，对受凉引起的咳嗽确实管用。橘络（果肉外那层白丝）别撕掉，化痰靠它。'},
+
+{id:'des_nanguageng',name:'小米南瓜羹',kind:'des',src:'none',spicy:0,t:30,veg:0,kcal:180,prot:4,dark:true,se:'au,wi',gentle:true,
+ eff:'健脾养胃、补中益气。适合胃不好、病后恢复、老人小孩。',
+ warn:'南瓜含糖较高，糖尿病人控制份量；胃酸过多者少量。',
+ ing:[['小米',40,'g','约3汤匙'],['老南瓜',250,'g','约1/6个']],
+ steps:['小米淘洗，南瓜去皮切小块。',
+        '加 800ml 水，大火烧开转小火煮 25 分钟。',
+        '用勺子把南瓜压成泥，与小米粥搅匀。',
+        '煮到浓稠顺滑即可，不用放糖。'],
+ tip:'南瓜天然带甜，完全不用加糖。胃不舒服时喝这个比喝粥更养人。'},
+
+{id:'des_shanyaolamnei',name:'山药蓝莓奶冻',kind:'des',src:'none',spicy:0,t:120,veg:0,kcal:160,prot:5,dark:true,se:'su,au',gentle:true,
+ eff:'健脾益胃、抗氧化。适合想吃甜品又要控糖控油的人。',
+ warn:'需冷藏凝固，肠胃虚寒者少量；乳糖不耐受者换椰奶。',
+ ing:[['山药',150,'g','约1段'],['牛奶',200,'ml','约1盒'],['蓝莓',50,'g','约1小盒'],['吉利丁片',8,'g','约2片'],['蜂蜜',15,'g','1汤匙']],
+ steps:['山药去皮蒸 15 分钟，压成泥。',
+        '吉利丁片冷水泡软。',
+        '牛奶微热（不要煮沸），加吉利丁搅到融化，再加山药泥、蜂蜜搅匀。',
+        '过筛倒入杯中，冷藏 2 小时凝固。',
+        '顶部铺蓝莓。'],
+ tip:'比外面卖的奶冻少一半糖。山药让口感更绵密，蓝莓提供花青素。'},
+
+{id:'des_hongzao',name:'红枣桂圆银耳汤',kind:'des',src:'none',spicy:0,t:60,veg:0,kcal:190,prot:3,dark:true,se:'wi,au',gentle:true,
+ eff:'补血安神、养颜润肤。适合气血不足、面色萎黄、睡眠不好的人。',
+ warn:'偏温补，易上火、口干舌燥者少喝；感冒期间不宜。',
+ ing:[['干银耳',8,'g','约1/4朵'],['红枣',20,'g','5颗'],['桂圆肉',15,'g','约8粒'],['枸杞',5,'g','1小撮'],['冰糖',15,'g','1小块']],
+ steps:['银耳泡发 1 小时，撕小朵。',
+        '银耳加 800ml 水，小火炖 40 分钟出胶。',
+        '加红枣（去核）、桂圆肉再炖 15 分钟。',
+        '加冰糖、枸杞煮 5 分钟。'],
+ tip:'女生经期后连喝几天，气色会明显变好。桂圆偏温，容易上火的人减量。'},
+
+{id:'des_suanmei',name:'酸梅汤',kind:'des',src:'none',spicy:0,t:50,veg:0,kcal:100,prot:1,dark:true,se:'su',gentle:true,
+ eff:'生津止渴、消食解腻。夏天出汗多、食欲差、吃油腻后最合适。',
+ warn:'胃酸过多、胃溃疡者不宜空腹喝；含糖，糖尿病人少量。',
+ ing:[['乌梅',30,'g','约8颗'],['山楂干',15,'g','约8片'],['陈皮',3,'g','1小片'],['甘草',3,'g','2片'],['冰糖',60,'g','约1小把'],['干桂花',2,'g','1小撮']],
+ steps:['乌梅、山楂、陈皮、甘草冲洗，用 1500ml 水泡 30 分钟。',
+        '连水一起大火烧开，转小火煮 30 分钟。',
+        '加冰糖煮 5 分钟融化，关火撒干桂花焖 5 分钟。',
+        '滤渣，放凉冷藏。'],
+ tip:'比外面卖的酸梅汤干净得多。桂花最后放，香气才保留。'},
+
+{id:'des_shuangpinai',name:'姜撞奶',kind:'des',src:'none',spicy:0,t:15,veg:0,kcal:180,prot:8,dark:false,se:'wi',gentle:true,
+ eff:'温胃驱寒、补钙。适合怕冷、胃寒、需要补钙的人。',
+ warn:'姜偏温，上火者少食；牛奶蛋白过敏者不宜。',
+ ing:[['全脂牛奶',250,'ml','1盒'],['老姜',30,'g','约1大块'],['白糖',15,'g','1汤匙']],
+ steps:['老姜磨成姜蓉，用纱布挤出姜汁（约 25ml），分装两碗。',
+        '牛奶加糖加热到 70–75℃（锅边冒小泡、还没沸）。',
+        '把牛奶从 15cm 高处快速冲入姜汁碗中，不要搅拌。',
+        '静置 5 分钟自然凝固，勺子放上去不下沉即成功。'],
+ tip:'广式经典。成败关键：姜必须是老姜（淀粉酶够）、奶温 70–75℃、冲完不能搅。'},
+
+{id:'des_liou',name:'梨藕汁',kind:'des',src:'none',spicy:0,t:10,veg:0,kcal:80,prot:1,dark:false,se:'au',gentle:true,
+ eff:'清热润肺、凉血止血。适合秋燥干咳、咽干、鼻出血。',
+ warn:'性偏凉，脾胃虚寒、经期女性少喝；不要冰镇。',
+ ing:[['雪梨',200,'g','1个'],['莲藕',150,'g','约半节'],['蜂蜜',10,'g','1茶匙']],
+ steps:['雪梨去皮去核切块，莲藕去皮切块。',
+        '放入榨汁机，加 100ml 凉开水打匀。',
+        '过滤去渣（也可不过滤保留纤维）。',
+        '加蜂蜜调匀，现榨现喝。'],
+ tip:'秋天每天早上喝一杯，对干燥引起的咽干、干咳很有效。脾胃弱的喝温的。'},
+];
+
+/* ============================================================
+   价格表（元 / 500g，成都 2026-11 菜市场零售参考）
+   ============================================================ */
+const PRICE = {
+  '羊肉片':40,'猪瘦肉':14,'黄油':45,'沙姜粉':60,'老姜':6,'空心菜':5,'黄豆':6,
+  /* 肉禽蛋 */
+  '五花肉':13,'猪后腿肉':11,'后腿肉':11,'猪里脊':15,'猪肉片':13,'猪肉末':12,'猪肋排':21,'猪梅肉':16,
+  '腊肉':28,'猪肝':8,'猪蹄':15,'猪肚':18,'牛腩':36,'牛里脊':45,'牛肉末':38,'羊肉':42,
+  '鸡肉':14,'三黄鸡':13,'鸡腿肉':13,'鸡腿':13,'鸡胸肉':12,'乌鸡':22,'鸡杂':12,'鸭肉':12,
+  '鸡蛋':6.4,'蛋清':6.4,'咸鸭蛋':20,
+  /* 水产 */
+  '鲈鱼':20,'鲫鱼':9,'草鱼':7,'鱼头':9,'带鱼':18,'小黄鱼':16,'龙利鱼柳':22,
+  '鲜虾':28,'虾仁':35,'小河虾':20,'鲜贝':30,'虾皮':30,'紫菜':30,
+  /* 豆制品 */
+  '嫩豆腐':3,'老豆腐':3.5,'豆腐皮':7,'血旺':3,'魔芋':4,'豆腐乳':12,
+  /* 蔬菜 */
+  '大白菜':2,'莲花白':1.8,'包菜':1.8,'白萝卜':1.6,'胡萝卜':3.1,'莴笋':3.4,'莴笋尖':4,'儿菜':4,
+  '棒菜':3,'青笋':3.4,'豌豆尖':8,'油菜尖':5,'菠菜':7.6,'上海青':4.4,'小白菜':3.2,'青菜':3,
+  '芹菜':4.5,'蒜苗':5,'蒜薹':5,'韭菜':5.3,'韭黄':8,'茼蒿':5,'红油菜薹':5,'西兰花':6,
+  '土豆':2,'红薯':3.3,'山药':9,'莲藕':4.8,'冬瓜':1.8,'老南瓜':1.7,'番茄':3.4,'青椒':3.3,'洋葱':3,
+  '苦瓜':4.5,'丝瓜':5.5,'四季豆':6,'豇豆':6,'绿豆芽':3,'荷兰豆':12,'春笋':8,'鲜蚕豆':5,'板栗':12,
+  '香菇':9.9,'鲜香菇':9.9,'平菇':5,'金针菇':6,'花菜':3.6,'折耳根':8,'茄子':3.3,'黄瓜':3.2,
+  '甜玉米':3,'酸菜':4,'泡椒':6,'酸豇豆':7,'酸萝卜':4,'宜宾芽菜':4,'粉丝':8,'粉条':8,'干榛蘑':60,
+  '木耳':28,'干木耳':28,'生菜':5,'小番茄':6,'空心菜':5,'黄豆':6,
+  /* 主食 · 果 · 奶 */
+  '大米':3,'小米':6,'糯米粉':5,'面条':4,'抄手皮':4,'馄饨':8,'馒头':6,'紫薯馒头':8,'包子':12,
+  '全麦面包':12,'蒸肉米粉':8,'燕麦片':12,'豆浆':3,'牛奶':5.7,'全脂牛奶':6,
+  '苹果':6,'雪梨':5,'橘子':4,'柚子':4,'橙子':5,'柠檬':8,'黄桃':8,'蓝莓':20,'榨菜':6,
+  '花生米':8,'花生碎':12,'白芝麻':12,'火腿片':30,'沙拉酱':12,'啤酒':6,
+  /* 药膳干货 */
+  '黄芪':60,'当归':80,'党参':70,'玉竹':60,'沙参':50,'麦冬':70,'五指毛桃':40,'天麻':200,
+  '川芎':40,'白芷':30,'茯苓':50,'白术':60,'陈皮':40,'罗汉果':60,'菊花':80,'乌梅':30,'甘草':40,
+  '桂圆肉':40,'桑葚干':40,'干百合':60,'莲子':30,'芡实':25,'薏米':12,'红枣':12,'枸杞':40,
+  '黑豆':6,'核桃仁':30,'红衣花生':8,'干桂花':100,'山楂干':20,'干银耳':30,'红豆':8,'绿豆':6,
+  '黑芝麻粉':20,
+  /* 调味料 */
+  '郫县豆瓣':10,'甜面酱':8,'豆豉':8,'姜':6,'生姜':6,'姜蒜':7,'蒜':8,'葱':4,'大葱':4,'葱花':4,
+  '香菜':10,'小米辣':10,'花椒':50,'花椒面':50,'干辣椒':18,'辣椒面':15,'辣椒油':25,'香油':20,
+  '菜籽油':9,'橄榄油':40,'香醋':8,'生抽':8,'老抽':8,'蒸鱼豉油':12,'料酒':6,'白糖':4,'冰糖':6,
+  '红糖':8,'蜂蜜':40,'淀粉':4,'番茄酱':10,'芝麻酱':18,'蚝油':10,'叉烧酱':20,'剁椒':10,'味淋':25,
+  '黑胡椒':60,'白胡椒':40,'八角':30,'桂皮':25,'盐':2,'食盐':2,'面粉':3,'吉利丁片':80,
+  '酒酿':6,'小圆子':8
+};
+
+/* 食材归类 */
+const SEASON = new Set(['郫县豆瓣','甜面酱','豆豉','姜','生姜','姜蒜','蒜','葱','大葱','葱花','香菜','小米辣',
+  '花椒','花椒面','干辣椒','辣椒面','辣椒油','香油','菜籽油','橄榄油','香醋','生抽','老抽','蒸鱼豉油','料酒',
+  '白糖','冰糖','红糖','蜂蜜','淀粉','番茄酱','芝麻酱','蚝油','叉烧酱','剁椒','味淋','黑胡椒','白胡椒',
+  '八角','桂皮','盐','食盐','面粉','豆腐乳','白芝麻','吉利丁片','黄油','沙姜粉']);
+const MEATSET = new Set(['五花肉','猪后腿肉','后腿肉','猪里脊','猪肉片','猪肉末','猪肋排','猪梅肉','腊肉','猪肝',
+  '猪蹄','猪肚','牛腩','牛里脊','牛肉末','羊肉','鸡肉','三黄鸡','鸡腿肉','鸡腿','鸡胸肉','乌鸡','鸡杂','鸭肉',
+  '鸡蛋','蛋清','咸鸭蛋','羊肉片','猪瘦肉']);
+const FISHSET = new Set(['鲈鱼','鲫鱼','草鱼','鱼头','带鱼','小黄鱼','龙利鱼柳','鲜虾','虾仁','小河虾','鲜贝','虾皮','紫菜']);
+const TOFUSET = new Set(['嫩豆腐','老豆腐','豆腐皮','血旺','魔芋']);
+const HERB = new Set(['黄芪','当归','党参','玉竹','沙参','麦冬','五指毛桃','天麻','川芎','白芷','茯苓','白术',
+  '陈皮','罗汉果','菊花','乌梅','甘草','桂圆肉','桑葚干','干百合','莲子','芡实','薏米','红枣','枸杞',
+  '黑豆','核桃仁','红衣花生','干桂花','山楂干','干银耳','红豆','绿豆','黑芝麻粉','黄豆']);
+const STAPLE = new Set(['大米','小米','糯米粉','面条','抄手皮','馄饨','馒头','紫薯馒头','包子','全麦面包',
+  '蒸肉米粉','燕麦片','豆浆','牛奶','全脂牛奶','苹果','雪梨','橘子','柚子','橙子','柠檬','黄桃','蓝莓',
+  '榨菜','花生米','花生碎','火腿片','沙拉酱','啤酒','酒酿','小圆子']);
+const IGNORE = new Set(['温水']);
+const ALIAS = {'木耳':'干木耳','鲜香菇':'香菇','青笋':'莴笋','后腿肉':'猪后腿肉','生姜':'姜','老姜':'姜'};
+const normName = nm => ALIAS[nm] || nm;
+const isVegItem = nm => !SEASON.has(nm) && !MEATSET.has(nm) && !FISHSET.has(nm) && !TOFUSET.has(nm)
+  && !STAPLE.has(nm) && !HERB.has(nm) && !IGNORE.has(nm);
+
+/* ============================================================
+   配置
+   ============================================================ */
+const AVOID_OPTS = [
+  {k:'pork',   n:'猪肉',   src:['pork']},
+  {k:'beef',   n:'牛肉',   src:['beef']},
+  {k:'lamb',   n:'羊肉',   src:['lamb']},
+  {k:'poultry',n:'鸡鸭',   src:['chicken','duck']},
+  {k:'seafood',n:'鱼虾',   src:['fish','shrimp']},
+  {k:'egg',    n:'鸡蛋',   src:['egg']},
+  {k:'tofu',   n:'豆制品', src:['tofu']},
+  {k:'offal',  n:'内脏',   ing:['猪肝','鸡杂','猪肚']},
+  {k:'xh',     n:'香菜',   ing:['香菜']},
+  {k:'zeg',    n:'折耳根', ing:['折耳根']},
+  {k:'larou',  n:'腌腊制品', ing:['腊肉','咸鸭蛋','火腿片']},
+  {k:'spicyfood', n:'辣椒', ing:['小米辣']}
+];
+
+const CROWD_OPTS = [
+  {k:'elder', n:'有老人'},
+  {k:'kid',   n:'有小孩'},
+  {k:'bp',    n:'三高控油'},
+  {k:'preg',  n:'孕产哺乳'}
+];
+
+/* 人群规则：排除清单 + 偏好温和 */
+const CROWD_RULE = {
+  elder: {gentle:true, ex:['ganshaodaiyu','hongshaojiyu','jiyudoufutang','des_kaojuzi']},
+  kid:   {gentle:true, ex:['ganshaodaiyu','hongshaojiyu','kuguachaorou','kuguachaodan','duojiaoyutou']},
+  bp:    {gentle:false, ex:['suanmiaochaolarou','huangdouzhutitang','md_gouqi','paojiaozhugan','hongshaorou',
+                            'fenzhengrou','mizhikaorou','des_yancheng','des_shuangpinai','mizhikaorou']},
+  preg:  {gentle:false, ex:['des_shanzha','des_jiuniang','md_danggui','md_wuzhimaotao','des_hongzao',
+                            'md_sishen','des_suanmei','des_yancheng']}
+};
+
+const SEASON_NAME = {sp:'春', su:'夏', au:'秋', wi:'冬'};
+const SEASON_FULL = {sp:'春季', su:'夏季', au:'秋季', wi:'冬季'};
+const SEASON_TIP = {
+  sp:'春宜升发养肝：多吃春笋、韭菜、豌豆尖、蒜薹等芽苗菜，少酸多甘，配疏肝理气的汤水。',
+  su:'夏宜清补祛湿：多吃瓜类、绿豆、苦瓜，少油腻；蛋白质以鱼虾、豆制品为主，注意补水和电解质。',
+  au:'秋宜润燥养肺：多吃梨、莲藕、山药、银耳、百合，少辛辣；汤水要足，防秋燥伤津。',
+  wi:'冬宜温补藏精：适当吃羊肉、牛肉、根茎类，配萝卜消滞；喝温补汤水，但不宜大补猛补。'
+};
+const SEASON_COLOR = {sp:'#8FBF6A', su:'#FFB347', au:'#E8955A', wi:'#7FA8D8'};
+
+/* ============================================================
+   工具
+   ============================================================ */
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function shuffle(arr, rnd){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+/* bf / des 按 1 人份；热菜、汤、药膳按 2 人份一盘 */
+const baseOf = d => (d.kind === 'bf' || d.kind === 'des') ? 1 : 2;
+const pKcal = d => d.kcal / baseOf(d);
+const pProt = d => d.prot / baseOf(d);
+const pVeg  = d => d.veg / baseOf(d);
+
+const UNIT_TO_G = {'个':50, '块':300, '根':150, '棵':200, '片':10, '朵':15, '只':30};
+const toGrams = (q, unit) => (UNIT_TO_G[unit] || 1) * q;
+
+function scaledQty(name, q, n, base){
+  let f = n / base;
+  if(SEASON.has(name)) f = 0.55 + 0.45 * f;
+  let v = q * f;
+  if(isVegItem(name)) v *= 1.12;
+  return v;
+}
+function dishCost(d, n){
+  const base = baseOf(d);
+  let c = 0;
+  for(const [nm, q, u] of d.ing){
+    if(IGNORE.has(nm)) continue;
+    const p = PRICE[nm] ?? 6;
+    c += scaledQty(nm, toGrams(q, u), n, base) / 500 * p;
+  }
+  return c;
+}
+/* 当前季节（按公历月份） */
+function currentSeason(date){
+  const m = (date || new Date()).getMonth() + 1;
+  if(m >= 3 && m <= 5) return 'sp';
+  if(m >= 6 && m <= 8) return 'su';
+  if(m >= 9 && m <= 11) return 'au';
+  return 'wi';
+}
+
+/* ============================================================
+   配餐核心
+   ============================================================ */
+const BUDGET_CAP = {low:26, std:40, high:60};
+
+const CFG = {
+  people: 3, season: 'auto', spicy: 3, budget: 'std', mode: 'full',
+  avoid: new Set(), crowd: new Set()
+};
+
+function filterPool(cfg, season){
+  const avSrc = new Set(), avIng = new Set();
+  for(const o of AVOID_OPTS){
+    if(!cfg.avoid.has(o.k)) continue;
+    (o.src || []).forEach(x => avSrc.add(x));
+    (o.ing || []).forEach(x => avIng.add(x));
+  }
+  const crowdEx = new Set();
+  let wantGentle = false;
+  for(const c of cfg.crowd){
+    const r = CROWD_RULE[c];
+    if(!r) continue;
+    if(r.gentle) wantGentle = true;
+    (r.ex || []).forEach(x => crowdEx.add(x));
+  }
+  const cap = cfg.spicy === 0 ? 1 : cfg.spicy;
+
+  return DB.filter(d => {
+    if(d.spicy > cap) return false;
+    if(avSrc.has(d.src)) return false;
+    for(const it of d.ing) if(avIng.has(it[0])) return false;
+    if(crowdEx.has(d.id)) return false;
+    // 季节：all 或 命中当季
+    if(d.se !== 'all' && !d.se.split(',').includes(season)) return false;
+    // 家里有老人小孩时，麻辣重的菜少上
+    if(wantGentle && d.spicy >= 3 && d.kind !== 'des') return false;
+    return true;
+  });
+}
+
+function buildPlanOnce(cfg, seed){
+  const rnd = mulberry32(seed);
+  const season = cfg.season === 'auto' ? currentSeason() : cfg.season;
+  const pool = filterPool(cfg, season);
+  const by = k => pool.filter(d => d.kind === k);
+
+  let meats = by('meat'), halves = by('half'), vegs = by('veg');
+  let soups = by('soup'), bfs = by('bf'), meds = by('med'), desserts = by('des');
+
+  /* 池子太小则放宽季节限制 */
+  const need = {meat:14, half:4, veg:14, soup:7, bf:7, med:2, des:4};
+  if(meats.length < 6 || vegs.length < 8 || soups.length < 3){
+    const relaxed = DB.filter(d => d.spicy <= (cfg.spicy === 0 ? 1 : cfg.spicy)
+      && !avSrcCheck(cfg, d));
+    const rv = k => relaxed.filter(d => d.kind === k);
+    if(meats.length < 6) meats = rv('meat');
+    if(halves.length < 3) halves = rv('half');
+    if(vegs.length < 8) vegs = rv('veg');
+    if(soups.length < 3) soups = rv('soup');
+    if(bfs.length < 3) bfs = rv('bf');
+    if(meds.length < 1) meds = rv('med');
+    if(desserts.length < 2) desserts = rv('des');
+  }
+
+  const used = new Set();
+  const takeFrom = (arr, ex) => {
+    const e = ex || used;
+    for(const d of arr) if(!e.has(d.id)){ e.add(d.id); return d; }
+    const cand = arr.filter(d => !e.has(d.id));
+    if(cand.length) return cand[Math.floor(rnd() * cand.length)];
+    return arr.length ? arr[Math.floor(rnd() * arr.length)] : null;
+  };
+
+  /* 荤菜：一周吃鱼 2~3 次 */
+  const fish = shuffle(meats.filter(d => d.src === 'fish'), rnd);
+  const nonFish = shuffle(meats.filter(d => d.src !== 'fish'), rnd);
+  const halfSh = shuffle(halves, rnd);
+
+  const fishWant = fish.length ? Math.min(fish.length, rnd() < 0.5 ? 2 : 3) : 0;
+  const dayOrder = shuffle([0,1,2,3,4,5,6], rnd);
+  const fishPlan = {};
+  for(let i = 0; i < fishWant; i++){
+    const dd = dayOrder[i];
+    fishPlan[dd] = {meal: rnd() < 0.55 ? 'lunch' : 'dinner', dish: fish[i]};
+    used.add(fish[i].id);
+  }
+  const halfN = Math.min(halves.length, rnd() < 0.5 ? 2 : 3);
+  const halfDays = new Set(dayOrder.slice(3, 3 + halfN));
+
+  const lunchMeat = [], dinnerMeat = [];
+  for(let d = 0; d < 7; d++){
+    const fp = fishPlan[d];
+    lunchMeat[d] = (fp && fp.meal === 'lunch') ? fp.dish : takeFrom(nonFish);
+    if(fp && fp.meal === 'dinner') dinnerMeat[d] = fp.dish;
+    else if(halfDays.has(d) && halfSh.length) dinnerMeat[d] = takeFrom(halfSh);
+    else dinnerMeat[d] = takeFrom(nonFish) || takeFrom(halfSh);
+  }
+
+  /* 素菜：深色/浅色分开抽，保证每天有深色 */
+  const darkV = shuffle(vegs.filter(d => d.dark), rnd);
+  const lightV = shuffle(vegs.filter(d => !d.dark), rnd);
+  let di = 0, li = 0;
+  const nextDark = () => darkV.length ? darkV[di++ % darkV.length] : null;
+  const nextLight = () => lightV.length ? lightV[li++ % lightV.length] : null;
+  const lunchVeg = [], dinnerVeg = [];
+  for(let d = 0; d < 7; d++){
+    lunchVeg[d] = nextDark() || nextLight();
+    dinnerVeg[d] = nextDark() || nextLight();
+    if(lunchVeg[d] && dinnerVeg[d] && lunchVeg[d].id === dinnerVeg[d].id){
+      dinnerVeg[d] = nextLight() || dinnerVeg[d];
+    }
+  }
+
+  /* 汤 + 药膳：一周 2 天用药膳汤替换普通汤 */
+  const soupPool = shuffle(soups, rnd);
+  // 药膳：当季不足 2 道时放宽到全年可用（药膳重在调理，不必严格按季）
+  let medPool = shuffle(meds.filter(d => d.kind === 'med'), rnd);
+  if(medPool.length < 2){
+    const allMed = DB.filter(d => d.kind === 'med' && !avSrcCheck(cfg, d)
+      && d.spicy <= (cfg.spicy === 0 ? 1 : cfg.spicy));
+    medPool = shuffle(allMed, rnd);
+  }
+  const medDays = new Set(medPool.length ? dayOrder.slice(0, Math.min(2, medPool.length)) : []);
+  const soupsOut = [];
+  const usedMed = new Set();
+  const pickMed = dd => {
+    const s1 = dinnerMeat[dd] && dinnerMeat[dd].src;
+    const s2 = lunchMeat[dd] && lunchMeat[dd].src;
+    for(let i = 0; i < medPool.length; i++){
+      const cand = medPool[i];
+      if(usedMed.has(cand.id)) continue;
+      // 当天已经吃过同类主料就跳过，避免一顿两个鱼头
+      if(cand.src !== 'none' && (cand.src === s1 || cand.src === s2)) continue;
+      usedMed.add(cand.id);
+      return cand;
+    }
+    const fb = medPool.find(x => !usedMed.has(x.id)) || medPool[0];
+    if(fb) usedMed.add(fb.id);
+    return fb;
+  };
+  for(let d = 0; d < 7; d++){
+    if(medDays.has(d)) soupsOut[d] = pickMed(d) || (soupPool[d % Math.max(1, soupPool.length)] || null);
+    else soupsOut[d] = soupPool[d % Math.max(1, soupPool.length)] || null;
+  }
+
+  /* 早餐 */
+  const bfPool = shuffle(bfs, rnd);
+  const bfOut = [];
+  for(let d = 0; d < 7; d++) bfOut[d] = cfg.mode === 'full' ? (bfPool[d % Math.max(1, bfPool.length)] || null) : null;
+
+  /* 加餐：甜品 3 天 + 水果 4 天 */
+  const desPool = shuffle(desserts, rnd);
+  const desDays = new Set(dayOrder.slice(0, Math.min(3, desPool.length)));
+  const snackOut = [];
+  let desIdx = 0;
+  for(let d = 0; d < 7; d++){
+    if(desDays.has(d) && desPool[desIdx]) snackOut[d] = {type:'des', dish: desPool[desIdx++]};
+    else snackOut[d] = {type:'fruit', dish: null};
+  }
+
+  /* 组装 */
+  const DOW = ['周一','周二','周三','周四','周五','周六','周日'];
+  const days = DOW.map((name, i) => {
+    let lunch = [lunchMeat[i], lunchVeg[i]].filter(Boolean);
+    if(lunch.length < 2){
+      const alt = vegs.find(v => v.id !== (lunch[0] && lunch[0].id));
+      if(alt) lunch.push(alt);
+    }
+    const dinner = [dinnerMeat[i], dinnerVeg[i], soupsOut[i]].filter(Boolean);
+    return {
+      dow: name,
+      bf: bfOut[i] ? [bfOut[i]] : [],
+      lunch, dinner,
+      snack: snackOut[i]
+    };
+  });
+
+  const FRUITS = ['苹果','橘子','柚子','雪梨','橙子','香蕉','苹果'];
+  const fruitPlan = DOW.map((_, i) => FRUITS[(i + Math.floor(rnd() * 7)) % FRUITS.length]);
+
+  const fixed = { ricePerDay:150, fruitPerDay:250, nutPerDay:10, milkPerDay:250 };
+
+  return { days, fixed, fruitPlan, season, cfg };
+}
+
+function avSrcCheck(cfg, d){
+  const avSrc = new Set(), avIng = new Set();
+  for(const o of AVOID_OPTS){
+    if(!cfg.avoid.has(o.k)) continue;
+    (o.src || []).forEach(x => avSrc.add(x));
+    (o.ing || []).forEach(x => avIng.add(x));
+  }
+  if(avSrc.has(d.src)) return true;
+  for(const it of d.ing) if(avIng.has(it[0])) return true;
+  return false;
+}
+
+/* ============================================================
+   营养与成本汇总（营养＝人均/天，成本＝全家/天）
+   ============================================================ */
+function analyze(plan){
+  const n = plan.cfg.people;
+  const RICE_KCAL = 3.46, RICE_PROT = 0.074;
+  const MILK_KCAL = 0.64, MILK_PROT = 0.032;
+
+  const days = plan.days.map(d => {
+    const all = [...d.bf, ...d.lunch, ...d.dinner];
+    let kcal = 0, prot = 0, veg = 0, darkVeg = 0, cost = 0;
+    for(const dish of all){
+      kcal += pKcal(dish); prot += pProt(dish); veg += pVeg(dish);
+      if(dish.dark) darkVeg += pVeg(dish);
+      cost += dishCost(dish, n);
+    }
+    // 加餐
+    if(d.snack && d.snack.dish){
+      kcal += pKcal(d.snack.dish);
+      prot += pProt(d.snack.dish);
+      if(d.snack.dish.dark) darkVeg += pVeg(d.snack.dish);
+      veg += pVeg(d.snack.dish);
+      cost += dishCost(d.snack.dish, n);
+    }
+    const F = plan.fixed;
+    kcal += F.ricePerDay * RICE_KCAL + F.fruitPerDay * 0.5 + F.nutPerDay * 5.8 + F.milkPerDay * MILK_KCAL;
+    prot += F.ricePerDay * RICE_PROT + F.fruitPerDay * 0.006 + F.nutPerDay * 0.2 + F.milkPerDay * MILK_PROT;
+    cost += F.ricePerDay / 500 * PRICE['大米'] * n
+          + F.fruitPerDay / 500 * 5.5 * n
+          + F.nutPerDay / 500 * 30 * n
+          + F.milkPerDay / 500 * PRICE['牛奶'] * n;
+    return {
+      dow: d.dow, bf: d.bf, lunch: d.lunch, dinner: d.dinner, snack: d.snack,
+      kcal: Math.round(kcal), prot: Math.round(prot), veg: Math.round(veg),
+      darkRatio: veg > 0 ? darkVeg / veg : 0, cost
+    };
+  });
+
+  const totalCost = days.reduce((s, d) => s + d.cost, 0);
+  const avgKcal = days.reduce((s, d) => s + d.kcal, 0) / 7;
+  const avgProt = days.reduce((s, d) => s + d.prot, 0) / 7;
+  const avgVeg  = days.reduce((s, d) => s + d.veg, 0) / 7;
+  const avgDark = days.reduce((s, d) => s + d.darkRatio, 0) / 7;
+
+  const ings = new Set();
+  plan.days.forEach(d => [...d.bf, ...d.lunch, ...d.dinner].forEach(dish => dish.ing.forEach(it => {
+    if(!IGNORE.has(it[0]) && !SEASON.has(it[0])) ings.add(it[0]);
+  })));
+
+  let fishTimes = 0, medCount = 0;
+  plan.days.forEach(d => {
+    [...d.lunch, ...d.dinner].forEach(dish => {
+      if(dish.src === 'fish') fishTimes++;
+      if(dish.kind === 'med') medCount++;
+    });
+    if(d.snack && d.snack.dish && d.snack.dish.kind === 'des') medCount += 0;
+  });
+
+  return { days, totalCost, avgKcal, avgProt, avgVeg, avgDark, ingCount: ings.size, fishTimes, medCount };
+}
+
+/* 采购清单 */
+function buildShopping(plan){
+  const n = plan.cfg.people;
+  const map = new Map();
+  plan.days.forEach(d => {
+    const all = [...d.bf, ...d.lunch, ...d.dinner];
+    if(d.snack && d.snack.dish) all.push(d.snack.dish);
+    all.forEach(dish => {
+      const base = baseOf(dish);
+      dish.ing.forEach(([nm0, q, u]) => {
+        if(IGNORE.has(nm0)) return;
+        const nm = normName(nm0);
+        const v = scaledQty(nm0, toGrams(q, u), n, base);
+        if(!map.has(nm)) map.set(nm, {q:0, season: SEASON.has(nm0)});
+        map.get(nm).q += v;
+      });
+    });
+  });
+  const add = (nm, q) => {
+    if(!map.has(nm)) map.set(nm, {q:0, season:false});
+    map.get(nm).q += q;
+  };
+  add('大米', plan.fixed.ricePerDay * n * 7 * 1.02);
+  add('花生米', plan.fixed.nutPerDay * n * 7);
+  add('牛奶', plan.fixed.milkPerDay * n * 7);
+  (plan.fruitPlan || []).forEach(f => add(normName(f), plan.fixed.fruitPerDay * n * 1.05));
+
+  const groups = {'肉禽蛋':[], '水产':[], '蔬菜':[], '豆制品':[], '主食·果·奶':[], '药膳干货':[], '调味料':[]};
+  let total = 0;
+  for(const [nm, o] of map){
+    const p = PRICE[nm] ?? 6;
+    const step = o.q < 100 ? 10 : o.q < 300 ? 25 : 50;
+    const q = Math.ceil(o.q / step) * step;
+    const money = q / 500 * p;
+    total += money;
+    let g = '蔬菜';
+    if(o.season) g = '调味料';
+    else if(MEATSET.has(nm)) g = '肉禽蛋';
+    else if(FISHSET.has(nm)) g = '水产';
+    else if(TOFUSET.has(nm)) g = '豆制品';
+    else if(HERB.has(nm)) g = '药膳干货';
+    else if(STAPLE.has(nm)) g = '主食·果·奶';
+    groups[g].push({name: nm, q, money});
+  }
+  for(const k in groups) groups[k].sort((a, b) => b.money - a.money);
+  return {groups, total};
+}
+
+/* ============================================================
+   渲染
+   ============================================================ */
+const SPICY_LABEL = ['不辣','微辣','中辣','麻辣'];
+const DAY_COLOR = ['#FF8F52','#FFB347','#E8955A','#F5C26B','#A3C46E','#E86B7A','#E85A2A'];
+
+let CURRENT = null, CURRENT_SHOP = null, CURRENT_SEED = 0, swapTargetDay = 0;
+
+function dishHTML(d, mealKey, idx){
+  const sp = d.spicy >= 3 ? '<span class="w" title="麻辣">辣辣</span>'
+           : d.spicy === 2 ? '<span class="w" title="中辣">辣</span>' : '';
+  const fh = d.src === 'fish' ? '<span class="f" title="水产">鱼</span>' : '';
+  const mh = d.kind === 'med' ? '<span class="m" title="药膳">养</span>' : '';
+  return `<div class="dish-row" style="position:relative">
+    <span class="dish" data-dish="${d.id}">${d.name}</span>${sp}${fh}${mh}
+    <button class="swap no-print" data-swap="1" data-meal="${mealKey}" data-idx="${idx}" title="换一道">⇄</button>
+  </div>`;
+}
+
+function render(plan, seed){
+  CURRENT = plan; CURRENT_SEED = seed;
+  const a = analyze(plan);
+  const shop = buildShopping(plan);
+  CURRENT_SHOP = shop;
+  const n = plan.cfg.people;
+  const season = plan.season;
+
+  const kcalOk = plan.cfg.mode === 'nobf' ? (a.avgKcal >= 1350 && a.avgKcal <= 2100)
+                                          : (a.avgKcal >= 1700 && a.avgKcal <= 2400);
+  const protOk = a.avgProt >= 55;
+  const vegOk  = a.avgVeg >= 300;
+  const darkOk = a.avgDark >= 0.45;
+  const fishOk = a.fishTimes >= 2;
+  const ingOk  = a.ingCount >= 25;
+
+  const stat = (cls, k, v, unit, note) =>
+    `<div class="stat ${cls}"><div class="k">${k}</div>
+      <div class="v">${v}<small>${unit || ''}</small></div>
+      <div class="n">${note}</div></div>`;
+
+  let html = `<div class="summary">
+    ${stat(kcalOk?'g':'o','日均热量',Math.round(a.avgKcal),'kcal',kcalOk?'✓ 1800–2200 区间':'⚠ 偏离参考区间')}
+    ${stat(protOk?'g':'o','日均蛋白质',Math.round(a.avgProt),'g',protOk?'✓ 达标（≥55g）':'⚠ 偏低，加蛋奶豆')}
+    ${stat(vegOk?'t':'o','日均蔬菜',Math.round(a.avgVeg),'g 生重',vegOk?'✓ 达标（≥300g）':'⚠ 不足 300g')}
+    ${stat(darkOk?'t':'o','深色蔬菜',Math.round(a.avgDark*100),'%',darkOk?'✓ 占比良好':'⚠ 建议过半')}
+    ${stat(fishOk?'g':'o','一周吃鱼',a.fishTimes,'次',fishOk?'✓ 指南建议 2–3 次':'⚠ 建议 2 次以上')}
+    ${stat('r','一周食材',a.ingCount,'种',ingOk?'✓ ≥25 种，够多样':'⚠ 建议 ≥25 种')}
+    ${stat('o','药膳/食疗',a.medCount,'次',a.medCount?'✓ 按季节安排':'')}
+    ${stat('','一周食材总额','¥'+shop.total.toFixed(0),'',`${n} 人 · 人均 ¥${(shop.total/n/7).toFixed(1)}/天`)}
+  </div>`;
+
+  html += '<div class="days">';
+  a.days.forEach((d, i) => {
+    const mealBlock = (label, cls, arr, mealKey) => {
+      if(!arr.length) return '';
+      const rows = arr.map((dish, idx) => dishHTML(dish, mealKey, idx)).join('');
+      const kc = Math.round(arr.reduce((s, x) => s + pKcal(x), 0));
+      return `<div class="meal">
+        <div class="meal-l"><span class="tag ${cls}">${label}</span><span class="k">${kc} kcal</span></div>
+        ${rows}
+      </div>`;
+    };
+    let snackBlock = '';
+    if(d.snack){
+      if(d.snack.dish){
+        const s = d.snack.dish;
+        snackBlock = `<div class="meal">
+          <div class="meal-l"><span class="tag b">加餐</span><span class="k">${Math.round(pKcal(s))} kcal</span></div>
+          <div class="dish-row"><span class="dish" data-dish="${s.id}">${s.name}</span>
+            <span class="m" style="font-size:10px;color:#B7D77E;font-weight:800">食疗</span>
+          </div>
+        </div>`;
+      } else {
+        snackBlock = `<div class="meal">
+          <div class="meal-l"><span class="tag b">加餐</span><span class="k">水果 250g</span></div>
+          <div style="font-size:13px;color:var(--text2)">${plan.fruitPlan[i]} 约 1–2 个</div>
+        </div>`;
+      }
+    }
+
+    html += `<div class="day" style="animation-delay:${i*45}ms">
+      <div class="day-h">
+        <div class="dn"><i style="background:${DAY_COLOR[i]};color:${DAY_COLOR[i]}"></i>${d.dow}</div>
+        <div class="dk">${d.kcal} kcal · 蛋白 <b>${d.prot}g</b> · 菜 ${d.veg}g</div>
+      </div>
+      <div class="meals">
+        ${mealBlock('早餐','b', d.bf, 'bf')}
+        ${mealBlock('午餐','l', d.lunch, 'lunch')}
+        ${mealBlock('晚餐','', d.dinner, 'dinner')}
+        ${snackBlock}
+      </div>
+      <div class="day-f">
+        <span>深色菜 <b>${Math.round(d.darkRatio*100)}%</b></span>
+        <span>成本 <b>¥${d.cost.toFixed(0)}</b></span>
+        <span>人均 <b>¥${(d.cost/n).toFixed(0)}</b></span>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  /* 采购清单 */
+  html += `<section class="panel" style="margin-top:26px">
+    <div class="p-head">
+      <div class="p-title"><span class="idx">02</span>一周采购清单 · ${n} 人份</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--dim)">
+        合计 <b style="color:var(--accent);font-size:15px">¥${shop.total.toFixed(0)}</b>
+        <span style="color:var(--dim2)"> · 已按采购粒度取整</span>
+      </div>
+    </div>
+    <div class="p-body"><div class="shop-cats">`;
+  for(const [cat, list] of Object.entries(shop.groups)){
+    if(!list.length) continue;
+    const sum = list.reduce((s, x) => s + x.money, 0);
+    html += `<div class="shop-cat">
+      <h4>${cat}<em>¥${sum.toFixed(0)}</em></h4>
+      <div class="shop-list">
+        ${list.map(x => `<div class="shop-item">
+          <span class="nm">${x.name}</span>
+          <span class="qt">${x.q >= 1000 ? (x.q/500).toFixed(1)+' 斤' : x.q+' g'}</span>
+          <span class="pr">¥${x.money.toFixed(1)}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+  html += `</div></div></section>`;
+
+  document.getElementById('result').innerHTML = html;
+  renderAppendix(season);
+  bindEvents();
+}
+
+/* 附录：药膳 + 甜品食疗 */
+function renderAppendix(season){
+  const inS = d => d.se === 'all' || d.se.split(',').includes(season);
+  const meds = DB.filter(d => d.kind === 'med');
+  const dess = DB.filter(d => d.kind === 'des');
+  const sortS = arr => arr.slice().sort((a, b) => (inS(b) ? 1 : 0) - (inS(a) ? 1 : 0));
+
+  const card = d => `<div class="des-card" data-dish="${d.id}">
+      <h5>${d.name}${inS(d) ? '<span class="eff" style="background:rgba(255,122,61,.14);border-color:rgba(255,122,61,.3);color:#FFB88F">当季</span>' : ''}</h5>
+      <p style="color:#C4DE96;font-size:12px;margin-bottom:7px">${d.eff || ''}</p>
+      <p>${d.steps[0].slice(0, 40)}…</p>
+      ${d.warn ? `<div class="warn">${d.warn}</div>` : ''}
+    </div>`;
+
+  let html = `
+  <div class="sec-title"><span class="idx">03</span>药膳汤方 · ${SEASON_FULL[season]}养生
+    <span class="line"></span>
+    <span style="font-size:12px;font-weight:500;color:var(--dim)">每周自动安排 2 次</span>
+  </div>
+  <div class="des-grid">${sortS(meds).map(card).join('')}</div>
+
+  <div class="sec-title"><span class="idx">04</span>甜品 · 食疗方
+    <span class="line"></span>
+    <span style="font-size:12px;font-weight:500;color:var(--dim)">每周自动安排 3 次加餐</span>
+  </div>
+  <div class="des-grid">${sortS(dess).map(card).join('')}</div>`;
+
+  document.getElementById('appendix').innerHTML = html;
+  document.querySelectorAll('.des-card').forEach(el => {
+    el.onclick = () => openDish(el.dataset.dish);
+  });
+}
+
+/* ============================================================
+   事件
+   ============================================================ */
+function bindEvents(){
+  document.querySelectorAll('.dish').forEach(el => {
+    el.onclick = () => openDish(el.dataset.dish);
+  });
+  document.querySelectorAll('[data-swap]').forEach(btn => {
+    btn.onclick = e => {
+      e.stopPropagation();
+      const card = btn.closest('.day');
+      const cards = Array.from(document.querySelectorAll('.day'));
+      swapTargetDay = cards.indexOf(card);
+      swapDish(btn.dataset.meal, +btn.dataset.idx);
+    };
+  });
+}
+
+function swapDish(mealKey, idx){
+  const plan = CURRENT;
+  const day = plan.days[swapTargetDay];
+  if(!day) return;
+  const arr = day[mealKey];
+  const cur = arr[idx];
+  if(!cur) return;
+
+  const pool = filterPool(plan.cfg, plan.season).filter(d => d.kind === cur.kind && d.id !== cur.id);
+  const usedIds = new Set();
+  [...day.bf, ...day.lunch, ...day.dinner].forEach(d => usedIds.add(d.id));
+  if(day.snack && day.snack.dish) usedIds.add(day.snack.dish.id);
+  let cands = pool.filter(d => !usedIds.has(d.id));
+  if(!cands.length) cands = pool;
+  if(!cands.length){ toast('这个条件下没有可替换的菜了'); return; }
+
+  const pick = cands[Math.floor(Math.random() * cands.length)];
+  arr[idx] = pick;
+  render(plan, CURRENT_SEED + Math.floor(Math.random() * 9999));
+  toast('已换成：' + pick.name);
+}
+
+/* 菜品详情 */
+function openDish(id){
+  const d = DB.find(x => x.id === id);
+  if(!d) return;
+  const n = CURRENT ? CURRENT.cfg.people : CFG.people;
+  const base = baseOf(d);
+
+  const ing = d.ing.filter(x => !IGNORE.has(x[0])).map(([nm, q, u, life]) => {
+    let show, lifeTxt = life || '';
+    if(u === 'g' || u === 'ml'){
+      const v = scaledQty(nm, toGrams(q, u), n, base);
+      show = v >= 1000 ? (v/1000).toFixed(1) + ' kg' : Math.round(v/5)*5 + ' g';
+    } else {
+      const cnt = Math.max(1, Math.round(q * n / base));
+      show = cnt + ' ' + u;
+      if(!lifeTxt) lifeTxt = '约 ' + Math.round(toGrams(q, u) * n / base) + ' g';
+    }
+    return `<li><span>${nm}</span><span class="amt"><b>${show}</b>${lifeTxt ? `<s>${lifeTxt}</s>` : ''}</span></li>`;
+  }).join('');
+
+  const tags = [
+    `<span class="mtag ${d.spicy >= 2 ? 'hot' : ''}">${SPICY_LABEL[d.spicy]}</span>`,
+    `<span class="mtag">${d.t} 分钟</span>`,
+    `<span class="mtag">约 ${Math.round(pKcal(d))} kcal / 人</span>`,
+    `<span class="mtag ok">蛋白 ${pProt(d).toFixed(1)} g / 人</span>`,
+    d.veg > 0 ? `<span class="mtag">蔬菜 ${Math.round(pVeg(d))} g / 人</span>` : '',
+    d.dark ? `<span class="mtag ok">深色蔬菜</span>` : '',
+    d.gentle ? `<span class="mtag ok">温和易嚼</span>` : '',
+    `<span class="mtag se">${d.se === 'all' ? '全年' : d.se.split(',').map(s => SEASON_NAME[s]).join('·') + '季'}</span>`,
+    d.kind === 'med' ? `<span class="mtag se">药膳</span>` : '',
+    d.kind === 'des' ? `<span class="mtag se">食疗</span>` : '',
+    `<span class="mtag">¥${dishCost(d, n).toFixed(1)} / ${n} 人份</span>`
+  ].filter(Boolean).join('');
+
+  document.getElementById('modal').innerHTML = `
+    <div class="m-h">
+      <button class="m-close" onclick="closeDish()">✕</button>
+      <h3>${d.name}</h3>
+      <div class="m-tags">${tags}</div>
+    </div>
+    <div class="m-b">
+      ${d.eff ? `<div class="eff-box"><b>食养作用：</b>${d.eff}</div>` : ''}
+      <p class="m-sec">用料 · ${n} 人份（括号内为买菜时的生活单位估量）</p>
+      <ul class="ing">${ing}</ul>
+      <p class="m-sec">做法</p>
+      <ol class="steps">${d.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="tip-box"><b>关键点：</b>${d.tip}</div>
+      ${d.warn ? `<div class="eff-box" style="border-left-color:#E85A2A;background:rgba(232,90,42,.09);color:#F2BFA8;margin-top:14px;margin-bottom:0"><b style="color:#FF9256">注意：</b>${d.warn}</div>` : ''}
+    </div>`;
+  document.getElementById('mask').classList.add('show');
+}
+function closeDish(){ document.getElementById('mask').classList.remove('show'); }
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1900);
+}
+
+/* 复制 */
+function copyText(txt){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(() => toast('采购清单已复制'), () => fallbackCopy(txt));
+  } else fallbackCopy(txt);
+}
+function fallbackCopy(txt){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast(ok ? '采购清单已复制' : '复制受限，请手动选中清单文本');
+  }catch(e){ toast('复制受限，请手动选中清单文本'); }
+}
+
+/* ============================================================
+   配置面板
+   ============================================================ */
+function seg(el, opts, cur, onPick){
+  el.innerHTML = opts.map(o =>
+    `<button data-v="${o.v}" class="${o.v === cur ? 'on' : ''}">${o.n}</button>`).join('');
+  el.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      el.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      onPick(b.dataset.v);
+    };
+  });
+}
+
+function initConfig(){
+  const kindCount = k => DB.filter(d => d.kind === k).length;
+  document.getElementById('metaCount').textContent =
+    DB.length + ' 道（荤' + kindCount('meat') + ' · 半荤' + kindCount('half') +
+    ' · 素' + kindCount('veg') + ' · 汤' + kindCount('soup') + ' · 早' + kindCount('bf') +
+    ' · 药膳' + kindCount('med') + ' · 食疗' + kindCount('des') + '）';
+
+  seg(document.getElementById('segPeople'), [1,2,3,4,5,6].map(v => ({v, n: v+'人'})), CFG.people,
+    v => { CFG.people = +v; regen(); });
+
+  seg(document.getElementById('segSeason'),
+    [{v:'auto',n:'自动'},{v:'sp',n:'春'},{v:'su',n:'夏'},{v:'au',n:'秋'},{v:'wi',n:'冬'}], CFG.season,
+    v => { CFG.season = v; regen(); });
+
+  seg(document.getElementById('segSpicy'),
+    [{v:0,n:'不辣'},{v:1,n:'微辣'},{v:2,n:'中辣'},{v:3,n:'麻辣'}], CFG.spicy,
+    v => { CFG.spicy = +v; regen(); });
+
+  seg(document.getElementById('segBudget'),
+    [{v:'low',n:'经济'},{v:'std',n:'标准'},{v:'high',n:'宽松'}], CFG.budget,
+    v => { CFG.budget = v; regen(); });
+
+  seg(document.getElementById('segMode'),
+    [{v:'full',n:'含早餐'},{v:'nobf',n:'只午晚餐'}], CFG.mode,
+    v => { CFG.mode = v; regen(); });
+
+  const cc = document.getElementById('chipsCrowd');
+  cc.innerHTML = CROWD_OPTS.map(o => `<div class="chip" data-k="${o.k}">${o.n}</div>`).join('');
+  cc.querySelectorAll('.chip').forEach(c => {
+    c.onclick = () => {
+      const k = c.dataset.k;
+      if(CFG.crowd.has(k)){ CFG.crowd.delete(k); c.classList.remove('on','g'); }
+      else { CFG.crowd.add(k); c.classList.add('on','g'); }
+      regen();
+    };
+  });
+
+  const cw = document.getElementById('chipsAvoid');
+  cw.innerHTML = AVOID_OPTS.map(o => `<div class="chip" data-k="${o.k}">${o.n}</div>`).join('');
+  cw.querySelectorAll('.chip').forEach(c => {
+    c.onclick = () => {
+      const k = c.dataset.k;
+      if(CFG.avoid.has(k)){ CFG.avoid.delete(k); c.classList.remove('on'); }
+      else { CFG.avoid.add(k); c.classList.add('on'); }
+      regen();
+    };
+  });
+}
+
+/* 季节提示条 */
+function renderSeasonBar(season){
+  const bar = document.getElementById('seasonBar');
+  bar.innerHTML = Object.keys(SEASON_FULL).map(s =>
+    `<div class="season-chip ${s === season ? 'on' : ''}"><span class="d"></span>${SEASON_FULL[s]}</div>`
+  ).join('') + `<div style="font-size:12.5px;color:var(--dim);line-height:1.6;flex:1;min-width:250px">${SEASON_TIP[season]}</div>`;
+  document.getElementById('metaSeason').textContent = SEASON_FULL[season] + ' · ' + new Date().toLocaleDateString('zh-CN');
+}
+
+/* ============================================================
+   生成入口
+   ============================================================ */
+function regen(seed){
+  const n = CFG.people;
+  const cap = BUDGET_CAP[CFG.budget] * n * 7;
+  let best = null, bestScore = Infinity;
+  const s0 = seed ?? Math.floor(Math.random() * 1e9);
+
+  for(let k = 0; k < 60; k++){
+    let plan;
+    try { plan = buildPlanOnce(CFG, s0 + k * 7919); } catch(e){ continue; }
+    const a = analyze(plan);
+    const t = buildShopping(plan).total;
+    const over = Math.max(0, t - cap);
+    const under = Math.max(0, cap * 0.70 - t);
+    const kcalPenalty = Math.abs(a.avgKcal - 1950) / 1000;
+    const score = over / cap * 10 + under / cap * 4 + kcalPenalty;
+    if(score < bestScore){ bestScore = score; best = {plan, seed: s0 + k*7919}; }
+    if(over === 0 && score < 0.35) break;
+  }
+  if(!best){ toast('当前条件下配不出方案，试试放宽忌口'); return; }
+  renderSeasonBar(best.plan.season);
+  render(best.plan, best.seed);
+}
+
+document.getElementById('btnGen').onclick = () => { regen(); toast('已按当季生成'); };
+document.getElementById('btnReroll').onclick = () => { regen(); toast('换了一版搭配'); };
+document.getElementById('btnPrint').onclick = () => window.print();
+
+document.getElementById('btnCopy').onclick = () => {
+  if(!CURRENT_SHOP){ toast('先点生成'); return; }
+  let txt = `【一周采购清单 · ${CFG.people}人份】合计约 ¥${CURRENT_SHOP.total.toFixed(0)}\n\n`;
+  for(const [cat, list] of Object.entries(CURRENT_SHOP.groups)){
+    if(!list.length) continue;
+    txt += `— ${cat} —\n`;
+    list.forEach(x => { txt += `${x.name}\t${x.q >= 1000 ? (x.q/500).toFixed(1)+'斤' : x.q+'g'}\n`; });
+    txt += '\n';
+  }
+  copyText(txt);
+};
+
+document.getElementById('mask').onclick = e => { if(e.target.id === 'mask') closeDish(); };
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDish(); });
+
+/* 启动 */
+initConfig();
+regen(20261123);
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# 凭证与本地配置（绝不提交）
+.env
+.env.*
+!.env.example
+config.json
+secrets.json
+tokens.json
+.creds/
+*.key
+*.pem
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/
+
+# 临时产物
+*.log
+_tmp/
+dist/
