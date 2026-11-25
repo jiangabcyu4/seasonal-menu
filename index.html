@@ -248,6 +248,70 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#FFC76B 0%,#FF8A44 45%
 .note b{color:var(--dim)}
 .empty{text-align:center;padding:64px 20px;color:var(--dim2);font-size:13.5px}
 
+
+/* ---------- 全菜谱库 ---------- */
+.flt-bar{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+.flt-row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.flt-row .lb{font-size:12px;font-weight:700;color:var(--dim);min-width:56px}
+.inp{background:rgba(0,0,0,.32);border:1px solid var(--line2);color:var(--text);font-family:inherit;
+  font-size:13px;padding:9px 15px;border-radius:var(--pill);outline:none;transition:.16s;min-width:200px}
+.inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,122,61,.14)}
+select.inp{min-width:130px;cursor:pointer;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
+select.inp option{background:#2A1C15;color:var(--text)}
+.have-box{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.have-box .hh{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.have-box .hh b{font-size:12.5px;color:var(--warm)}
+.have-box .hh .cnt{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+.ct-chip{font-size:12px;padding:5px 12px;border-radius:var(--pill);border:1px solid var(--line2);
+  background:rgba(255,255,255,.04);color:var(--dim);cursor:pointer;transition:.16s;font-weight:600;user-select:none}
+.ct-chip:hover{border-color:var(--line3);color:var(--warm)}
+.ct-chip.on{background:rgba(255,122,61,.20);border-color:rgba(255,122,61,.6);color:#FFB88F}
+.tbl-wrap{overflow:auto;max-height:600px;border:1px solid var(--line);border-radius:var(--r);background:rgba(0,0,0,.18);position:relative}
+table.rt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
+table.rt th{position:sticky;top:0;background:#432E24;color:var(--warm);font-weight:700;text-align:left;
+  padding:11px 13px;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:11.5px;letter-spacing:.03em;z-index:1}
+table.rt td{padding:9px 13px;border-bottom:1px solid rgba(255,180,120,.07);color:var(--text2);white-space:nowrap}
+table.rt tbody tr{cursor:pointer;transition:.14s}
+table.rt tbody tr:hover{background:rgba(255,122,61,.08)}
+table.rt tbody tr:hover td:first-child{color:var(--accent)}
+table.rt .nmc{color:var(--text);font-weight:600}
+.badge{display:inline-block;font-size:10.5px;padding:1.5px 8px;border-radius:var(--pill);font-weight:700;
+  background:rgba(255,255,255,.06);border:1px solid var(--line2);color:var(--dim)}
+.badge.k-meat{background:rgba(232,90,42,.16);color:#FFA87A;border-color:rgba(232,90,42,.3)}
+.badge.k-half{background:rgba(255,179,71,.16);color:#FFCC8A;border-color:rgba(255,179,71,.3)}
+.badge.k-veg{background:rgba(163,196,110,.16);color:#C4DE96;border-color:rgba(163,196,110,.3)}
+.badge.k-soup{background:rgba(91,157,255,.16);color:#9CC2FF;border-color:rgba(91,157,255,.3)}
+.badge.k-bf,.badge.k-staple{background:rgba(245,194,107,.16);color:#F8D493;border-color:rgba(245,194,107,.3)}
+.badge.k-med{background:rgba(167,139,250,.16);color:#C4B2FF;border-color:rgba(167,139,250,.3)}
+.badge.k-des{background:rgba(232,107,122,.16);color:#F09AA6;border-color:rgba(232,107,122,.3)}
+.tbl-foot{display:flex;justify-content:space-between;align-items:center;padding:12px 4px 0;font-size:12px;color:var(--dim);flex-wrap:wrap;gap:10px}
+
+/* ---------- 我的菜谱（表单） ---------- */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px 18px;margin-bottom:16px}
+.form-grid label{display:flex;flex-direction:column;gap:6px}
+.form-grid label span{font-size:12px;font-weight:700;color:var(--dim)}
+.form-grid .inp{min-width:0;width:100%;border-radius:10px}
+textarea.inp{border-radius:12px;min-height:88px;resize:vertical;line-height:1.7;font-size:12.5px;
+  font-family:var(--mono)}
+.hint-line{font-size:11.5px;color:var(--dim2);line-height:1.7;margin:-4px 0 12px}
+.my-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.my-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--line);
+  border-radius:var(--r);background:rgba(0,0,0,.2);font-size:13px}
+.my-item .n{flex:1;font-weight:600}
+.my-item .t{font-size:11px;color:var(--dim2)}
+.mini{background:transparent;border:1px solid var(--line2);color:var(--dim);border-radius:var(--pill);
+  font-size:11.5px;padding:5px 12px;cursor:pointer;font-family:inherit;font-weight:600;transition:.16s}
+.mini:hover{border-color:var(--danger);color:#FF9595;background:rgba(255,107,107,.1)}
+.empty-tip{color:var(--dim2);font-size:12.5px;padding:10px 0}
+
+@media(max-width:720px){
+  .flt-row .lb{min-width:100%}
+  .inp{min-width:0;width:100%}
+  .have-box{padding:12px}
+}
+
 @media(max-width:720px){
   .wrap{padding:0 14px 74px}
   header{padding:30px 0 18px}
@@ -354,6 +418,136 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#FFC76B 0%,#FF8A44 45%
 
 <div id="appendix"></div>
 
+
+<!-- ===== 05 全菜谱库 ===== -->
+<div class="sec-title"><span class="idx">05</span>全菜谱库
+  <span class="line"></span>
+  <span style="font-size:12px;font-weight:500;color:var(--dim)">按冰箱里现有的主材反查能做什么菜</span>
+</div>
+<section class="panel" style="margin-bottom:26px">
+  <div class="p-head">
+    <div class="p-title"><span class="idx" id="libCount">—</span>道菜 · 点击任意一行看完整做法</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn ghost sm" id="btnResetFilter">清空筛选</button>
+    </div>
+  </div>
+  <div class="p-body">
+    <div class="flt-bar">
+      <div class="flt-row">
+        <input class="inp" id="fltQ" placeholder="搜菜名 / 食材，如「五花肉」「豆腐」">
+        <select class="inp" id="fltKind"></select>
+        <select class="inp" id="fltSe"></select>
+        <select class="inp" id="fltSrc"></select>
+      </div>
+      <div class="have-box">
+        <div class="hh">
+          <b>我有这些食材</b>
+          <span class="cnt" id="haveCount">未选择</span>
+          <span style="flex:1"></span>
+          <div class="seg" style="width:auto" id="segHaveMode">
+            <button data-v="all" class="on">全部具备才能做</button>
+            <button data-v="any">包含任一即可</button>
+          </div>
+        </div>
+        <div class="chips" id="chipsHave"></div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="rt">
+        <thead><tr>
+          <th>菜名</th><th>类别</th><th>主材</th><th>时令</th><th>辣度</th>
+          <th>耗时</th><th>热量</th><th>蛋白</th><th>适配</th>
+        </tr></thead>
+        <tbody id="libBody"></tbody>
+      </table>
+    </div>
+    <div class="tbl-foot">
+      <span id="libStat">—</span>
+      <span style="color:var(--dim2)">热量/蛋白为每人均值 · 点击行看做法</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 我的菜谱 ===== -->
+<div class="sec-title"><span class="idx">06</span>我的菜谱
+  <span class="line"></span>
+  <span style="font-size:12px;font-weight:500;color:var(--dim)">自己加的菜会参与配餐，并可同步到仓库</span>
+</div>
+<section class="panel" style="margin-bottom:26px">
+  <div class="p-head">
+    <div class="p-title"><span class="idx" id="myCount">0</span>道自定义菜谱</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn ghost sm" id="btnExportRecipes">导出 JSON</button>
+      <button class="btn ghost sm" id="btnImportRecipes">导入 JSON</button>
+      <input type="file" id="fileImport" accept=".json" style="display:none">
+    </div>
+  </div>
+  <div class="p-body">
+    <div class="form-grid">
+      <label><span>菜名 *</span><input class="inp" id="fName" placeholder="如：香菇滑蛋"></label>
+      <label><span>类别 *</span>
+        <select class="inp" id="fKind">
+          <option value="meat">荤菜</option><option value="half">半荤</option>
+          <option value="veg">素菜</option><option value="soup">汤</option>
+          <option value="bf">早餐</option><option value="staple">主食</option>
+          <option value="med">药膳</option><option value="des">食疗甜品</option>
+        </select>
+      </label>
+      <label><span>主材来源</span>
+        <select class="inp" id="fSrc">
+          <option value="pork">猪肉</option><option value="beef">牛肉</option>
+          <option value="lamb">羊肉</option><option value="chicken">鸡</option>
+          <option value="duck">鸭</option><option value="fish">鱼</option>
+          <option value="shrimp">虾贝</option><option value="egg">蛋</option>
+          <option value="tofu">豆制品</option><option value="none">素</option>
+        </select>
+      </label>
+      <label><span>辣度</span>
+        <select class="inp" id="fSpicy">
+          <option value="0">不辣</option><option value="1">微辣</option>
+          <option value="2" selected>中辣</option><option value="3">麻辣</option>
+        </select>
+      </label>
+      <label><span>耗时（分钟）</span><input class="inp" id="fTime" type="number" value="20" min="1"></label>
+      <label><span>时令</span>
+        <select class="inp" id="fSeason">
+          <option value="all">全年</option><option value="sp">春</option>
+          <option value="su">夏</option><option value="au">秋</option><option value="wi">冬</option>
+        </select>
+      </label>
+      <label><span>蔬菜净重（克/人）</span><input class="inp" id="fVeg" type="number" value="100" min="0"></label>
+      <label><span>热量（kcal/人）</span><input class="inp" id="fKcal" type="number" value="300" min="0"></label>
+      <label><span>蛋白质（克/人）</span><input class="inp" id="fProt" type="number" value="15" min="0"></label>
+      <label><span>适合老人小孩</span>
+        <select class="inp" id="fGentle"><option value="0">普通</option><option value="1">温和易嚼</option></select>
+      </label>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+      <span style="font-size:12px;font-weight:700;color:var(--dim)">食材 *（每行一个，格式：名称,数量,单位,生活单位）</span>
+      <textarea class="inp" id="fIng" placeholder="五花肉,150,g,约1块掌心大
+蒜苗,80,g,约4根
+郫县豆瓣,12,g,约1汤匙"></textarea>
+    </label>
+    <p class="hint-line">单位支持 g / ml / 个 / 根 / 把 / 块。第四项（生活单位）可省略，买菜时按它估量更准。</p>
+    <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+      <span style="font-size:12px;font-weight:700;color:var(--dim)">做法步骤 *（每行一步）</span>
+      <textarea class="inp" id="fSteps" placeholder="五花肉切薄片，蒜苗切段
+热锅下油，肉片煸至微焦
+下豆瓣炒出红油，加蒜苗炒 20 秒"></textarea>
+    </label>
+    <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+      <span style="font-size:12px;font-weight:700;color:var(--dim)">关键点 / 注意事项（可选）</span>
+      <textarea class="inp" id="fTip" style="min-height:60px" placeholder="蒜苗最后下，久炒发黄"></textarea>
+    </label>
+    <div class="actions" style="border:0;background:none;padding:0">
+      <button class="btn primary" id="btnAddRecipe">添加到我的菜谱</button>
+      <button class="btn ghost" id="btnFillDemo">填个示例</button>
+      <span style="font-size:11.5px;color:var(--dim2)">保存在本机浏览器，导出后可同步到仓库</span>
+    </div>
+    <div class="my-list" id="myList"></div>
+  </div>
+</section>
+
 <div class="note no-print">
   <b>说明</b>：① 热量、蛋白质为按食材克数估算的近似值（生重），用于看结构是否均衡，不作医学依据。
   ② 用量同时标注克数与生活单位（个／根／把／块），买菜按生活单位估更靠谱；克数用于营养计算。
@@ -367,6 +561,8 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#FFC76B 0%,#FF8A44 45%
 <div class="mask" id="mask"><div class="modal" id="modal"></div></div>
 <div class="toast" id="toast"></div>
 
+<!-- 云端扩充包：可选，存在时自动合并进菜谱库 -->
+<script src="data/recipes.js" onerror="void 0"></script>
 <script>
 /* ============================================================
    菜谱数据库
@@ -1790,12 +1986,859 @@ const DB = [
         '过滤去渣（也可不过滤保留纤维）。',
         '加蜂蜜调匀，现榨现喝。'],
  tip:'秋天每天早上喝一杯，对干燥引起的咽干、干咳很有效。脾胃弱的喝温的。'},
+/* ================= 荤菜扩充 · 各菜系 ================= */
+{id:'baizhuoxia',name:'白灼虾',kind:'meat',src:'shrimp',spicy:0,t:15,veg:20,kcal:180,prot:26,dark:false,se:'su,au',gentle:true,
+ ing:[['鲜虾',300,'g','约12只'],['姜',10,'g','4片'],['葱',20,'g','2根'],['生抽',15,'ml','1汤匙'],['香油',3,'ml','几滴']],
+ steps:['虾剪去虾枪虾须，挑去虾线。','锅中水加姜片、葱段烧开，下虾煮 90 秒至变红蜷曲，立刻捞出。','过一遍冰水，虾肉更弹。','姜末葱花加生抽、香油调蘸料，蘸着吃。'],
+ tip:'水开下锅、90 秒出锅，多煮 30 秒虾肉就柴。冰水一激是弹牙的关键。'},
+
+{id:'chizhipaigu',name:'豉汁蒸排骨',kind:'meat',src:'pork',spicy:1,t:35,veg:60,kcal:420,prot:24,dark:false,se:'all',gentle:true,
+ ing:[['猪肋排',300,'g','约10小块'],['豆豉',15,'g','约2汤匙'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['淀粉',8,'g','1汤匙'],['白糖',4,'g','1茶匙'],['小米辣',5,'g','2个']],
+ steps:['排骨剁 3cm 小段，清水泡 20 分钟去血水，挤干。','豆豉剁碎，与蒜末、生抽、糖、淀粉、少许油拌成豉汁。','排骨拌入豉汁抓匀，腌 20 分钟。','摊平入盘，水开后大火蒸 18 分钟，撒小米辣圈。'],
+ tip:'排骨先泡水去血水，蒸出来才不腥不浑汤。淀粉抓匀是嫩的关键。'},
+
+{id:'meicaikourou',name:'梅菜扣肉',kind:'meat',src:'pork',spicy:0,t:100,veg:100,kcal:600,prot:21,dark:true,se:'au,wi',gentle:true,
+ ing:[['五花肉',200,'g','约1块方块'],['梅干菜',60,'g','约2小把'],['生抽',20,'ml','1.5汤匙'],['老抽',6,'ml','1茶匙'],['冰糖',8,'g','4粒'],['八角',1,'g','1颗']],
+ steps:['五花肉整块冷水下锅煮 20 分钟至七成熟，捞出趁热在皮上抹老抽。','锅中少油，肉皮朝下煎到起虎皮泡（盖锅盖防溅），泡冷水 10 分钟。','梅干菜泡软洗 3 遍去沙，挤干后用少许油炒香，加生抽、糖调味。','肉切 0.4cm 厚片，皮朝下码碗，梅干菜铺满压实，上汽蒸 90 分钟。','倒扣入盘。'],
+ tip:'梅干菜一定要洗够 3 遍，沙子藏在褶皱里。蒸足 90 分钟肉才入口即化。'},
+
+{id:'gulurou',name:'咕噜肉',kind:'meat',src:'pork',spicy:0,t:35,veg:120,kcal:520,prot:22,dark:true,se:'all',gentle:false,
+ ing:[['猪梅肉',250,'g','约1块'],['菠萝',100,'g','约1/4个'],['青红椒',60,'g','各半个'],['番茄酱',30,'g','2汤匙'],['白糖',15,'g','1汤匙'],['香醋',10,'ml','2茶匙'],['淀粉',40,'g','4汤匙']],
+ steps:['梅肉切 2cm 方块，加盐、料酒、蛋液腌 15 分钟，裹满干淀粉。','油烧六成热，肉块下锅炸 3 分钟至金黄，捞出升高油温复炸 20 秒。','锅留底油，下番茄酱、糖、醋和 3 汤匙水炒成糖醋汁。','下青红椒、菠萝块炒 30 秒，倒肉块快速翻匀裹汁出锅。'],
+ tip:'复炸才酥。糖醋汁要收到能挂住肉块，稀了就成汤了。'},
+
+{id:'jiangconglaoji',name:'姜葱捞鸡',kind:'meat',src:'chicken',spicy:0,t:40,veg:60,kcal:330,prot:30,dark:false,se:'all',gentle:true,
+ ing:[['鸡腿',350,'g','约2个'],['姜',30,'g','约1大块'],['葱',50,'g','4根'],['盐',4,'g','1茶匙'],['菜籽油',30,'ml','3汤匙'],['生抽',10,'ml','2茶匙']],
+ steps:['鸡腿冷水下锅，加姜片煮 15 分钟，关火焖 8 分钟，捞出过冰水。','姜磨成蓉，葱切细花，加盐拌匀。','热油烧到冒烟，泼在姜葱上激香，加生抽调匀。','鸡腿斩件摆盘，淋满姜葱油。'],
+ tip:'姜葱油是灵魂，油必须烧到冒烟再泼，否则姜葱是生的。'},
+
+{id:'tangculiji',name:'糖醋里脊',kind:'meat',src:'pork',spicy:0,t:30,veg:20,kcal:500,prot:24,dark:false,se:'all',gentle:false,
+ ing:[['猪里脊',250,'g','约1条'],['淀粉',50,'g','5汤匙'],['番茄酱',30,'g','2汤匙'],['白糖',20,'g','1.5汤匙'],['香醋',15,'ml','1汤匙'],['鸡蛋',1,'个','1个']],
+ steps:['里脊切 1cm 粗条，加盐、料酒腌 15 分钟，加蛋液抓匀，裹干淀粉。','油六成热下锅炸 3 分钟至定型，捞出复炸至金黄酥脆。','锅留底油，下番茄酱、糖、醋、3 汤匙水炒到起泡浓稠。','倒里脊快速翻匀，让每根都裹上糖醋汁，出锅。'],
+ tip:'糖醋汁起大泡、能拉丝时下肉最合适，早了不挂汁，晚了发苦。'},
+
+{id:'dongporou',name:'东坡肉',kind:'meat',src:'pork',spicy:0,t:120,veg:20,kcal:650,prot:20,dark:false,se:'au,wi',gentle:true,
+ ing:[['五花肉',300,'g','约1大方块'],['黄酒',200,'ml','约1小碗'],['生抽',30,'ml','2汤匙'],['老抽',10,'ml','2茶匙'],['冰糖',30,'g','约15粒'],['姜',15,'g','5片'],['葱',40,'g','4根']],
+ steps:['五花肉切 5cm 见方大块，冷水下锅焯 5 分钟，捞出洗净。','砂锅底铺满葱段姜片（防粘），肉皮朝下码好。','加黄酒、生抽、老抽、冰糖，不加水（全靠黄酒）。','大火烧开转最小火焖 90 分钟，中途翻面一次让皮朝上。','取出装碗，淋上收浓的汤汁。'],
+ tip:'全程不加水，只用黄酒，这是东坡肉酥而不散的秘密。火要最小，汤面只冒小泡。'},
+
+{id:'longjingxiaren',name:'龙井虾仁',kind:'meat',src:'shrimp',spicy:0,t:25,veg:20,kcal:220,prot:26,dark:false,se:'sp,su',gentle:true,
+ ing:[['虾仁',250,'g','约20只'],['龙井茶',3,'g','1小撮'],['蛋清',15,'g','半个'],['淀粉',8,'g','1汤匙'],['料酒',8,'ml','2茶匙']],
+ steps:['虾仁去虾线，用盐抓洗 2 分钟至发黏，冲净擦干。','加蛋清、淀粉、料酒抓匀上浆，冷藏 20 分钟。','龙井用 80℃ 水泡开，茶叶和茶汤分开留用。','锅烧热宽油，虾仁下锅滑散至变色立刻盛出。','锅留少许油，下虾仁、茶叶，淋 2 汤匙茶汤，快速翻匀出锅。'],
+ tip:'虾仁用盐抓洗是"上劲"的关键，炒出来才脆弹。茶汤别多，多了就成煮虾。'},
+
+{id:'yanduxian',name:'腌笃鲜',kind:'meat',src:'pork',spicy:0,t:90,veg:250,kcal:380,prot:22,dark:false,se:'sp',gentle:true,
+ ing:[['咸肉',100,'g','约1小块'],['鲜五花肉',150,'g','约1块'],['春笋',250,'g','约2根'],['百叶结',80,'g','约8个'],['姜',10,'g','4片'],['料酒',15,'ml','1汤匙']],
+ steps:['咸肉切厚片，鲜肉切块，一起冷水下锅焯 3 分钟，捞出洗净。','春笋切滚刀块，沸水汆 5 分钟去涩。','砂锅放两种肉、姜片、料酒，加 1200ml 热水，小火炖 50 分钟。','下春笋、百叶结再炖 25 分钟，汤色奶白。','咸肉本身咸，尝过再决定是否加盐。'],
+ tip:'江南春天第一鲜。"腌"是咸肉、"笃"是小火慢炖，两样肉一起才鲜得立体。'},
+
+{id:'xiaochaohuangniurou',name:'小炒黄牛肉',kind:'meat',src:'beef',spicy:3,t:20,veg:130,kcal:380,prot:28,dark:true,se:'all',gentle:false,
+ ing:[['牛里脊',200,'g','约1条'],['小米辣',15,'g','5个'],['二荆条',60,'g','3根'],['姜蒜',15,'g','各2瓣'],['生抽',12,'ml','1汤匙'],['淀粉',8,'g','1汤匙']],
+ steps:['牛肉逆纹切薄片，加生抽、淀粉、1 汤匙水抓匀，封油腌 15 分钟。','小米辣、二荆条切圈，姜蒜切末。','锅烧到冒烟宽油，牛肉下锅大火爆炒 40 秒至变色，盛出。','底油下姜蒜、辣椒炒香，倒回牛肉，加盐大火翻匀 20 秒出锅。'],
+ tip:'湖南做法的核心是"猛火快炒"，锅要烧到冒烟，全程不超过 90 秒。'},
+
+{id:'nongjiaxiaochaorou',name:'农家小炒肉',kind:'meat',src:'pork',spicy:2,t:20,veg:150,kcal:420,prot:20,dark:true,se:'all',gentle:false,
+ ing:[['五花肉',120,'g','约8片'],['前腿肉',100,'g','约5片'],['螺丝椒',150,'g','约4个'],['蒜',10,'g','3瓣'],['豆豉',8,'g','1汤匙'],['生抽',12,'ml','1汤匙']],
+ steps:['五花肉切薄片，瘦肉切片加生抽、淀粉抓匀。','螺丝椒斜切段，干锅不放油煸 2 分钟至起虎皮，盛出。','锅中下五花肉煸出油至微焦，加蒜片、豆豉炒香。','下瘦肉炒散，倒回辣椒，加生抽大火翻炒 1 分钟。'],
+ tip:'辣椒先干煸出虎皮才香，直接炒会水塌塌的。'},
+
+{id:'duojiaozhengpaigu',name:'剁椒蒸排骨',kind:'meat',src:'pork',spicy:2,t:35,veg:40,kcal:400,prot:24,dark:true,se:'all',gentle:false,
+ ing:[['猪肋排',300,'g','约10小块'],['剁椒',40,'g','3汤匙'],['蒜',12,'g','4瓣'],['姜',8,'g','3片'],['生抽',10,'ml','2茶匙'],['淀粉',8,'g','1汤匙']],
+ steps:['排骨剁小段，泡水 20 分钟去血水，挤干。','加生抽、淀粉、姜末抓匀腌 20 分钟。','剁椒拌蒜末铺在排骨上。','水开后大火蒸 18 分钟，出锅撒葱花。'],
+ tip:'剁椒本身很咸，不要再加盐。排骨泡净血水是去腥关键。'},
+
+{id:'lajiaochaorou',name:'辣椒炒肉',kind:'meat',src:'pork',spicy:2,t:18,veg:160,kcal:390,prot:21,dark:true,se:'su,au',gentle:false,
+ ing:[['猪前腿肉',180,'g','约1小块'],['青尖椒',180,'g','约5个'],['蒜',10,'g','3瓣'],['豆豉',6,'g','1茶匙'],['生抽',12,'ml','1汤匙']],
+ steps:['肉切薄片（肥瘦分开），加生抽抓匀。','青椒斜切，干锅煸到起虎皮盛出。','下肥肉片煸出油，再下瘦肉炒散。','加蒜、豆豉炒香，倒回青椒，大火翻炒 1 分钟出锅。'],
+ tip:'肥肉先煸出油，用猪油炒辣椒才香。'},
+
+{id:'koushuiji',name:'口水鸡',kind:'meat',src:'chicken',spicy:3,t:40,veg:80,kcal:340,prot:29,dark:true,se:'su',gentle:false,
+ ing:[['鸡腿',350,'g','约2个'],['辣椒油',30,'ml','3汤匙'],['花椒面',3,'g','1茶匙'],['生抽',20,'ml','1.5汤匙'],['香醋',12,'ml','1汤匙'],['白糖',8,'g','2茶匙'],['花生碎',20,'g','2汤匙'],['蒜',12,'g','3瓣']],
+ steps:['鸡腿冷水下锅，加姜葱料酒，水开后小火 12 分钟，关火焖 8 分钟。','捞出立刻泡冰水 10 分钟，皮才爽脆。','蒜捣泥，加生抽、醋、糖、辣椒油、花椒面调成红油汁。','鸡腿斩件，淋汁，撒花生碎和葱花。'],
+ tip:'冰水激皮是白切类菜的通则。红油里加一点煮鸡的汤，味道更融合。'},
+
+{id:'xiaosurou',name:'小酥肉',kind:'meat',src:'pork',spicy:1,t:35,veg:10,kcal:520,prot:22,dark:false,se:'all',gentle:false,
+ ing:[['猪五花肉',250,'g','约1块'],['红薯淀粉',60,'g','6汤匙'],['鸡蛋',1,'个','1个'],['花椒面',2,'g','1茶匙'],['料酒',10,'ml','2茶匙'],['菜籽油',500,'ml','炸用']],
+ steps:['五花肉切 1cm 粗条，加盐、花椒面、料酒腌 20 分钟。','红薯淀粉加鸡蛋和少许水调成稠糊，倒入肉条抓匀。','油烧六成热，逐条下锅炸 3 分钟至浅黄，捞出。','升高油温复炸 40 秒至金黄酥脆。'],
+ tip:'必须用红薯淀粉，才有那种外壳酥脆、内里软嫩的口感。复炸是酥的保证。'},
+
+{id:'laomathua',name:'老妈蹄花',kind:'meat',src:'pork',spicy:1,t:150,veg:150,kcal:480,prot:28,dark:false,se:'wi',gentle:true,
+ ing:[['猪蹄',400,'g','约1只'],['白芸豆',60,'g','约3汤匙'],['姜',20,'g','6片'],['花椒',2,'g','1茶匙'],['料酒',30,'ml','2汤匙'],['香醋',15,'ml','1汤匙']],
+ steps:['白芸豆提前泡 6 小时。猪蹄剁块，冷水下锅加姜、料酒焯 5 分钟，刮净残毛。','砂锅放猪蹄、姜片、花椒，加 1500ml 热水，小火炖 120 分钟。','加白芸豆再炖 30 分钟至豆烂汤白。','蘸碟：香醋、生抽、蒜末、辣椒油。'],
+ tip:'成都人的宵夜灵魂。炖到汤色奶白、蹄筋软糯，筷子一夹就脱骨才对。'},
+
+{id:'fenzhengpaigu',name:'粉蒸排骨',kind:'meat',src:'pork',spicy:1,t:60,veg:180,kcal:440,prot:22,dark:true,se:'au,wi',gentle:true,
+ ing:[['猪肋排',300,'g','约10小块'],['土豆',150,'g','约1个'],['蒸肉米粉',50,'g','5汤匙'],['郫县豆瓣',12,'g','1汤匙'],['姜',5,'g','2片'],['料酒',10,'ml','2茶匙']],
+ steps:['排骨剁段泡水去血，加豆瓣、姜末、料酒腌 30 分钟。','拌入蒸肉米粉，加 2 汤匙水抓润。','土豆切滚刀块垫碗底，排骨铺上。','上汽后中火蒸 50 分钟。'],
+ tip:'土豆垫底吸油，比直接蒸排骨清爽。米粉加水抓润，蒸出来才不干。'},
+
+{id:'mayishangshu',name:'蚂蚁上树',kind:'meat',src:'pork',spicy:2,t:20,veg:40,kcal:380,prot:14,dark:false,se:'all',gentle:false,
+ ing:[['红薯粉丝',80,'g','约1把'],['猪肉末',80,'g','约3汤匙'],['郫县豆瓣',12,'g','1汤匙'],['姜蒜',12,'g','各2瓣'],['生抽',10,'ml','2茶匙'],['葱花',10,'g','1根']],
+ steps:['粉丝温水泡软，剪短（吃的时候好夹）。','锅中下油，肉末炒散出油至微酥。','加豆瓣、姜蒜末炒出红油。','掺 200ml 水，下粉丝小火焖 3 分钟至吸干汤汁。','撒葱花出锅。'],
+ tip:'粉丝别泡太软，下锅还要吸汁。收汁要收干，"蚂蚁"才能爬上"树"。'},
+
+{id:'malaxiangguo',name:'麻辣香锅',kind:'meat',src:'pork',spicy:3,t:35,veg:300,kcal:480,prot:22,dark:true,se:'au,wi',gentle:false,
+ ing:[['五花肉',100,'g','约6片'],['虾',100,'g','约5只'],['藕片',80,'g','约半节'],['花菜',100,'g','约1/4颗'],['土豆',80,'g','约1个'],['麻辣香锅底料',40,'g','约1/4包'],['干辣椒',6,'g','8个']],
+ steps:['各种蔬菜切块，分别沸水汆到八成熟，捞出沥干。','五花肉煸出油，虾煎至变色。','下底料和干辣椒小火炒出红油和香味。','倒入所有食材，中火翻炒 3 分钟让每样都裹上料。'],
+ tip:'蔬菜先汆后炒，避免出水把香味冲淡。底料本身咸，别再放盐。'},
+
+{id:'lengchitu',name:'冷吃兔',kind:'meat',src:'rabbit',spicy:3,t:50,veg:40,kcal:460,prot:30,dark:false,se:'all',gentle:false,
+ ing:[['兔肉',400,'g','约半只'],['干辣椒',25,'g','约30个'],['花椒',6,'g','1汤匙'],['姜',15,'g','5片'],['八角',2,'g','2颗'],['料酒',20,'ml','1.5汤匙'],['菜籽油',80,'ml','约1/3碗']],
+ steps:['兔肉剁成 1cm 小丁，加盐、料酒、姜片腌 30 分钟。','油烧七成热，兔丁下锅炸到干香紧缩，捞出。','底油小火下干辣椒、花椒、八角炒香（火要小）。','倒回兔丁，加生抽、糖，小火翻炒 10 分钟让味道渗进去。','出锅晾凉，越放越香。'],
+ tip:'自贡名菜。兔肉要炸干水分才耐放，冷吃比热吃更香。'},
+
+{id:'guobaorou',name:'锅包肉',kind:'meat',src:'pork',spicy:0,t:35,veg:30,kcal:560,prot:24,dark:false,se:'all',gentle:false,
+ ing:[['猪里脊',250,'g','约1条'],['土豆淀粉',70,'g','7汤匙'],['白糖',25,'g','2汤匙'],['香醋',25,'ml','2汤匙'],['胡萝卜丝',20,'g','少许'],['葱姜丝',15,'g','各少许']],
+ steps:['里脊切 0.5cm 厚大片，用刀背拍松，加盐、料酒腌 15 分钟。','土豆淀粉加水泡 30 分钟，倒掉上层清水，用沉底的湿淀粉抓匀肉片。','油六成热下肉片炸至定型，捞出；升高油温复炸至金黄酥脆。','锅留底油，下糖、醋、少许生抽烧到起泡，倒肉片和葱姜丝快速翻匀。'],
+ tip:'必须用土豆淀粉水淀粉（湿淀粉），炸出来才酥脆不回软。糖醋要 1:1。'},
+
+{id:'zhuroudunfentiao',name:'猪肉炖粉条',kind:'meat',src:'pork',spicy:1,t:60,veg:150,kcal:520,prot:22,dark:false,se:'au,wi',gentle:true,
+ ing:[['五花肉',200,'g','约1块'],['宽粉条',80,'g','约1把'],['酸菜',80,'g','1小把'],['姜',8,'g','3片'],['八角',1,'g','1颗'],['生抽',20,'ml','1.5汤匙']],
+ steps:['粉条温水泡 30 分钟至软。','五花肉切片，锅中煸出油至微焦。','加姜片、八角、生抽炒香，掺 800ml 热水烧开，小火炖 30 分钟。','下酸菜和粉条再炖 15 分钟至粉条透明吸汁。'],
+ tip:'东北硬菜。粉条后放，早放会炖成糊。酸菜解腻，没有可以不放。'},
+
+{id:'dapanji',name:'新疆大盘鸡',kind:'meat',src:'chicken',spicy:2,t:60,veg:250,kcal:520,prot:28,dark:true,se:'all',gentle:false,
+ ing:[['鸡腿',400,'g','约3个'],['土豆',250,'g','约2个'],['青椒',80,'g','2个'],['郫县豆瓣',20,'g','1.5汤匙'],['干辣椒',8,'g','10个'],['花椒',3,'g','1茶匙'],['啤酒',330,'ml','1罐'],['手工宽面',150,'g','约1份']],
+ steps:['鸡腿剁块焯水冲净；土豆切滚刀块。','锅中下油，炒香豆瓣、干辣椒、花椒出红油。','倒鸡块翻炒上色，加啤酒没过，烧开转小火炖 20 分钟。','下土豆再炖 15 分钟，加青椒块收汁。','宽面另煮，铺盘底，把鸡块连汤浇上。'],
+ tip:'用啤酒代替水，去腥增香。面条垫底吸满汤汁才是精华。'},
+
+{id:'ziranrou',name:'孜然羊肉',kind:'meat',src:'lamb',spicy:2,t:20,veg:100,kcal:420,prot:28,dark:true,se:'wi,sp',gentle:false,
+ ing:[['羊肉片',250,'g','约1小碗'],['洋葱',100,'g','约半个'],['孜然粒',6,'g','1汤匙'],['辣椒面',5,'g','1茶匙'],['香菜',15,'g','1小把'],['淀粉',6,'g','2茶匙']],
+ steps:['羊肉片加盐、料酒、淀粉抓匀腌 15 分钟。','锅烧冒烟宽油，羊肉下锅大火爆炒 40 秒至变色。','加洋葱丝炒 30 秒，撒孜然粒、辣椒面。','大火翻匀，撒香菜出锅。'],
+ tip:'孜然要一半粒一半粉：粒增香、粉入味。羊肉别炒老，变色就好。'},
+
+{id:'suantangyu',name:'酸汤鱼',kind:'meat',src:'fish',spicy:2,t:40,veg:150,kcal:340,prot:30,dark:true,se:'all',gentle:false,
+ ing:[['草鱼',400,'g','约半条'],['酸汤料',60,'g','约3汤匙'],['番茄',150,'g','约1个'],['小米辣',8,'g','3个'],['姜蒜',15,'g','各2瓣'],['蛋清',15,'g','半个'],['淀粉',10,'g','1汤匙']],
+ steps:['鱼片成片，加盐、蛋清、淀粉上浆腌 15 分钟；鱼骨剁块。','锅中少油炒香姜蒜、小米辣，下番茄炒出汁。','加酸汤料和 800ml 水烧开，下鱼骨煮 5 分钟。','转小火，鱼片逐片下锅汆 40 秒，连汤倒入碗中。'],
+ tip:'贵州酸汤分白酸和红酸，家用瓶装红酸汤最方便。鱼片 40 秒就好。'},
+
+{id:'guizhoulaziji',name:'贵州辣子鸡',kind:'meat',src:'chicken',spicy:3,t:50,veg:60,kcal:520,prot:28,dark:false,se:'all',gentle:false,
+ ing:[['鸡腿',400,'g','约3个'],['糍粑辣椒',60,'g','4汤匙'],['姜',15,'g','5片'],['蒜',15,'g','4瓣'],['豆瓣酱',15,'g','1汤匙'],['料酒',15,'ml','1汤匙'],['菜籽油',60,'ml','4汤匙']],
+ steps:['鸡腿剁小块，加盐、料酒、姜片腌 30 分钟。','宽油烧热，鸡块下锅炸到表面金黄紧缩，捞出。','底油小火下糍粑辣椒，慢炒 5 分钟出红油（这步决定成败）。','加豆瓣、姜蒜炒香，倒回鸡块，小火翻炒 10 分钟让辣味渗进去。'],
+ tip:'贵州辣子鸡是"湿辣"，靠糍粑辣椒慢炒出香，不是干辣椒的干香。炒辣椒全程小火。'},
+
+{id:'qiguoji',name:'汽锅鸡',kind:'meat',src:'chicken',spicy:0,t:150,veg:60,kcal:320,prot:30,dark:false,se:'all',gentle:true,
+ ing:[['土鸡',500,'g','约半只'],['姜',15,'g','5片'],['葱',20,'g','2根'],['枸杞',5,'g','1小撮'],['盐',3,'g','半茶匙']],
+ steps:['鸡剁块，加盐、姜片、葱段抓匀腌 20 分钟。','鸡块码入汽锅，不加水。','汽锅坐在装水的汤锅上，接口处用湿布封严防漏汽。','大火蒸 120 分钟，靠蒸汽凝结成汤。','出锅撒枸杞，只加少许盐。'],
+ tip:'云南名菜，全程不加一滴水，汤全是蒸馏出来的鸡汁。没有汽锅可用带盖炖盅隔水蒸。'},
+
+{id:'lizhirou',name:'荔枝肉',kind:'meat',src:'pork',spicy:0,t:30,veg:80,kcal:480,prot:22,dark:false,se:'all',gentle:false,
+ ing:[['猪里脊',200,'g','约1条'],['荸荠',80,'g','约6个'],['番茄酱',25,'g','2汤匙'],['白糖',15,'g','1汤匙'],['香醋',12,'ml','1汤匙'],['淀粉',40,'g','4汤匙']],
+ steps:['里脊切 2cm 厚片，剞十字花刀再切块，加盐、料酒腌 15 分钟。','裹干淀粉，油六成热炸到卷曲成"荔枝"状，捞出复炸。','荸荠切块略炸。','锅留底油，下番茄酱、糖、醋炒成汁，倒肉和荸荠翻匀。'],
+ tip:'剞花刀让肉受热卷曲，形似荔枝。福建做法偏酸甜，糖醋比例可略调。'},
+
+{id:'zuipaigu',name:'醉排骨',kind:'meat',src:'pork',spicy:0,t:35,veg:20,kcal:500,prot:23,dark:false,se:'all',gentle:false,
+ ing:[['猪肋排',300,'g','约10小块'],['番茄酱',25,'g','2汤匙'],['白糖',20,'g','1.5汤匙'],['香醋',15,'ml','1汤匙'],['蒜',10,'g','3瓣'],['淀粉',40,'g','4汤匙']],
+ steps:['排骨剁段，加盐、料酒、蒜末腌 30 分钟。','裹干淀粉，油六成热炸 4 分钟至熟，复炸至酥。','锅留底油，下番茄酱、糖、醋、蒜末炒成浓汁。','倒排骨快速翻匀裹汁。'],
+ tip:'福建名菜。"醉"指酸甜汁浸透，趁热吃最酥。'},
+
+{id:'kelejichi',name:'可乐鸡翅',kind:'meat',src:'chicken',spicy:0,t:30,veg:10,kcal:400,prot:24,dark:false,se:'all',gentle:true,
+ ing:[['鸡翅中',350,'g','约10个'],['可乐',330,'ml','1罐'],['生抽',20,'ml','1.5汤匙'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙']],
+ steps:['鸡翅两面各划两刀，冷水下锅加姜、料酒焯 3 分钟，捞出擦干。','锅中少油，鸡翅煎到两面金黄。','倒可乐没过鸡翅，加生抽、姜片。','大火烧开转中小火焖 15 分钟，再大火收汁到浓稠挂勺。'],
+ tip:'可乐已经够甜，不用放糖。收汁时勤翻动，糖分容易糊底。'},
+
+{id:'aoliyangjitui',name:'奥尔良烤鸡腿',kind:'meat',src:'chicken',spicy:1,t:50,veg:10,kcal:420,prot:30,dark:false,se:'all',gentle:true,
+ ing:[['鸡腿',400,'g','约2个'],['奥尔良腌料',30,'g','2汤匙'],['蜂蜜',15,'g','1汤匙'],['料酒',10,'ml','2茶匙']],
+ steps:['鸡腿用叉子戳孔，加腌料、料酒抓匀，冷藏腌 4 小时（隔夜更好）。','烤箱 200℃ 预热，鸡腿放烤架中层。','烤 25 分钟，翻面刷蜂蜜水。','再烤 15 分钟至表面焦亮。'],
+ tip:'腌够时间才入味，最少 4 小时。最后刷蜂蜜上色，早了会烤焦。'},
+
+{id:'galiji',name:'咖喱鸡',kind:'meat',src:'chicken',spicy:1,t:45,veg:250,kcal:440,prot:26,dark:true,se:'all',gentle:true,
+ ing:[['鸡腿肉',350,'g','约2个'],['土豆',200,'g','约2个'],['胡萝卜',100,'g','1根'],['洋葱',100,'g','半个'],['咖喱块',50,'g','约2小块'],['椰浆',100,'ml','半小盒']],
+ steps:['鸡腿肉切块，加盐、料酒腌 15 分钟。','锅中少油炒香洋葱，下鸡块煎至变色。','加土豆、胡萝卜翻炒，掺 600ml 水烧开，小火煮 15 分钟。','关火下咖喱块搅化，再开小火加椰浆煮 5 分钟至浓稠。'],
+ tip:'咖喱块要关火后再放，否则容易结块糊底。椰浆最后加，香气才在。'},
+
+{id:'yansuji',name:'盐酥鸡',kind:'meat',src:'chicken',spicy:1,t:35,veg:20,kcal:480,prot:28,dark:true,se:'all',gentle:false,
+ ing:[['鸡腿肉',350,'g','约2个'],['红薯淀粉',50,'g','5汤匙'],['五香粉',2,'g','半茶匙'],['白胡椒',2,'g','半茶匙'],['蒜',10,'g','3瓣'],['九层塔',10,'g','1小把']],
+ steps:['鸡腿肉切 3cm 块，加蒜末、生抽、五香粉、白胡椒腌 30 分钟。','裹红薯淀粉，静置 5 分钟让粉回潮。','油六成热下锅炸 3 分钟，捞出复炸 40 秒。','关火后把九层塔丢进油里炸 10 秒，捞出与鸡块拌匀。'],
+ tip:'九层塔（罗勒）是台湾盐酥鸡的灵魂，最后炸香撒上。复炸决定酥度。'},
+
+{id:'lushirou',name:'台式卤肉',kind:'meat',src:'pork',spicy:0,t:80,veg:30,kcal:520,prot:20,dark:false,se:'all',gentle:true,
+ ing:[['五花肉',300,'g','约1块'],['红葱头',40,'g','约5个'],['生抽',30,'ml','2汤匙'],['老抽',8,'ml','2茶匙'],['冰糖',15,'g','8粒'],['五香粉',2,'g','半茶匙'],['鸡蛋',2,'个','2个']],
+ steps:['五花肉切 1cm 小条，干锅煸出油至微焦。','下红葱头碎炒香（这是卤肉饭的灵魂）。','加生抽、老抽、冰糖、五香粉，掺 600ml 水烧开。','放入剥壳水煮蛋，小火卤 60 分钟至肉软汁浓。'],
+ tip:'红葱头不能省，它决定了台式卤肉和普通红烧肉的区别。卤汁要多留一点拌饭。'},
+
+{id:'congshaodapai',name:'葱烧大排',kind:'meat',src:'pork',spicy:0,t:40,veg:80,kcal:480,prot:26,dark:true,se:'all',gentle:true,
+ ing:[['猪大排',300,'g','约2块'],['大葱',150,'g','约2根'],['生抽',20,'ml','1.5汤匙'],['老抽',5,'ml','1茶匙'],['冰糖',10,'g','5粒'],['淀粉',30,'g','3汤匙']],
+ steps:['大排用刀背两面拍松，边缘切几刀防卷，加盐、料酒腌 15 分钟。','两面拍薄淀粉，锅中煎至两面金黄，盛出。','底油下大葱段（切长段）煎到焦香。','大排回锅，加生抽、老抽、糖和 200ml 水，小火焖 15 分钟收汁。'],
+ tip:'拍松断筋是嫩的关键。葱要煎到焦黄才出甜味，这是"葱烧"的精髓。'},
+
+{id:'hongshaozhuti',name:'红烧猪蹄',kind:'meat',src:'pork',spicy:1,t:120,veg:20,kcal:520,prot:26,dark:false,se:'au,wi',gentle:true,
+ ing:[['猪蹄',500,'g','约1只'],['冰糖',20,'g','10粒'],['生抽',25,'ml','2汤匙'],['老抽',8,'ml','2茶匙'],['姜',15,'g','5片'],['八角',2,'g','2颗'],['料酒',30,'ml','2汤匙']],
+ steps:['猪蹄剁块，冷水下锅加姜、料酒焯 5 分钟，刮净残毛冲净。','锅中少油炒冰糖成枣红色，下猪蹄翻炒上色。','加姜、八角、生抽、老抽，掺 1200ml 热水烧开。','小火炖 90 分钟至软糯脱骨，大火收汁。'],
+ tip:'胶原蛋白多、汤汁黏唇才对。炒糖色是颜色好看的关键，别炒过头。'},
+
+{id:'xiangjianwuhuarou',name:'香煎五花肉',kind:'meat',src:'pork',spicy:1,t:25,veg:80,kcal:560,prot:18,dark:true,se:'all',gentle:false,
+ ing:[['五花肉',250,'g','约1块'],['生菜',100,'g','约4片'],['蒜',10,'g','3瓣'],['生抽',15,'ml','1汤匙'],['辣椒面',5,'g','1茶匙'],['孜然',3,'g','半茶匙']],
+ steps:['五花肉切 0.5cm 厚片，加生抽、蒜末腌 20 分钟。','平底锅不放油，肉片铺开中小火煎 4 分钟，逼出大量油脂。','翻面再煎 2 分钟至两面焦脆。','撒辣椒面、孜然，用生菜包着吃。'],
+ tip:'不用放油，五花肉自己出的油足够。煎到边缘焦脆最好吃，生菜包着解腻。'},
+
+{id:'yangshuopiyu',name:'阳朔啤酒鱼',kind:'meat',src:'fish',spicy:2,t:40,veg:150,kcal:380,prot:30,dark:true,se:'all',gentle:false,
+ ing:[['鲤鱼',450,'g','约1条'],['啤酒',330,'ml','1罐'],['番茄',150,'g','约1个'],['青椒',60,'g','1个'],['姜蒜',15,'g','各2瓣'],['郫县豆瓣',12,'g','1汤匙']],
+ steps:['鱼处理干净，两面划刀，用盐、料酒腌 15 分钟，擦干。','锅烧热下油，鱼两面煎到金黄定型。','底油炒香豆瓣、姜蒜，下番茄块炒出汁。','倒啤酒，放回鱼，中火烧 12 分钟，加青椒块收汁。'],
+ tip:'桂林名菜，啤酒去腥增香，带一点麦芽甜。鱼不要翻，用勺把汁浇上去。'},
+
+{id:'bianyudoufu',name:'鳊鱼炖豆腐',kind:'meat',src:'fish',spicy:1,t:40,veg:150,kcal:330,prot:28,dark:false,se:'all',gentle:true,
+ ing:[['鳊鱼',400,'g','约1条'],['老豆腐',250,'g','约半块'],['姜',10,'g','4片'],['葱',20,'g','2根'],['料酒',15,'ml','1汤匙'],['生抽',15,'ml','1汤匙']],
+ steps:['鳊鱼处理干净擦干，两面煎至金黄。','烹料酒，掺 800ml 开水，加姜片大火滚 10 分钟至汤白。','下豆腐块，转中小火炖 12 分钟。','加生抽、盐，撒葱花。'],
+ tip:'鱼煎透再冲开水，汤才奶白。豆腐用老豆腐，炖久了不散。'},
+
+{id:'liyudunbaicai',name:'鲤鱼炖白菜',kind:'meat',src:'fish',spicy:0,t:40,veg:300,kcal:290,prot:26,dark:false,se:'wi',gentle:true,
+ ing:[['鲤鱼',400,'g','约1条'],['大白菜',350,'g','约1/3棵'],['姜',10,'g','4片'],['葱',20,'g','2根'],['料酒',15,'ml','1汤匙'],['白胡椒',2,'g','半茶匙']],
+ steps:['鲤鱼处理干净，两面煎至金黄。','烹料酒，掺 1000ml 开水，加姜片大火滚 10 分钟。','下白菜帮煮 5 分钟，再下菜叶煮 3 分钟。','加盐、白胡椒，撒葱花。'],
+ tip:'东北家常菜，冬天吃最暖。白菜吸了鱼汤特别鲜甜。'},
+
+{id:'xihongshitundouniurou',name:'西红柿土豆炖牛肉',kind:'meat',src:'beef',spicy:1,t:90,veg:280,kcal:440,prot:26,dark:true,se:'au,wi',gentle:true,
+ ing:[['牛腩',200,'g','约1小碗'],['番茄',250,'g','约2个'],['土豆',200,'g','约2个'],['洋葱',60,'g','1/4个'],['姜',8,'g','3片'],['番茄酱',20,'g','1汤匙']],
+ steps:['牛腩切块焯水，撇沫捞出温水冲净。','锅中少油炒香洋葱，下番茄炒出沙，加番茄酱炒匀。','倒牛腩翻炒，掺 1200ml 热水，小火炖 60 分钟。','下土豆再炖 25 分钟，加盐调味。'],
+ tip:'番茄分两次下更浓：一半炒成汤底，一半最后放保留果肉。'},
+
+{id:'xianglasuorou',name:'香辣虾',kind:'meat',src:'shrimp',spicy:3,t:30,veg:150,kcal:380,prot:28,dark:true,se:'all',gentle:false,
+ ing:[['鲜虾',350,'g','约14只'],['土豆',150,'g','约1个'],['芹菜',80,'g','2根'],['干辣椒',10,'g','12个'],['花椒',4,'g','1汤匙'],['郫县豆瓣',15,'g','1汤匙'],['蒜',12,'g','4瓣']],
+ steps:['虾开背去虾线；土豆切条炸至金黄。','锅中宽油，虾煎到两面变红酥脆，盛出。','底油小火下豆瓣、干辣椒、花椒、蒜炒香。','倒回虾和土豆条，加芹菜段大火翻炒 2 分钟。'],
+ tip:'虾要煎到壳酥，连壳吃才香。土豆先炸再炒，口感才对。'},
+
+/* ================= 半荤扩充 ================= */
+{id:'bocaichaodan',name:'菠菜炒鸡蛋',kind:'half',src:'egg',spicy:0,t:12,veg:200,kcal:230,prot:15,dark:true,se:'sp,au,wi',gentle:true,
+ ing:[['菠菜',250,'g','约1把'],['鸡蛋',2,'个','2个'],['蒜',5,'g','2瓣'],['菜籽油',16,'ml','2汤匙']],
+ steps:['菠菜洗净切段，沸水汆 15 秒捞出挤干（去草酸）。','鸡蛋打散，热锅热油炒成大块盛出。','底油下蒜末，倒菠菜大火炒 30 秒。','倒回鸡蛋，加盐翻匀出锅。'],
+ tip:'菠菜必须焯水，否则涩口还影响钙吸收。'},
+
+{id:'xihuluchaodan',name:'西葫芦炒鸡蛋',kind:'half',src:'egg',spicy:0,t:12,veg:220,kcal:210,prot:14,dark:false,se:'su,au',gentle:true,
+ ing:[['西葫芦',250,'g','约1根'],['鸡蛋',2,'个','2个'],['蒜',5,'g','2瓣'],['菜籽油',16,'ml','2汤匙']],
+ steps:['西葫芦对半剖开切薄片。','鸡蛋打散炒成块盛出。','底油下蒜末，倒西葫芦大火炒 2 分钟至微软。','倒回鸡蛋，加盐翻匀出锅。'],
+ tip:'西葫芦易出水，大火快炒别加盖，否则变成煮的。'},
+
+{id:'huotuihuangguad',name:'鸡蛋火腿炒黄瓜',kind:'half',src:'egg',spicy:0,t:12,veg:200,kcal:260,prot:16,dark:false,se:'su',gentle:true,
+ ing:[['黄瓜',200,'g','约1根'],['鸡蛋',2,'个','2个'],['火腿片',50,'g','约3片'],['蒜',5,'g','2瓣']],
+ steps:['黄瓜斜切薄片，火腿切条。','鸡蛋炒成块盛出。','底油下蒜末、火腿炒香，倒黄瓜大火炒 60 秒。','倒回鸡蛋，加盐翻匀出锅。'],
+ tip:'黄瓜炒到断生就好，久了出水变软。'},
+
+{id:'jinqiandan',name:'金钱蛋',kind:'half',src:'egg',spicy:2,t:20,veg:80,kcal:280,prot:15,dark:true,se:'all',gentle:false,
+ ing:[['鸡蛋',4,'个','4个'],['青椒',60,'g','1个'],['小米辣',6,'g','2个'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙'],['淀粉',10,'g','1汤匙']],
+ steps:['鸡蛋煮 8 分钟，剥壳切成 1cm 厚圆片。','两面拍薄淀粉（防散）。','平底锅少油，蛋片煎到两面金黄，盛出。','底油下青椒、小米辣、蒜末炒香，倒回蛋片，加生抽翻匀。'],
+ tip:'湖南家常菜，切片后拍淀粉再煎，蛋片才不散、外皮焦香。'},
+
+{id:'leijiaopidan',name:'雷椒皮蛋',kind:'half',src:'egg',spicy:2,t:20,veg:100,kcal:220,prot:12,dark:true,se:'su',gentle:false,
+ ing:[['皮蛋',2,'个','2个'],['青椒',150,'g','约4个'],['蒜',10,'g','3瓣'],['生抽',10,'ml','2茶匙'],['香醋',8,'ml','2茶匙'],['香油',3,'ml','几滴']],
+ steps:['青椒放干锅或明火上烧到表皮焦黑起泡。','放入碗中盖住焖 5 分钟，撕去黑皮，手撕成条。','皮蛋切瓣。','蒜捣泥，加生抽、醋、香油，与青椒皮蛋拌匀。'],
+ tip:'青椒烧到焦黑再撕皮，才有那股特殊的糊香。'},
+
+{id:'pidandoufu',name:'皮蛋豆腐',kind:'half',src:'tofu',spicy:1,t:10,veg:60,kcal:180,prot:14,dark:true,se:'su',gentle:true,
+ ing:[['嫩豆腐',300,'g','约1盒'],['皮蛋',1,'个','1个'],['葱',10,'g','1根'],['生抽',12,'ml','1汤匙'],['香油',5,'ml','1茶匙']],
+ steps:['嫩豆腐整块扣入盘中，用刀划成小块。','皮蛋切小丁铺在豆腐上。','淋生抽、香油，撒葱花。','吃时拌匀。'],
+ tip:'夏天最省事的凉菜，5 分钟上桌。吃前再拌，早了出水。'},
+
+{id:'liangbandoufu',name:'凉拌豆腐',kind:'half',src:'tofu',spicy:1,t:10,veg:60,kcal:160,prot:14,dark:true,se:'su',gentle:true,
+ ing:[['嫩豆腐',300,'g','约1盒'],['小葱',15,'g','2根'],['生抽',12,'ml','1汤匙'],['辣椒油',8,'ml','2茶匙'],['香油',3,'ml','几滴']],
+ steps:['豆腐切 2cm 方块，沸水汆 1 分钟去豆腥，捞出沥干。','小葱切花。','加生抽、辣椒油、香油拌匀。','冷藏 10 分钟更爽口。'],
+ tip:'豆腐先汆一下，豆腥味去一半，口感也更紧实。'},
+
+{id:'ribendoufujia',name:'家常日本豆腐',kind:'half',src:'tofu',spicy:1,t:25,veg:120,kcal:280,prot:14,dark:true,se:'all',gentle:true,
+ ing:[['日本豆腐',300,'g','约2管'],['猪肉末',50,'g','2汤匙'],['青椒',50,'g','1个'],['郫县豆瓣',10,'g','1汤匙'],['淀粉',20,'g','2汤匙'],['蒜',6,'g','2瓣']],
+ steps:['日本豆腐连袋切段，轻轻推出，两面拍薄淀粉。','平底锅少油，中火煎到两面金黄硬壳，盛出。','底油下肉末炒散，加豆瓣、蒜末炒出红油。','掺 150ml 水烧开，下豆腐小火煨 3 分钟，加青椒块勾薄芡。'],
+ tip:'日本豆腐极嫩，拍淀粉煎出硬壳才拿得起来。'},
+
+{id:'cuipidoufu',name:'脆皮豆腐',kind:'half',src:'tofu',spicy:1,t:25,veg:30,kcal:300,prot:16,dark:false,se:'all',gentle:false,
+ ing:[['老豆腐',300,'g','约1块'],['淀粉',40,'g','4汤匙'],['椒盐',5,'g','1茶匙'],['小米辣',5,'g','2个'],['蒜',6,'g','2瓣'],['菜籽油',200,'ml','炸用']],
+ steps:['老豆腐切 2cm 方块，用厨房纸吸干表面水。','裹一层干淀粉。','油六成热下锅炸 4 分钟至外壳金黄酥脆，捞出。','撒椒盐、蒜末、小米辣圈拌开。'],
+ tip:'豆腐必须吸干水，否则下油锅会溅、且不脆。'},
+
+{id:'congjiandoufu',name:'葱煎豆腐',kind:'half',src:'tofu',spicy:0,t:20,veg:20,kcal:250,prot:16,dark:false,se:'all',gentle:true,
+ ing:[['老豆腐',350,'g','约1块'],['小葱',40,'g','4根'],['生抽',12,'ml','1汤匙'],['菜籽油',20,'ml','2汤匙']],
+ steps:['豆腐切 1cm 厚片，吸干水。','平底锅少油，中火煎到两面金黄（约 6 分钟）。','加生抽和 3 汤匙水，小火焖 2 分钟让豆腐吸味。','撒大量葱花，收干汤汁出锅。'],
+ tip:'葱要多，靠葱香提味，不用别的调料。'},
+
+{id:'jinzhenguidofu',name:'金针菇豆腐煲',kind:'half',src:'tofu',spicy:1,t:25,veg:150,kcal:260,prot:15,dark:true,se:'au,wi',gentle:true,
+ ing:[['日本豆腐',250,'g','约2管'],['金针菇',150,'g','约1把'],['猪肉末',40,'g','1.5汤匙'],['蚝油',12,'ml','1汤匙'],['蒜',8,'g','2瓣'],['淀粉',6,'g','2茶匙']],
+ steps:['日本豆腐切段，煎至两面金黄。','砂锅少油炒香蒜末、肉末。','掺 250ml 水烧开，下金针菇煮 3 分钟。','下豆腐，加蚝油，勾薄芡，撒葱花。'],
+ tip:'金针菇煮 3 分钟就够，久了塞牙。'},
+
+{id:'lancairoumo',name:'榄菜肉末四季豆',kind:'half',src:'pork',spicy:1,t:20,veg:200,kcal:320,prot:14,dark:true,se:'su,au',gentle:false,
+ ing:[['四季豆',250,'g','约1把'],['猪肉末',60,'g','2汤匙'],['橄榄菜',30,'g','2汤匙'],['蒜',6,'g','2瓣'],['生抽',8,'ml','2茶匙']],
+ steps:['四季豆掐段，沸水汆 3 分钟（必须熟透）。','锅中下油，肉末炒散出油。','加蒜末、橄榄菜炒香。','倒四季豆大火翻炒 2 分钟，加生抽出锅。'],
+ tip:'橄榄菜本身很咸，别再加盐。四季豆一定要汆透，半生有毒。'},
+
+{id:'xiangganqincai',name:'香干芹菜炒肉',kind:'half',src:'pork',spicy:1,t:18,veg:220,kcal:310,prot:20,dark:true,se:'all',gentle:false,
+ ing:[['香干',150,'g','约3块'],['芹菜',150,'g','约4根'],['猪肉片',80,'g','约5片'],['蒜',6,'g','2瓣'],['生抽',10,'ml','2茶匙']],
+ steps:['香干切条，芹菜切段，肉切片。','热锅下油，肉片炒至变色。','加蒜末、香干炒 1 分钟至边缘微焦。','下芹菜大火炒 90 秒，加生抽、盐出锅。'],
+ tip:'香干先炒出焦边更香。芹菜叶别扔，可以另外凉拌。'},
+
+{id:'xiangganrousi',name:'香干肉丝',kind:'half',src:'pork',spicy:1,t:15,veg:120,kcal:300,prot:21,dark:false,se:'all',gentle:false,
+ ing:[['香干',150,'g','约3块'],['猪里脊',120,'g','约1小块'],['青椒',50,'g','1个'],['生抽',10,'ml','2茶匙'],['淀粉',6,'g','2茶匙']],
+ steps:['里脊切丝，加生抽、淀粉腌 10 分钟。香干切丝。','热锅下油，肉丝炒散盛出。','底油下香干丝炒 1 分钟，加青椒丝炒 30 秒。','倒回肉丝，加盐翻匀出锅。'],
+ tip:'香干切细一点更入味，比肉丝略细最好。'},
+
+{id:'huangguachaorou',name:'黄瓜炒肉',kind:'half',src:'pork',spicy:1,t:15,veg:200,kcal:280,prot:18,dark:false,se:'su',gentle:true,
+ ing:[['黄瓜',250,'g','约2根'],['猪肉片',100,'g','约6片'],['蒜',6,'g','2瓣'],['生抽',10,'ml','2茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['黄瓜斜切薄片，肉片加生抽、淀粉抓匀。','热锅下油，肉片炒至变色。','加蒜片炒香，倒黄瓜大火炒 60 秒。','加盐翻匀出锅。'],
+ tip:'黄瓜最后下、快出锅，保持脆爽。'},
+
+{id:'jiaobaichaorou',name:'茭白炒肉',kind:'half',src:'pork',spicy:1,t:18,veg:220,kcal:290,prot:17,dark:false,se:'su,au',gentle:true,
+ ing:[['茭白',250,'g','约2根'],['猪肉片',100,'g','约6片'],['青椒',40,'g','1个'],['生抽',10,'ml','2茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['茭白剥壳切滚刀块或薄片。','肉片加生抽、淀粉抓匀，滑炒至变色盛出。','底油下茭白炒 2 分钟，加 2 汤匙水略焖。','倒回肉片、青椒，加盐炒匀。'],
+ tip:'茭白要选白嫩带绿的，切开有黑点的不要。'},
+
+{id:'helangdoulachang',name:'荷兰豆炒腊肠',kind:'half',src:'pork',spicy:1,t:15,veg:200,kcal:360,prot:16,dark:true,se:'sp,wi',gentle:false,
+ ing:[['荷兰豆',200,'g','约1把'],['腊肠',80,'g','约半根'],['蒜',6,'g','2瓣'],['生抽',6,'ml','1茶匙']],
+ steps:['荷兰豆撕去老筋，沸水汆 30 秒。','腊肠斜切薄片，冷锅小火煸出油。','加蒜片炒香，倒荷兰豆大火炒 60 秒。','加少许生抽，翻匀出锅。'],
+ tip:'腊肠先煸出油，用它的油炒荷兰豆最香。腊肠偏咸，生抽只放一点。'},
+
+{id:'xiaochaoouding',name:'小炒藕丁',kind:'half',src:'pork',spicy:2,t:18,veg:200,kcal:300,prot:14,dark:false,se:'au,wi',gentle:false,
+ ing:[['莲藕',250,'g','约1节'],['猪肉末',60,'g','2汤匙'],['小米辣',8,'g','3个'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙'],['香醋',6,'ml','1茶匙']],
+ steps:['莲藕去皮切 1cm 小丁，泡清水防氧化，沸水汆 2 分钟。','锅中下油，肉末炒散出油。','加蒜末、小米辣炒香。','倒藕丁大火炒 2 分钟，加生抽、醋出锅。'],
+ tip:'藕丁先汆水，炒的时候才脆不粘锅。'},
+
+{id:'qingjiaoniang',name:'青椒酿肉',kind:'half',src:'pork',spicy:1,t:35,veg:180,kcal:320,prot:20,dark:true,se:'su,au',gentle:true,
+ ing:[['青椒',250,'g','约5个'],['猪肉末',150,'g','约5汤匙'],['姜',4,'g','1片'],['生抽',15,'ml','1汤匙'],['淀粉',10,'g','1汤匙'],['蚝油',10,'ml','2茶匙']],
+ steps:['肉末加姜末、生抽、淀粉、2 汤匙水，顺一个方向搅打上劲。','青椒去籽（从蒂部挖出），把肉馅塞满。','平底锅少油，肉馅面朝下煎到金黄，翻面再煎。','加 150ml 水和蚝油，加盖焖 8 分钟收汁。'],
+ tip:'肉馅打水上劲才嫩。青椒选直的、粗细均匀的好塞。'},
+
+{id:'qieziduntudou',name:'茄子炖土豆',kind:'half',src:'pork',spicy:1,t:30,veg:280,kcal:340,prot:12,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',250,'g','约2根'],['土豆',200,'g','约2个'],['猪肉片',60,'g','约4片'],['郫县豆瓣',10,'g','1汤匙'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙']],
+ steps:['茄子切滚刀块，盐腌 10 分钟挤水；土豆切块。','锅中下油，茄子煎到软塌盛出。','底油炒肉片，加豆瓣、蒜末炒出红油。','下土豆、茄子，掺 300ml 水，小火炖 15 分钟。','加生抽，大火收汁。'],
+ tip:'东北家常菜，茄子先煎过才不吸油、不发黑。'},
+
+/* ================= 素菜扩充 ================= */
+{id:'hupiqingjiao',name:'虎皮青椒',kind:'veg',src:'none',spicy:2,t:15,veg:250,kcal:140,prot:5,dark:true,se:'su,au',gentle:false,
+ ing:[['青椒',300,'g','约6个'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',8,'ml','2茶匙'],['白糖',4,'g','1茶匙']],
+ steps:['青椒去蒂，用刀背拍扁（更易入味）。','干锅不放油，中火把青椒压着煎 5 分钟至表皮起虎皮、变软。','加少许油、蒜末炒香。','淋生抽、醋、糖，翻匀收汁。'],
+ tip:'干锅先煎出虎皮，再放油，这样不吸油还香。'},
+
+{id:'disanxian',name:'地三鲜',kind:'veg',src:'none',spicy:1,t:30,veg:300,kcal:320,prot:7,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',200,'g','约1根'],['土豆',200,'g','约2个'],['青椒',100,'g','2个'],['蒜',10,'g','3瓣'],['生抽',15,'ml','1汤匙'],['淀粉',8,'g','1汤匙']],
+ steps:['茄子、土豆切滚刀块，青椒切块。','茄子撒盐腌 10 分钟挤水，拌少许淀粉。','锅中多放油，土豆炸至金黄捞出；茄子炸至软塌捞出。','锅留底油，下蒜末、青椒炒香，倒回土豆茄子，加生抽、糖、水淀粉翻匀。'],
+ tip:'东北名菜。茄子先腌挤水能少吸一半油，比传统油炸健康。'},
+
+{id:'basitudou',name:'拔丝土豆',kind:'veg',src:'none',spicy:0,t:30,veg:250,kcal:380,prot:5,dark:false,se:'au,wi',gentle:false,
+ ing:[['土豆',300,'g','约2个'],['白糖',80,'g','约4汤匙'],['淀粉',40,'g','4汤匙'],['菜籽油',300,'ml','炸用']],
+ steps:['土豆切滚刀块，沸水煮 3 分钟，捞出沥干裹淀粉。','油六成热炸到金黄硬壳，捞出。','锅刷干净，放糖和 1 汤匙水，小火熬到糖浆微黄、能拉丝。','关火立刻倒土豆翻匀，装盘配一碗凉水蘸着吃。'],
+ tip:'熬糖是关键：颜色到浅琥珀、能拉细丝就关火，晚 5 秒就苦。'},
+
+{id:'songrenyumi',name:'松仁玉米',kind:'veg',src:'none',spicy:0,t:15,veg:230,kcal:280,prot:8,dark:true,se:'au,wi',gentle:true,
+ ing:[['玉米粒',250,'g','约1碗'],['松仁',30,'g','2汤匙'],['胡萝卜',60,'g','半根'],['黄瓜',60,'g','半根'],['白糖',5,'g','1茶匙']],
+ steps:['玉米粒、胡萝卜丁沸水汆 1 分钟。','松仁冷油小火炸到微黄，捞出（易糊，全程小火）。','锅中少油，下玉米、胡萝卜、黄瓜丁翻炒 1 分钟。','加盐、糖，撒松仁出锅。'],
+ tip:'松仁必须冷油小火，热油下去 10 秒就糊。'},
+
+{id:'shangtangwawa',name:'上汤娃娃菜',kind:'veg',src:'none',spicy:0,t:20,veg:280,kcal:160,prot:8,dark:false,se:'au,wi',gentle:true,
+ ing:[['娃娃菜',300,'g','约2棵'],['皮蛋',1,'个','1个'],['咸鸭蛋',1,'个','1个'],['蒜',10,'g','3瓣'],['枸杞',3,'g','1小撮']],
+ steps:['娃娃菜对半剖开；皮蛋、咸鸭蛋切小丁。','锅中少油，下蒜末炒香，加皮蛋咸蛋丁炒 1 分钟。','掺 500ml 水烧开，汤色转白。','下娃娃菜煮 5 分钟至软，撒枸杞。'],
+ tip:'汤白的秘诀是皮蛋+咸蛋+蒜炒过再加水。不用放盐，咸蛋够味。'},
+
+{id:'qianlongbaicai',name:'乾隆白菜',kind:'veg',src:'none',spicy:0,t:10,veg:250,kcal:180,prot:8,dark:false,se:'au,wi',gentle:true,
+ ing:[['大白菜心',300,'g','约半棵'],['芝麻酱',25,'g','2汤匙'],['香醋',15,'ml','1汤匙'],['白糖',10,'g','2茶匙'],['蜂蜜',8,'g','1茶匙']],
+ steps:['白菜只取嫩心，手撕成大片，冰水泡 10 分钟至脆。','芝麻酱用温水慢慢化开（少量多次，否则结块）。','加醋、糖、蜂蜜、少许盐调成顺滑的酱汁。','沥干白菜，淋酱拌匀。'],
+ tip:'芝麻酱要一点一点加水化，一次加多了就成疙瘩。'},
+
+{id:'baizhuocaixin',name:'白灼菜心',kind:'veg',src:'none',spicy:0,t:12,veg:250,kcal:100,prot:6,dark:true,se:'all',gentle:true,
+ ing:[['菜心',300,'g','约1把'],['蒜',8,'g','2瓣'],['生抽',15,'ml','1汤匙'],['菜籽油',10,'ml','2茶匙']],
+ steps:['菜心洗净，粗梗剖开。','沸水加几滴油和少许盐，菜心下锅汆 60 秒，捞出摆盘。','蒜切末铺在菜心上，淋生抽。','烧一勺热油泼在蒜末上。'],
+ tip:'水里加油和盐，菜心才翠绿。汆 60 秒足够，久了发黄。'},
+
+{id:'haoyoushengcai',name:'蚝油生菜',kind:'veg',src:'none',spicy:0,t:10,veg:250,kcal:110,prot:6,dark:true,se:'all',gentle:true,
+ ing:[['生菜',300,'g','约1颗'],['蚝油',15,'ml','1汤匙'],['蒜',8,'g','2瓣'],['淀粉',4,'g','1茶匙']],
+ steps:['生菜掰大片洗净，沸水汆 20 秒捞出摆盘。','锅中少油炒香蒜末，加蚝油、100ml 水烧开。','勾薄芡至浓稠。','淋在生菜上。'],
+ tip:'生菜汆 20 秒就够，久了塌成一团。'},
+
+{id:'liangbanyoumai',name:'凉拌油麦菜',kind:'veg',src:'none',spicy:1,t:10,veg:250,kcal:110,prot:6,dark:true,se:'sp,su',gentle:true,
+ ing:[['油麦菜',300,'g','约1把'],['蒜',12,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',10,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙']],
+ steps:['油麦菜洗净切段，冰水泡 10 分钟更脆。','沥干装盘。','蒜捣泥，加生抽、醋、糖、辣椒油调汁。','淋上拌匀。'],
+ tip:'冰水泡过口感脆一倍。现拌现吃，放久了出水。'},
+
+{id:'hongshaodonggua',name:'红烧冬瓜',kind:'veg',src:'none',spicy:0,t:25,veg:300,kcal:150,prot:5,dark:false,se:'su',gentle:true,
+ ing:[['冬瓜',400,'g','约1圈'],['生抽',15,'ml','1汤匙'],['老抽',3,'ml','半茶匙'],['白糖',5,'g','1茶匙'],['蒜',6,'g','2瓣'],['葱',10,'g','1根']],
+ steps:['冬瓜去皮切 2cm 厚块，表面划十字花刀。','锅中少油，冬瓜煎到两面微黄。','加蒜末、生抽、老抽、糖，掺 200ml 水。','小火焖 12 分钟至透明，大火收汁撒葱花。'],
+ tip:'冬瓜划花刀才入味，不然外面咸里面淡。'},
+
+{id:'hongshaoqiezi',name:'红烧茄子',kind:'veg',src:'none',spicy:1,t:25,veg:280,kcal:260,prot:6,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',350,'g','约2根'],['蒜',10,'g','3瓣'],['生抽',15,'ml','1汤匙'],['老抽',3,'ml','半茶匙'],['白糖',6,'g','1茶匙'],['淀粉',8,'g','1汤匙']],
+ steps:['茄子切滚刀块，撒盐腌 10 分钟挤水，拌少许淀粉。','锅中少油，中火煎到表面金黄软塌。','加蒜末炒香，倒生抽、老抽、糖和 100ml 水。','小火焖 3 分钟，勾薄芡收汁。'],
+ tip:'盐腌挤水 + 裹淀粉，是茄子少吸油的两个关键。'},
+
+{id:'suanrongkaoqiezi',name:'蒜蓉烤茄子',kind:'veg',src:'none',spicy:2,t:35,veg:300,kcal:200,prot:6,dark:true,se:'su,au',gentle:true,
+ ing:[['茄子',400,'g','约2根'],['蒜',30,'g','1整头'],['小米辣',8,'g','3个'],['生抽',15,'ml','1汤匙'],['蚝油',10,'ml','2茶匙'],['菜籽油',20,'ml','2汤匙']],
+ steps:['茄子对半剖开，切面刷油，200℃ 烤 20 分钟至软。','蒜切末，一半用热油炸香，与生蒜末混合（金银蒜）。','加生抽、蚝油、小米辣拌匀。','铺在茄子上，再烤 8 分钟。'],
+ tip:'金银蒜（一半炸香一半生）是蒜蓉菜的灵魂，香气有层次。'},
+
+{id:'liangbanjinzhengu',name:'凉拌金针菇',kind:'veg',src:'none',spicy:1,t:12,veg:200,kcal:110,prot:7,dark:true,se:'all',gentle:true,
+ ing:[['金针菇',250,'g','约1把'],['黄瓜',80,'g','半根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',10,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙']],
+ steps:['金针菇去根撕散，沸水汆 2 分钟捞出过凉水，挤干。','黄瓜切细丝。','蒜末加生抽、醋、糖、辣椒油调汁。','拌匀冷藏 10 分钟。'],
+ tip:'金针菇汆完一定挤干水，否则拌出来一盘汤。'},
+
+{id:'qincaichashugu',name:'芹菜拌茶树菇',kind:'veg',src:'none',spicy:1,t:15,veg:220,kcal:130,prot:7,dark:true,se:'all',gentle:true,
+ ing:[['茶树菇',150,'g','约1把'],['芹菜',150,'g','约4根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',8,'ml','2茶匙']],
+ steps:['茶树菇去根，沸水汆 3 分钟，捞出挤干。','芹菜切段，沸水汆 40 秒，过凉水。','蒜末加生抽、醋、辣椒油调汁。','拌匀即可。'],
+ tip:'茶树菇要汆够 3 分钟，不然有生味。'},
+
+{id:'haoyousanxiangu',name:'蚝油三鲜菇',kind:'veg',src:'none',spicy:0,t:18,veg:230,kcal:150,prot:8,dark:true,se:'all',gentle:true,
+ ing:[['香菇',80,'g','约4朵'],['平菇',80,'g','1小把'],['金针菇',80,'g','半把'],['蚝油',15,'ml','1汤匙'],['蒜',8,'g','2瓣'],['淀粉',5,'g','2茶匙']],
+ steps:['三种菇洗净撕小朵，香菇切片。','沸水汆 1 分钟捞出（去杂味）。','锅中少油炒香蒜末，下三种菇炒 2 分钟。','加蚝油、100ml 水，勾薄芡收汁。'],
+ tip:'菌菇先汆水去味，再用蚝油提鲜，鲜味翻倍。'},
+
+{id:'liangbanwosun',name:'凉拌莴笋',kind:'veg',src:'none',spicy:1,t:12,veg:250,kcal:90,prot:5,dark:false,se:'sp,su',gentle:true,
+ ing:[['莴笋',300,'g','约1根'],['蒜',10,'g','3瓣'],['生抽',10,'ml','2茶匙'],['香醋',8,'ml','2茶匙'],['辣椒油',8,'ml','2茶匙'],['白糖',3,'g','半茶匙']],
+ steps:['莴笋去皮切细丝，冰水泡 10 分钟至脆。','沥干装盘。','蒜末加生抽、醋、糖、辣椒油调汁。','淋上拌匀。'],
+ tip:'莴笋丝越细越好吃，冰水泡过更脆。'},
+
+{id:'liangbanhaidai',name:'凉拌海带丝',kind:'veg',src:'none',spicy:1,t:15,veg:220,kcal:100,prot:6,dark:true,se:'su,au',gentle:true,
+ ing:[['海带丝',250,'g','约1把'],['胡萝卜',60,'g','半根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',12,'ml','1汤匙'],['辣椒油',10,'ml','2茶匙']],
+ steps:['海带丝洗净，沸水汆 3 分钟（去腥、去多余碘味），捞出过凉水。','胡萝卜切丝。','蒜末加生抽、醋、糖、辣椒油调汁。','拌匀冷藏 15 分钟。'],
+ tip:'海带丝要多洗几遍去沙，汆 3 分钟口感才脆。'},
+
+{id:'suanrongxiancai',name:'蒜蓉苋菜',kind:'veg',src:'none',spicy:0,t:8,veg:250,kcal:100,prot:6,dark:true,se:'su',gentle:true,
+ ing:[['苋菜',300,'g','约1把'],['蒜',15,'g','4瓣'],['菜籽油',16,'ml','2汤匙']],
+ steps:['苋菜洗净沥干（带水会溅油）。','热锅下油，小火炒香一半蒜末。','下苋菜大火炒 60 秒至塌软出红汁。','加盐、剩下的生蒜末，翻匀出锅。'],
+ tip:'苋菜的红汁是天然的，炒出来染红米饭，小孩喜欢。'},
+
+{id:'qingchaojielan',name:'清炒芥蓝',kind:'veg',src:'none',spicy:0,t:12,veg:250,kcal:110,prot:7,dark:true,se:'au,wi,sp',gentle:true,
+ ing:[['芥蓝',300,'g','约1把'],['蒜',10,'g','3瓣'],['蚝油',10,'ml','2茶匙'],['淀粉',4,'g','1茶匙']],
+ steps:['芥蓝削去老皮，斜切段。','沸水加少许油盐，汆 40 秒捞出。','热锅下油、蒜末炒香，下芥蓝大火炒 60 秒。','加蚝油、少许水淀粉，翻匀出锅。'],
+ tip:'芥蓝有苦味，汆水能去掉大半，还能保翠绿。'},
+
+{id:'ganbianxingbaogu',name:'干煸杏鲍菇',kind:'veg',src:'none',spicy:2,t:20,veg:250,kcal:180,prot:8,dark:false,se:'all',gentle:false,
+ ing:[['杏鲍菇',300,'g','约3根'],['干辣椒',5,'g','6个'],['花椒',2,'g','1茶匙'],['蒜',8,'g','2瓣'],['生抽',10,'ml','2茶匙'],['白芝麻',3,'g','1茶匙']],
+ steps:['杏鲍菇手撕成条（别用刀切，撕的更入味）。','干锅不放油，中火煸 5 分钟至水分收干、边缘微焦。','加油、干辣椒、花椒、蒜末炒香。','加生抽、盐，大火翻炒 1 分钟，撒白芝麻。'],
+ tip:'先干煸出水，杏鲍菇才有嚼劲，像在吃肉。'},
+
+{id:'jiucaichaodouya',name:'韭菜炒豆芽',kind:'veg',src:'none',spicy:1,t:8,veg:250,kcal:100,prot:6,dark:true,se:'sp',gentle:true,
+ ing:[['绿豆芽',200,'g','约1大把'],['韭菜',100,'g','约半把'],['蒜',5,'g','2瓣'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['豆芽洗净掐根，韭菜切段。','热锅下油、蒜片炒香。','先下豆芽大火炒 40 秒。','下韭菜炒 20 秒，加盐立刻出锅。'],
+ tip:'韭菜最后 20 秒，久了发黄。'},
+
+{id:'suanmiaochaodougan',name:'蒜苗炒豆干',kind:'veg',src:'none',spicy:1,t:12,veg:230,kcal:210,prot:12,dark:true,se:'wi,sp',gentle:true,
+ ing:[['豆干',200,'g','约4块'],['蒜苗',120,'g','约4根'],['干辣椒',3,'g','4个'],['生抽',8,'ml','2茶匙']],
+ steps:['豆干切条，蒜苗斜切段（白叶分开）。','热锅下油，豆干炒到边缘微焦。','加干辣椒、蒜苗白炒 30 秒。','下蒜苗叶炒 20 秒，加生抽出锅。'],
+ tip:'豆干炒出焦边才香，别急着下蒜苗。'},
+
+{id:'ganguotudoupian',name:'干锅土豆片',kind:'veg',src:'none',spicy:2,t:25,veg:250,kcal:230,prot:6,dark:true,se:'au,wi',gentle:false,
+ ing:[['土豆',350,'g','约3个'],['五花肉',40,'g','约2片'],['干辣椒',6,'g','8个'],['郫县豆瓣',10,'g','1汤匙'],['蒜',8,'g','2瓣'],['蒜苗',50,'g','2根']],
+ steps:['土豆切 3mm 厚片，清水冲去淀粉，擦干。','平底锅少油，土豆片煎到两面金黄起皱。','另起锅，五花肉煸出油，下豆瓣、干辣椒、蒜炒香。','倒土豆片，加生抽、蒜苗，大火翻炒 1 分钟。'],
+ tip:'土豆片先煎出硬壳，才不会炒成土豆泥。'},
+
+{id:'qingchaolusun',name:'清炒芦笋',kind:'veg',src:'none',spicy:0,t:10,veg:250,kcal:95,prot:7,dark:true,se:'sp,su',gentle:true,
+ ing:[['芦笋',300,'g','约1把'],['蒜',8,'g','2瓣'],['蚝油',8,'ml','2茶匙'],['菜籽油',14,'ml','1.5汤匙']],
+ steps:['芦笋削去根部老皮，切 5cm 段。','沸水汆 30 秒（保持翠绿脆嫩），捞出。','热锅下油、蒜片炒香，下芦笋大火炒 60 秒。','加蚝油、盐，翻匀出锅。'],
+ tip:'芦笋根部老皮必须削掉，否则咬不动。汆 30 秒就够。'},
+
+{id:'culiuouding',name:'醋溜藕丁',kind:'veg',src:'none',spicy:1,t:15,veg:230,kcal:160,prot:5,dark:false,se:'au,wi',gentle:true,
+ ing:[['莲藕',300,'g','约1节'],['干辣椒',3,'g','4个'],['蒜',6,'g','2瓣'],['香醋',12,'ml','1汤匙'],['白糖',5,'g','1茶匙'],['淀粉',5,'g','2茶匙']],
+ steps:['莲藕去皮切 1cm 丁，泡清水加几滴醋防黑。','沸水汆 1 分钟，捞出。','热锅下油、干辣椒、蒜末炒香，倒藕丁大火炒 90 秒。','加醋、糖、盐，勾薄芡翻匀。'],
+ tip:'藕丁比片更脆，适合快炒。醋分两次放更香。'},
+
+/* ================= 汤品扩充 ================= */
+{id:'paigukugua',name:'排骨苦瓜汤',kind:'soup',src:'pork',spicy:0,t:65,veg:250,kcal:250,prot:18,dark:true,se:'su',gentle:true,
+ ing:[['猪肋排',200,'g','约7小块'],['苦瓜',300,'g','约1.5根'],['姜',8,'g','3片'],['料酒',10,'ml','2茶匙']],
+ steps:['排骨冷水下锅焯 3 分钟，撇沫捞出温水洗净。','苦瓜去瓤去白膜切块，撒少许盐腌 10 分钟去苦。','排骨加 1200ml 热水、姜片，小火炖 40 分钟。','下苦瓜再炖 15 分钟，加盐调味。'],
+ tip:'夏天消暑第一汤。苦瓜去净白膜、盐腌挤水，苦味能去七成。'},
+
+{id:'paigushanyaoyumi',name:'排骨山药玉米汤',kind:'soup',src:'pork',spicy:0,t:75,veg:280,kcal:320,prot:18,dark:true,se:'au,wi',gentle:true,
+ ing:[['猪肋排',200,'g','约7小块'],['山药',150,'g','约1段'],['甜玉米',200,'g','约1根'],['胡萝卜',80,'g','半根'],['姜',8,'g','3片']],
+ steps:['排骨焯水冲净。','砂锅放排骨、姜片、1200ml 热水，小火炖 40 分钟。','下玉米段、胡萝卜块炖 20 分钟。','山药去皮切段下锅再炖 15 分钟，加盐。'],
+ tip:'山药最后下，早放会化在汤里。玉米和胡萝卜自带甜味，不用加调料。'},
+
+{id:'huanglading',name:'黄辣丁豆腐汤',kind:'soup',src:'fish',spicy:1,t:35,veg:150,kcal:270,prot:26,dark:false,se:'su,au',gentle:true,
+ ing:[['黄辣丁',350,'g','约4条'],['嫩豆腐',200,'g','约半盒'],['姜',10,'g','4片'],['葱',15,'g','2根'],['料酒',15,'ml','1汤匙'],['白胡椒',2,'g','半茶匙']],
+ steps:['黄辣丁处理干净，用料酒、盐腌 10 分钟。','锅中少油，鱼煎至两面微黄（小心它很嫩，别翻碎）。','冲入 1000ml 开水，加姜片大火滚 10 分钟至汤色奶白。','下豆腐块煮 5 分钟，加盐、白胡椒、葱花。'],
+ tip:'川渝家常汤。黄辣丁只有一根主刺、肉质极嫩，冲开水大火滚才白。'},
+
+{id:'fanqieniuroudanhua',name:'番茄牛肉蛋花汤',kind:'soup',src:'beef',spicy:0,t:25,veg:180,kcal:220,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['牛里脊',100,'g','约半条'],['番茄',200,'g','约1.5个'],['鸡蛋',1,'个','1个'],['淀粉',6,'g','2茶匙'],['姜',4,'g','1片']],
+ steps:['牛肉逆纹切薄片，加盐、淀粉抓匀腌 10 分钟。','番茄去皮切块，锅中少油炒出沙。','加 800ml 水烧开，煮 3 分钟。','牛肉片逐片下锅煮 1 分钟，淋蛋液成蛋花，加盐。'],
+ tip:'牛肉片下锅一分钟就熟，久了发柴。'},
+
+{id:'huanggupidantang',name:'黄瓜皮蛋汤',kind:'soup',src:'egg',spicy:0,t:15,veg:200,kcal:140,prot:10,dark:true,se:'su',gentle:true,
+ ing:[['黄瓜',200,'g','约1根'],['皮蛋',1,'个','1个'],['姜',4,'g','2片'],['香油',2,'ml','几滴']],
+ steps:['黄瓜切滚刀块，皮蛋切瓣。','锅中少油，下姜片、皮蛋煎 1 分钟。','加 800ml 水烧开，煮 3 分钟至汤色微白。','下黄瓜煮 2 分钟，加盐、香油。'],
+ tip:'皮蛋先煎一下，汤才白、才没有碱味。夏天清热降火。'},
+
+{id:'naiyoumogu',name:'奶油蘑菇汤',kind:'soup',src:'none',spicy:0,t:30,veg:200,kcal:260,prot:7,dark:false,se:'au,wi',gentle:true,
+ ing:[['口蘑',200,'g','约10个'],['洋葱',80,'g','半个'],['黄油',20,'g','1小块'],['面粉',20,'g','2汤匙'],['牛奶',250,'ml','1盒'],['淡奶油',50,'ml','3汤匙']],
+ steps:['口蘑切片，洋葱切碎。','黄油融化，炒香洋葱至透明，下口蘑炒到出水收干。','撒面粉炒匀（去生粉味），慢慢倒入牛奶搅匀无颗粒。','小火煮 8 分钟至浓稠，加淡奶油、盐、黑胡椒。'],
+ tip:'面粉必须炒过再加牛奶，否则有生粉味。加牛奶要边倒边搅。'},
+
+{id:'chenpipaigu',name:'陈皮排骨汤',kind:'soup',src:'pork',spicy:0,t:70,veg:120,kcal:280,prot:19,dark:false,se:'all',gentle:true,
+ ing:[['猪肋排',220,'g','约8小块'],['陈皮',5,'g','1片'],['姜',8,'g','3片'],['红枣',15,'g','4颗'],['料酒',10,'ml','2茶匙']],
+ steps:['陈皮温水泡软，刮去内层白瓤（去苦）。','排骨焯水冲净。','砂锅放排骨、陈皮、姜片、红枣，加 1200ml 热水。','小火炖 60 分钟，加盐调味。'],
+ tip:'陈皮理气健脾，配排骨不腻。白瓤是苦味来源，一定刮净。'},
+
+{id:'luobositang',name:'白萝卜丝清汤',kind:'soup',src:'none',spicy:0,t:20,veg:280,kcal:80,prot:5,dark:false,se:'au,wi',gentle:true,
+ ing:[['白萝卜',350,'g','约1根'],['姜',5,'g','2片'],['葱',10,'g','1根'],['白胡椒',1,'g','半茶匙'],['香油',2,'ml','几滴']],
+ steps:['白萝卜切细丝（越细越甜）。','锅中 800ml 水加姜丝烧开。','下萝卜丝煮 8 分钟至透明软烂。','加盐、白胡椒、葱花、香油。'],
+ tip:'最朴素的一碗，吃撑了或者胃不舒服时喝。萝卜煮到透明才出甜味。'},
+
+{id:'dongguageli',name:'冬瓜蛤蜊汤',kind:'soup',src:'shrimp',spicy:0,t:20,veg:250,kcal:150,prot:16,dark:false,se:'su',gentle:true,
+ ing:[['冬瓜',300,'g','约1圈'],['蛤蜊',300,'g','约15个'],['姜',8,'g','3片'],['葱',10,'g','1根']],
+ steps:['蛤蜊用淡盐水泡 2 小时吐沙（滴几滴香油更快）。','冬瓜去皮切薄片。','锅中 800ml 水加姜片烧开，下冬瓜煮 6 分钟。','下蛤蜊煮到开口（约 2 分钟），加盐、葱花。'],
+ tip:'蛤蜊一开口就好，煮久了肉缩成渣。吐沙不干净整锅汤都废。'},
+
+{id:'oupianyumi',name:'藕片玉米汤',kind:'soup',src:'pork',spicy:0,t:60,veg:280,kcal:260,prot:14,dark:true,se:'au,wi',gentle:true,
+ ing:[['莲藕',250,'g','约1节'],['甜玉米',200,'g','约1根'],['猪肋排',150,'g','约5小块'],['姜',8,'g','3片']],
+ steps:['排骨焯水冲净。','砂锅放排骨、姜片、1200ml 热水，小火炖 30 分钟。','下藕块、玉米段再炖 30 分钟至藕粉糯。','加盐调味。'],
+ tip:'秋藕粉糯拉丝，配玉米的甜，这汤不用任何调料。'},
+
+{id:'zicaixiapi',name:'紫菜虾皮冬瓜汤',kind:'soup',src:'shrimp',spicy:0,t:15,veg:250,kcal:100,prot:9,dark:true,se:'su',gentle:true,
+ ing:[['冬瓜',250,'g','约1圈'],['紫菜',5,'g','1小把'],['虾皮',8,'g','1汤匙'],['姜',4,'g','2片'],['香油',2,'ml','几滴']],
+ steps:['冬瓜去皮切薄片。','锅中 700ml 水加姜片烧开，下冬瓜煮 6 分钟。','加紫菜、虾皮煮 2 分钟。','加盐（虾皮咸，先尝）、香油、葱花。'],
+ tip:'5 分钟的快手汤。虾皮补钙，紫菜补碘，成本不到 4 元。'},
+
+{id:'jiyuluobosi',name:'鲫鱼萝卜丝汤',kind:'soup',src:'fish',spicy:0,t:35,veg:250,kcal:230,prot:24,dark:false,se:'au,wi',gentle:true,
+ ing:[['鲫鱼',350,'g','约1条'],['白萝卜',250,'g','约1根'],['姜',10,'g','4片'],['葱',15,'g','2根'],['料酒',10,'ml','2茶匙']],
+ steps:['鲫鱼处理干净擦干，两面煎至金黄。','烹料酒，冲入 1000ml 开水，加姜片大火滚 10 分钟至汤白。','下萝卜丝煮 8 分钟。','加盐、白胡椒、葱花。'],
+ tip:'冬天喝最暖。给老人小孩喝要滤掉鱼刺。'},
+
+{id:'fanqiedoufutang',name:'番茄豆腐汤',kind:'soup',src:'tofu',spicy:0,t:20,veg:230,kcal:130,prot:11,dark:true,se:'all',gentle:true,
+ ing:[['番茄',200,'g','约1.5个'],['嫩豆腐',200,'g','约半盒'],['葱',10,'g','1根'],['淀粉',4,'g','1茶匙']],
+ steps:['番茄去皮切块，锅中少油炒出沙。','加 800ml 水烧开，煮 3 分钟。','下豆腐块煮 5 分钟。','勾薄芡，加盐、葱花。'],
+ tip:'酸甜开胃，配油腻的菜最合适。豆腐用勺背推不碎。'},
+
+{id:'xianggujitang',name:'香菇鸡汤',kind:'soup',src:'chicken',spicy:0,t:75,veg:150,kcal:300,prot:28,dark:true,se:'au,wi',gentle:true,
+ ing:[['鸡肉',350,'g','约1/4只'],['干香菇',20,'g','约8朵'],['姜',10,'g','4片'],['红枣',15,'g','4颗'],['料酒',12,'ml','1汤匙']],
+ steps:['干香菇温水泡 30 分钟（泡菇水留下）。','鸡块冷水下锅焯水，撇沫捞出。','砂锅放鸡块、姜片、香菇和泡菇水，加 1300ml 热水。','小火炖 60 分钟，加盐。'],
+ tip:'干香菇比鲜香菇香十倍，泡菇水是天然高汤，别倒。'},
+
+{id:'huluoboyumi',name:'胡萝卜玉米汤',kind:'soup',src:'pork',spicy:0,t:60,veg:280,kcal:240,prot:12,dark:true,se:'all',gentle:true,
+ ing:[['胡萝卜',200,'g','约2根'],['甜玉米',250,'g','约1根'],['猪肋排',150,'g','约5小块'],['姜',6,'g','2片']],
+ steps:['排骨焯水冲净。','所有材料入砂锅，加 1300ml 热水，小火炖 55 分钟。','炖到胡萝卜软甜、玉米出味。','加盐调味。'],
+ tip:'最受小孩欢迎的一碗，胡萝卜和玉米都带天然甜味。'},
+
+{id:'suanlatang',name:'酸辣汤',kind:'soup',src:'tofu',spicy:1,t:25,veg:180,kcal:150,prot:10,dark:true,se:'au,wi',gentle:true,
+ ing:[['嫩豆腐',150,'g','约半盒'],['干木耳',5,'g','1小把'],['胡萝卜',50,'g','半根'],['鸡蛋',1,'个','1个'],['香醋',20,'ml','1.5汤匙'],['白胡椒',3,'g','1茶匙'],['淀粉',15,'g','1.5汤匙']],
+ steps:['豆腐、木耳、胡萝卜切细丝。','锅中 800ml 水烧开，下三丝煮 3 分钟。','加生抽、盐，用较多水淀粉勾浓芡。','淋蛋液成蛋花，关火加醋和白胡椒（这两样最后放）。'],
+ tip:'酸辣汤的醋和白胡椒必须关火后放，煮过就没劲了。芡要勾得稠一点。'},
+
+/* ================= 早餐扩充 ================= */
+{id:'bf16',name:'皮蛋瘦肉粥',kind:'bf',src:'pork',spicy:0,t:45,veg:30,kcal:380,prot:18,dark:false,se:'all',gentle:true,
+ ing:[['大米',50,'g','约4汤匙'],['皮蛋',1,'个','1个'],['猪瘦肉',50,'g','约3片'],['姜',4,'g','1片'],['葱',8,'g','1根']],
+ steps:['大米加 10 倍水烧开，转小火煮 30 分钟至米开花。','瘦肉切丝，加盐、淀粉腌 10 分钟。','皮蛋切丁，与姜丝一起下锅煮 5 分钟。','下肉丝煮 2 分钟，加盐、白胡椒、葱花。'],
+ tip:'广式经典。米要煮到"开花"才绵，肉丝最后下才嫩。'},
+
+{id:'bf17',name:'腊八粥',kind:'bf',src:'none',spicy:0,t:60,veg:10,kcal:360,prot:10,dark:true,se:'wi',gentle:true,
+ ing:[['腊八米',80,'g','约半碗'],['红枣',15,'g','4颗'],['桂圆肉',10,'g','约6粒'],['冰糖',15,'g','1小块']],
+ steps:['腊八米（超市配好的杂粮豆类混合）提前泡 4 小时。','加 10 倍水烧开，转小火煮 50 分钟。','中途搅两次防粘底，加红枣、桂圆。','煮到豆烂粥稠，加冰糖融化。'],
+ tip:'腊八节应景。豆类必须泡够时间，不然煮不烂。'},
+
+{id:'bf18',name:'蒸花卷 + 豆浆',kind:'bf',src:'none',spicy:0,t:15,veg:0,kcal:340,prot:12,dark:false,se:'all',gentle:true,
+ ing:[['花卷',120,'g','约2个'],['豆浆',300,'ml','1杯'],['鸡蛋',1,'个','1个']],
+ steps:['花卷上锅，水开后蒸 8 分钟。','鸡蛋同时煮 8 分钟。','豆浆加热（买现成无糖的）。','配一碟小菜。'],
+ tip:'最省事的组合，10 分钟上桌。花卷可以一次买几个冷冻。'},
+
+{id:'bf19',name:'手抓饼夹蛋',kind:'bf',src:'egg',spicy:0,t:10,veg:60,kcal:420,prot:16,dark:true,se:'all',gentle:false,
+ ing:[['手抓饼皮',100,'g','1张'],['鸡蛋',1,'个','1个'],['生菜',30,'g','2片'],['火腿片',20,'g','1片'],['番茄酱',10,'g','2茶匙']],
+ steps:['平底锅不放油，饼皮下锅小火烙 2 分钟至起层。','翻面，打个鸡蛋在饼上，用铲子摊开。','蛋液凝固后翻面，铺生菜、火腿、番茄酱。','卷起来对折，趁热吃。'],
+ tip:'饼皮本身有油，不用再放油。冷冻饼皮超市有，2 分钟一张。'},
+
+{id:'bf20',name:'煎饺 + 小米粥',kind:'bf',src:'pork',spicy:0,t:20,veg:60,kcal:430,prot:18,dark:false,se:'all',gentle:true,
+ ing:[['饺子',150,'g','约10个'],['小米',30,'g','约2汤匙'],['菜籽油',10,'ml','2茶匙']],
+ steps:['小米加 8 倍水煮 20 分钟成粥。','平底锅少油，饺子摆入，中火煎 1 分钟至底部微黄。','加 3 汤匙水，加盖焖 5 分钟至水干。','开盖再煎 1 分钟至底脆。'],
+ tip:'水煎法：先煎后焖再收干，底部才金黄酥脆。'},
+
+{id:'bf21',name:'燕麦鸡蛋饼',kind:'bf',src:'egg',spicy:0,t:15,veg:40,kcal:350,prot:18,dark:false,se:'all',gentle:true,
+ ing:[['燕麦片',40,'g','约4汤匙'],['鸡蛋',2,'个','2个'],['面粉',20,'g','2汤匙'],['牛奶',100,'ml','半盒'],['葱',8,'g','1根']],
+ steps:['燕麦片用牛奶泡 5 分钟至软。','加鸡蛋、面粉、盐、葱花搅成糊。','平底锅少油，倒糊摊成圆饼。','小火煎 2 分钟，翻面再煎 1 分钟。'],
+ tip:'燕麦代替部分面粉，膳食纤维翻倍。糊要稀一点，摊得薄才好吃。'},
+
+{id:'bf22',name:'葱油拌面',kind:'bf',src:'none',spicy:0,t:20,veg:20,kcal:450,prot:11,dark:true,se:'all',gentle:true,
+ ing:[['面条',100,'g','约1把'],['小葱',60,'g','6根'],['生抽',15,'ml','1汤匙'],['老抽',5,'ml','1茶匙'],['白糖',8,'g','2茶匙'],['菜籽油',30,'ml','3汤匙']],
+ steps:['小葱切长段，冷油下锅小火慢炸 10 分钟至焦黄（葱油的关键）。','捞出葱段，油里加生抽、老抽、糖，小火煮 1 分钟成葱油汁。','面条煮熟捞出。','淋 2 汤匙葱油汁拌匀，撒炸葱。'],
+ tip:'葱要冷油下锅小火慢炸，急火会苦。葱油可以一次多做点冷藏。'},
+
+{id:'bf23',name:'蛋炒饭',kind:'bf',src:'egg',spicy:0,t:12,veg:60,kcal:480,prot:16,dark:true,se:'all',gentle:true,
+ ing:[['隔夜米饭',200,'g','约1碗'],['鸡蛋',2,'个','2个'],['葱',15,'g','2根'],['胡萝卜',30,'g','少许'],['生抽',8,'ml','2茶匙']],
+ steps:['隔夜饭用手抓散（结块的炒不开）。','鸡蛋打散，热锅热油炒成碎蛋块。','下米饭，中大火翻炒 2 分钟至粒粒分明。','加胡萝卜丁、生抽、盐，撒葱花出锅。'],
+ tip:'必须用隔夜冷饭，新煮的饭水分多会炒成糊。锅要够热。'},
+
+{id:'bf24',name:'韭菜盒子',kind:'bf',src:'egg',spicy:0,t:40,veg:150,kcal:420,prot:15,dark:true,se:'sp',gentle:true,
+ ing:[['面粉',150,'g','约1碗'],['韭菜',200,'g','约1把'],['鸡蛋',2,'个','2个'],['香油',5,'ml','1茶匙']],
+ steps:['面粉加温水和成软面团，盖布醒 20 分钟。','鸡蛋炒成碎块晾凉，韭菜切碎。','韭菜先拌香油（锁水防出水），再加鸡蛋、盐拌匀。','面团分小剂擀皮，包入馅料对折捏紧。','平底锅少油，小火烙 3 分钟，翻面再烙 3 分钟。'],
+ tip:'韭菜先拌油再放盐，才不会出汤把皮泡破。'},
+
+{id:'bf25',name:'金枪鱼三明治',kind:'bf',src:'fish',spicy:0,t:10,veg:80,kcal:380,prot:22,dark:true,se:'all',gentle:false,
+ ing:[['全麦面包',80,'g','2片'],['金枪鱼罐头',80,'g','约半罐'],['生菜',30,'g','2片'],['沙拉酱',15,'g','1汤匙'],['黄瓜',50,'g','半根']],
+ steps:['金枪鱼沥干油，与沙拉酱拌匀。','面包片烤 2 分钟。','铺生菜、黄瓜片、金枪鱼酱。','盖上另一片，对角切开。'],
+ tip:'金枪鱼罐头要沥干油，否则面包会湿。选水浸的更低脂。'},
+
+{id:'bf26',name:'疙瘩汤',kind:'bf',src:'egg',spicy:0,t:20,veg:120,kcal:360,prot:14,dark:true,se:'au,wi',gentle:true,
+ ing:[['面粉',80,'g','约半碗'],['番茄',100,'g','1个'],['鸡蛋',1,'个','1个'],['小白菜',60,'g','2棵'],['香油',2,'ml','几滴']],
+ steps:['面粉一点一点加水，用筷子搅成小疙瘩（水要极少，边加边搅）。','番茄炒出汁，加 800ml 水烧开。','把疙瘩慢慢撒入锅中，边撒边搅防粘。','煮 5 分钟，下小白菜，淋蛋液，加盐、香油。'],
+ tip:'水要一滴一滴加，才能搅出均匀的小疙瘩。北方家常暖胃汤。'},
+
+{id:'bf27',name:'紫薯山药粥',kind:'bf',src:'none',spicy:0,t:35,veg:150,kcal:320,prot:7,dark:true,se:'au,wi',gentle:true,
+ ing:[['大米',40,'g','约3汤匙'],['紫薯',100,'g','约1个小的'],['山药',100,'g','约1小段']],
+ steps:['大米加 8 倍水烧开。','紫薯、山药去皮切小丁。','一起下锅小火煮 25 分钟至软烂。','搅匀即可，紫薯自带甜味不用放糖。'],
+ tip:'花青素 + 山药黏液蛋白，颜色好看又养胃。'},
+
+{id:'bf28',name:'玉米面粥 + 咸菜',kind:'bf',src:'none',spicy:0,t:20,veg:30,kcal:280,prot:8,dark:false,se:'au,wi',gentle:true,
+ ing:[['玉米面',50,'g','约4汤匙'],['榨菜',20,'g','1小碟'],['鸡蛋',1,'个','1个']],
+ steps:['玉米面用冷水调成稀糊（不结块）。','锅中 800ml 水烧开，慢慢倒入糊，边倒边搅。','小火煮 8 分钟至浓稠。','配水煮蛋和一碟咸菜。'],
+ tip:'玉米面必须先用冷水调开，直接下开水会结疙瘩。'},
+
+{id:'bf29',name:'蒸红薯 + 牛奶 + 坚果',kind:'bf',src:'none',spicy:0,t:25,veg:150,kcal:330,prot:11,dark:true,se:'au,wi',gentle:true,
+ ing:[['红薯',200,'g','约1个'],['牛奶',250,'ml','1盒'],['核桃仁',10,'g','约2个'],['鸡蛋',1,'个','1个']],
+ steps:['红薯洗净，水开后蒸 20 分钟至软。','鸡蛋同时煮 8 分钟。','牛奶加热，核桃仁掰碎。','摆盘即食。'],
+ tip:'最少动手的一套。红薯带皮蒸，皮里的纤维最多。'},
+
+{id:'bf30',name:'鸡蛋灌饼',kind:'bf',src:'egg',spicy:0,t:15,veg:60,kcal:440,prot:17,dark:true,se:'all',gentle:false,
+ ing:[['鸡蛋灌饼皮',100,'g','1张'],['鸡蛋',1,'个','1个'],['生菜',30,'g','2片'],['甜面酱',10,'g','2茶匙']],
+ steps:['饼皮平底锅小火烙 2 分钟至鼓起。','用筷子在鼓起处戳个洞，把打散的蛋液灌进去。','翻面再烙 2 分钟至蛋液凝固。','刷甜面酱，夹生菜卷起。'],
+ tip:'饼皮要用冷冻的现成货，自己擀很难鼓起来。灌蛋要趁饼鼓的时候。'},
+
+/* ================= 主食 ================= */
+{id:'st_yangzhou',name:'扬州炒饭',kind:'staple',src:'shrimp',spicy:0,t:20,veg:80,kcal:520,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['隔夜米饭',250,'g','约1.5碗'],['鸡蛋',2,'个','2个'],['虾仁',60,'g','约5只'],['火腿丁',40,'g','约3片'],['青豆',40,'g','约2汤匙'],['胡萝卜',40,'g','少许'],['葱',10,'g','1根']],
+ steps:['虾仁焯 30 秒，青豆、胡萝卜丁汆 1 分钟。','鸡蛋炒散盛出。','锅中下油，倒米饭中大火炒 2 分钟至粒粒分明。','加所有配料、盐，翻炒 1 分钟，撒葱花。'],
+ tip:'米饭要隔夜的。配料先汆水再炒，才不会出水把饭炒糊。'},
+
+{id:'st_galifan',name:'日式咖喱饭',kind:'staple',src:'beef',spicy:1,t:50,veg:250,kcal:620,prot:26,dark:true,se:'all',gentle:true,
+ ing:[['牛腩',150,'g','约1小碗'],['土豆',150,'g','约1个'],['胡萝卜',80,'g','半根'],['洋葱',80,'g','半个'],['咖喱块',50,'g','约2小块'],['米饭',250,'g','约1.5碗']],
+ steps:['牛腩切块焯水，冲净。','炒香洋葱，下牛肉翻炒，掺 800ml 水小火炖 40 分钟。','下土豆、胡萝卜再炖 15 分钟。','关火下咖喱块搅化，再开小火煮 5 分钟至浓稠。','浇在米饭上。'],
+ tip:'咖喱块必须关火后放，否则结块糊底。'},
+
+{id:'st_zhaoshao',name:'照烧鸡腿饭',kind:'staple',src:'chicken',spicy:0,t:30,veg:100,kcal:650,prot:32,dark:true,se:'all',gentle:true,
+ ing:[['鸡腿',250,'g','约2个'],['米饭',250,'g','约1.5碗'],['西兰花',80,'g','约1/4颗'],['生抽',20,'ml','1.5汤匙'],['味淋',15,'ml','1汤匙'],['白糖',10,'g','2茶匙']],
+ steps:['鸡腿去骨，皮上戳孔。','锅中不放油，鸡皮朝下小火煎 8 分钟至金黄酥脆，翻面煎 3 分钟。','加生抽、味淋、糖，小火烧 4 分钟，不断浇汁。','西兰花汆水，与鸡腿一起摆在米饭上，淋汁。'],
+ tip:'不用放油，鸡皮自身出油。皮朝下慢煎是脆皮关键。'},
+
+{id:'st_danbao',name:'蛋包饭',kind:'staple',src:'egg',spicy:0,t:25,veg:120,kcal:580,prot:22,dark:true,se:'all',gentle:true,
+ ing:[['米饭',200,'g','约1碗'],['鸡蛋',3,'个','3个'],['鸡腿肉',80,'g','约半只'],['洋葱',50,'g','1/4个'],['番茄酱',30,'g','2汤匙'],['牛奶',20,'ml','1汤匙']],
+ steps:['鸡肉切丁，与洋葱丁炒香，加番茄酱炒匀。','倒米饭翻炒 2 分钟，加盐调成炒饭。','鸡蛋加牛奶打散，过筛。','平底锅少油，倒蛋液摊成薄蛋皮（不要翻动）。','蛋皮半凝固时把炒饭放在一侧，对折包起，倒扣装盘，挤番茄酱。'],
+ tip:'蛋液加牛奶更嫩，过筛去泡沫才光滑。蛋皮半凝固就包，全熟会裂。'},
+
+{id:'st_zhuyou',name:'猪油拌饭',kind:'staple',src:'none',spicy:0,t:10,veg:10,kcal:520,prot:9,dark:false,se:'all',gentle:true,
+ ing:[['热米饭',250,'g','约1.5碗'],['猪油',15,'g','1汤匙'],['生抽',10,'ml','2茶匙'],['葱',8,'g','1根']],
+ steps:['米饭趁热盛碗。','挖一勺猪油放在饭上，用饭的温度化开。','淋生抽，撒葱花。','拌匀开吃。'],
+ tip:'最朴素也最香的一碗。猪油自己熬的最好，一次熬一小罐冷藏。'},
+
+{id:'st_hanshi',name:'韩式拌饭',kind:'staple',src:'beef',spicy:2,t:30,veg:280,kcal:600,prot:26,dark:true,se:'all',gentle:true,
+ ing:[['米饭',250,'g','约1.5碗'],['牛肉末',80,'g','约3汤匙'],['菠菜',80,'g','1小把'],['胡萝卜',60,'g','半根'],['豆芽',80,'g','1小把'],['鸡蛋',1,'个','1个'],['韩式辣酱',20,'g','1汤匙']],
+ steps:['菠菜、豆芽分别汆水挤干，加香油、盐拌一下。','胡萝卜丝炒软；牛肉末加生抽炒香。','煎一个溏心蛋。','米饭盛碗，各种配菜呈放射状摆好，中间放蛋。','加辣酱拌开吃。'],
+ tip:'各种配菜分别调味再摆盘，拌开才有层次。'},
+
+{id:'st_zhajiang',name:'炸酱面',kind:'staple',src:'pork',spicy:1,t:30,veg:150,kcal:580,prot:22,dark:true,se:'all',gentle:true,
+ ing:[['面条',150,'g','约1把'],['五花肉',100,'g','约6片'],['甜面酱',30,'g','2汤匙'],['黄豆酱',20,'g','1.5汤匙'],['黄瓜',80,'g','半根'],['豆芽',60,'g','1小把']],
+ steps:['五花肉切小丁，锅中煸出油至微焦。','下甜面酱、黄豆酱，小火炒 5 分钟至酱香浓郁、出油（炸酱）。','面条煮熟过凉水；黄瓜切丝、豆芽汆水。','面盛碗，铺菜码，浇炸酱。'],
+ tip:'酱要小火慢炸 5 分钟才香，急火会苦。两种酱各半，咸甜平衡。'},
+
+{id:'st_regan',name:'热干面',kind:'staple',src:'none',spicy:1,t:15,veg:20,kcal:520,prot:14,dark:false,se:'all',gentle:false,
+ ing:[['碱水面',150,'g','约1把'],['芝麻酱',30,'g','2汤匙'],['生抽',15,'ml','1汤匙'],['辣椒油',10,'ml','2茶匙'],['酸豆角',30,'g','1汤匙'],['葱',10,'g','1根']],
+ steps:['碱水面煮 1 分钟（断生即可），捞出拌少许油摊开晾凉。','吃前用开水烫 10 秒捞出沥干。','芝麻酱用温水化开，加生抽、辣椒油调匀。','浇在面上，加酸豆角、葱花拌匀。'],
+ tip:'武汉热干面的关键是碱水面、芝麻酱要化得稀稠适中。'},
+
+{id:'st_youpo',name:'油泼面',kind:'staple',src:'none',spicy:2,t:25,veg:120,kcal:560,prot:14,dark:true,se:'all',gentle:false,
+ ing:[['宽面',150,'g','约1份'],['青菜',100,'g','3棵'],['辣椒面',15,'g','1汤匙'],['蒜',10,'g','3瓣'],['生抽',15,'ml','1汤匙'],['香醋',10,'ml','2茶匙'],['菜籽油',30,'ml','3汤匙']],
+ steps:['宽面煮熟，青菜最后 30 秒下锅一起捞出。','面盛碗，铺上辣椒面、蒜末、盐。','油烧到冒烟，猛地泼在辣椒面上（刺啦一声）。','加生抽、醋，拌开吃。'],
+ tip:'油温必须够高，泼下去要有"刺啦"声，辣椒才香不苦。'},
+
+{id:'st_fanqiemian',name:'西红柿鸡蛋面',kind:'staple',src:'egg',spicy:0,t:20,veg:180,kcal:480,prot:19,dark:true,se:'all',gentle:true,
+ ing:[['面条',120,'g','约1把'],['番茄',150,'g','约1个'],['鸡蛋',2,'个','2个'],['葱',10,'g','1根']],
+ steps:['番茄去皮切块，炒出沙。','加 700ml 水烧开。','下面条煮 3 分钟。','淋蛋液成蛋花，加盐、葱花。'],
+ tip:'最家常的一碗。番茄去皮口感好一大截。'},
+
+{id:'st_doujiao',name:'豆角焖面',kind:'staple',src:'pork',spicy:1,t:35,veg:200,kcal:560,prot:22,dark:true,se:'su,au',gentle:true,
+ ing:[['面条',150,'g','约1把'],['豇豆',200,'g','约1把'],['五花肉',80,'g','约5片'],['蒜',8,'g','2瓣'],['生抽',20,'ml','1.5汤匙']],
+ steps:['五花肉煸出油，下豇豆炒 3 分钟。','加生抽、盐，掺 400ml 水烧开。','面条抖散铺在菜上（不要搅动）。','加盖小火焖 12 分钟，听到"滋滋"声说明水快干了。','关火拌匀。'],
+ tip:'面铺上后千万别搅，靠蒸汽焖熟。水要一次给够，中途加水会夹生。'},
+
+{id:'st_yangchun',name:'阳春面',kind:'staple',src:'none',spicy:0,t:12,veg:60,kcal:400,prot:12,dark:true,se:'all',gentle:true,
+ ing:[['面条',120,'g','约1把'],['小葱',30,'g','3根'],['猪油',10,'g','2茶匙'],['生抽',15,'ml','1汤匙'],['小白菜',60,'g','2棵']],
+ steps:['碗底放猪油、生抽、少许盐和葱花。','冲入一勺滚烫的面汤，把猪油化开。','面条煮熟，小白菜最后 30 秒下锅。','捞入碗中即可。'],
+ tip:'猪油是灵魂，没有它就不是阳春面。汤要滚烫才能把香味冲出来。'},
+
+{id:'st_suanlafen',name:'酸辣粉',kind:'staple',src:'pork',spicy:3,t:25,veg:120,kcal:480,prot:16,dark:true,se:'all',gentle:false,
+ ing:[['红薯粉条',100,'g','约1把'],['猪肉末',50,'g','2汤匙'],['酥花生',20,'g','2汤匙'],['酸豆角',30,'g','1汤匙'],['辣椒油',20,'ml','1.5汤匙'],['香醋',25,'ml','2汤匙'],['蒜',10,'g','3瓣']],
+ steps:['粉条温水泡 30 分钟至软。','碗底放蒜泥、辣椒油、生抽、醋、花椒面、盐。','肉末炒酥，加酸豆角炒香。','粉条煮熟捞入碗中，冲入热汤。','铺肉末、酸豆角、酥花生、葱花。'],
+ tip:'重庆小吃。醋和辣椒油的比例是灵魂，酸要够、辣要冲。'},
+
+{id:'st_shuijiao',name:'手工水饺',kind:'staple',src:'pork',spicy:0,t:60,veg:150,kcal:520,prot:24,dark:true,se:'all',gentle:true,
+ ing:[['饺子皮',250,'g','约30张'],['猪肉末',250,'g','约8汤匙'],['白菜',200,'g','约1/4棵'],['姜',6,'g','2片'],['葱',20,'g','2根'],['香油',8,'ml','2茶匙']],
+ steps:['白菜切碎，撒盐腌 10 分钟，挤干水分。','肉末加姜末、葱末、生抽、香油，顺一个方向搅打上劲，拌入白菜。','饺子皮包馅，捏紧边缘。','水开下饺子，点两次凉水，浮起即熟。'],
+ tip:'白菜一定要挤干水，否则馅出水、皮易破。"点凉水"三次是煮饺子的老办法。'},
+
+{id:'st_congyoubing',name:'葱油饼',kind:'staple',src:'none',spicy:0,t:40,veg:20,kcal:480,prot:10,dark:true,se:'all',gentle:true,
+ ing:[['面粉',200,'g','约1.5碗'],['小葱',60,'g','6根'],['菜籽油',40,'ml','4汤匙'],['盐',4,'g','1茶匙']],
+ steps:['面粉加温水揉成软面团，醒 30 分钟。','擀成薄片，刷油、撒盐和葱花。','卷起成长条，再盘成圆饼，压扁擀薄。','平底锅少油，小火烙 3 分钟，翻面再烙 3 分钟至两面金黄起层。'],
+ tip:'面团要软（水多一点），醒够时间才擀得开。卷起来再盘是起层的关键。'},
+
+{id:'st_xianbing',name:'馅饼',kind:'staple',src:'pork',spicy:0,t:50,veg:150,kcal:500,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['面粉',200,'g','约1.5碗'],['猪肉末',200,'g','约6汤匙'],['大白菜',200,'g','约1/4棵'],['姜',5,'g','2片'],['香油',8,'ml','2茶匙']],
+ steps:['面粉加温水和成软面团，醒 30 分钟。','白菜切碎挤干水，与肉末、姜末、香油、盐拌成馅。','面团分剂擀皮，包入馅料压扁。','平底锅少油，小火烙 4 分钟，翻面再烙 4 分钟。'],
+ tip:'皮要中间厚边缘薄，才不容易破。小火慢烙，火大了外焦里生。'},
+
+{id:'st_shaomai',name:'鲜肉烧卖',kind:'staple',src:'pork',spicy:0,t:45,veg:80,kcal:420,prot:20,dark:false,se:'all',gentle:true,
+ ing:[['烧卖皮',200,'g','约20张'],['糯米',150,'g','约1小碗'],['猪肉末',100,'g','约3汤匙'],['香菇',40,'g','2朵'],['生抽',15,'ml','1汤匙']],
+ steps:['糯米提前泡 4 小时，蒸 25 分钟至熟。','肉末、香菇丁炒香，加生抽，与糯米饭拌匀成馅。','烧卖皮包入馅料，用虎口收口（顶部露馅）。','水开后蒸 12 分钟。'],
+ tip:'糯米必须提前泡透，否则蒸不熟。收口时用虎口一捏就成形。'},
+
+{id:'st_laobing',name:'烙饼',kind:'staple',src:'none',spicy:0,t:35,veg:10,kcal:420,prot:11,dark:false,se:'all',gentle:true,
+ ing:[['面粉',200,'g','约1.5碗'],['温水',130,'ml','约半碗'],['菜籽油',20,'ml','2汤匙'],['盐',3,'g','半茶匙']],
+ steps:['面粉加温水揉成光滑面团，醒 30 分钟。','擀成薄片，刷油撒盐，卷起盘圆再擀薄。','平底锅不放油，中火烙 2 分钟至起泡。','翻面再烙 2 分钟，出锅后用手拍松起层。'],
+ tip:'醒面时间要够，饼才软。出锅拍几下，层次就出来了。'},
+
+{id:'st_liangpi',name:'凉皮',kind:'staple',src:'none',spicy:2,t:90,veg:150,kcal:380,prot:9,dark:true,se:'su',gentle:true,
+ ing:[['凉皮',200,'g','约1份'],['黄瓜',80,'g','半根'],['绿豆芽',60,'g','1小把'],['芝麻酱',20,'g','1.5汤匙'],['辣椒油',15,'ml','1汤匙'],['香醋',20,'ml','1.5汤匙'],['蒜',10,'g','3瓣']],
+ steps:['买现成凉皮（菜市场或超市有），切条。','绿豆芽汆水过凉，黄瓜切丝。','芝麻酱温水化开，加生抽、醋、蒜水、辣椒油调汁。','凉皮、豆芽、黄瓜装碗，淋汁拌匀。'],
+ tip:'自己洗面做凉皮要 4 小时，买现成的最省事。芝麻酱要化稀一点才拌得开。'},
+
+{id:'st_chaohefen',name:'炒河粉',kind:'staple',src:'beef',spicy:1,t:20,veg:150,kcal:560,prot:24,dark:true,se:'all',gentle:false,
+ ing:[['河粉',250,'g','约1份'],['牛肉片',100,'g','约6片'],['豆芽',80,'g','1小把'],['韭黄',50,'g','半把'],['生抽',15,'ml','1汤匙'],['老抽',5,'ml','1茶匙'],['淀粉',6,'g','2茶匙']],
+ steps:['牛肉片加生抽、淀粉抓匀腌 10 分钟。','热锅宽油，牛肉滑炒至变色盛出。','下河粉，用铲子摊开中大火煎 1 分钟（别急着翻，让它定型）。','翻面再煎，加豆芽、韭黄、生抽、老抽。','倒回牛肉，快速翻炒 30 秒。'],
+ tip:'河粉要"煎"不是"炒"，先让一面定型再翻，才不粘不碎。'},
+
+{id:'st_chaoniangao',name:'炒年糕',kind:'staple',src:'pork',spicy:1,t:20,veg:180,kcal:520,prot:16,dark:true,se:'au,wi',gentle:true,
+ ing:[['年糕',250,'g','约1碗'],['猪肉丝',80,'g','约5片'],['大白菜',150,'g','约1/6棵'],['香菇',40,'g','2朵'],['生抽',15,'ml','1汤匙']],
+ steps:['年糕切片，温水泡 10 分钟。','肉丝加生抽、淀粉抓匀，滑炒盛出。','底油下香菇、白菜炒软。','下年糕，加 100ml 水和生抽，小火焖 5 分钟至软。','倒回肉丝，大火收汁。'],
+ tip:'年糕先泡软再炒，不然外软里硬。'},
+
+{id:'st_niurougalifan',name:'咖喱牛肉饭',kind:'staple',src:'beef',spicy:1,t:55,veg:220,kcal:640,prot:30,dark:true,se:'all',gentle:true,
+ ing:[['牛里脊',180,'g','约1条'],['土豆',150,'g','约1个'],['胡萝卜',80,'g','半根'],['洋葱',80,'g','半个'],['咖喱块',45,'g','约2小块'],['米饭',250,'g','约1.5碗']],
+ steps:['牛肉切块，用少许淀粉抓匀。','炒香洋葱，下牛肉煎至变色。','加土豆、胡萝卜，掺 700ml 水小火煮 25 分钟。','关火下咖喱块化开，小火再煮 5 分钟。','浇在米饭上。'],
+ tip:'用牛里脊比牛腩快，30 分钟就能软。咖喱块关火再放。'},
+
+{id:'st_sanxianchaomian',name:'三鲜炒面',kind:'staple',src:'shrimp',spicy:1,t:20,veg:150,kcal:540,prot:22,dark:true,se:'all',gentle:true,
+ ing:[['面条',150,'g','约1把'],['虾仁',60,'g','约5只'],['猪肉丝',50,'g','约3片'],['青菜',100,'g','3棵'],['生抽',15,'ml','1汤匙']],
+ steps:['面条煮 2 分钟（比正常少 1 分钟），捞出过凉水拌少许油。','虾仁、肉丝分别滑炒盛出。','锅中下油，倒面条中大火翻炒 2 分钟。','加青菜、虾仁、肉丝，淋生抽，翻炒 1 分钟。'],
+ tip:'面煮到七分熟就捞，炒的时候还会继续熟。拌油防粘。'},
+
+{id:'st_rousichaobing',name:'肉丝炒饼',kind:'staple',src:'pork',spicy:1,t:20,veg:180,kcal:520,prot:20,dark:true,se:'all',gentle:true,
+ ing:[['烙饼',200,'g','约1张'],['猪肉丝',80,'g','约5片'],['包菜',150,'g','约1/6颗'],['生抽',15,'ml','1汤匙'],['蒜',6,'g','2瓣']],
+ steps:['烙饼切细条（买现成的或自己烙）。','肉丝加生抽、淀粉抓匀，滑炒盛出。','底油下蒜末、包菜丝炒软。','下饼条，淋少许水，加盖焖 1 分钟。','倒回肉丝，大火翻炒均匀。'],
+ tip:'饼条要切得均匀，加一点水焖才不干硬。'},
+
+{id:'st_majiangliangmian',name:'麻酱凉面',kind:'staple',src:'none',spicy:1,t:15,veg:100,kcal:460,prot:13,dark:true,se:'su',gentle:true,
+ ing:[['面条',130,'g','约1把'],['芝麻酱',25,'g','2汤匙'],['黄瓜',80,'g','半根'],['蒜',10,'g','3瓣'],['生抽',12,'ml','1汤匙'],['香醋',10,'ml','2茶匙']],
+ steps:['面条煮熟，过凉水，拌少许香油摊开晾凉。','芝麻酱用温水少量多次化开，加生抽、醋、蒜水调匀。','黄瓜切丝。','面装碗，铺黄瓜丝，淋麻酱汁。'],
+ tip:'夏天最爽的一碗。面过凉水后拌点油，才不粘坨。'},
+
+/* ================= 药膳补充 ================= */
+{id:'md_lianziyiyi',name:'莲子山药薏米汤',kind:'med',src:'none',spicy:0,t:60,veg:100,kcal:200,prot:8,dark:false,se:'su,au',gentle:true,
+ eff:'健脾祛湿、清心安神。适合湿气重、身重乏力、睡不安稳的人，夏天尤宜。',
+ warn:'孕妇忌薏米（有滑胎风险）；便秘者少喝。',
+ ing:[['莲子',25,'g','约12粒'],['山药',150,'g','约1段'],['薏米',25,'g','约2汤匙'],['芡实',15,'g','1汤匙'],['红枣',15,'g','4颗']],
+ steps:['薏米、芡实提前泡 2 小时；莲子去芯。','加 1300ml 水，大火烧开转小火煮 40 分钟。','山药去皮切段下锅，再煮 20 分钟。','加少许冰糖或盐调味。'],
+ tip:'薏米性微寒，夏天祛湿最好，冬天要炒过再用。孕妇一定不能吃薏米。'},
+
+{id:'md_duzhong',name:'杜仲猪腰汤',kind:'med',src:'pork',spicy:0,t:50,veg:80,kcal:280,prot:24,dark:false,se:'wi',gentle:true,
+ eff:'补肝肾、强筋骨。适合腰膝酸软、久坐腰痛、劳累后腰沉的人。',
+ warn:'猪腰胆固醇高，高血脂者少量；感冒期间不宜；肾功能异常者请遵医嘱。',
+ ing:[['猪腰',200,'g','约1个'],['杜仲',10,'g','约3片'],['核桃仁',20,'g','约4个'],['姜',10,'g','4片'],['料酒',20,'ml','1.5汤匙']],
+ steps:['猪腰对半剖开，剔除中间的白色筋膜（这是腥味来源），切花刀后泡水 20 分钟。','冷水下锅加姜、料酒焯 2 分钟，捞出。','杜仲、核桃仁加 1000ml 水煮 30 分钟出味。','下猪腰煮 5 分钟，加盐调味。'],
+ tip:'猪腰的白筋膜必须剔干净，否则腥得没法喝。猪腰煮 5 分钟就够，久了发硬。'},
+
+{id:'md_huangqishanyao',name:'黄芪山药粥',kind:'med',src:'none',spicy:0,t:40,veg:100,kcal:260,prot:9,dark:false,se:'au,wi',gentle:true,
+ eff:'补气健脾、固表止汗。适合容易疲劳、动则出汗、食欲差、病后体虚的人。',
+ warn:'感冒发热期间不宜；体质偏热、易上火者减量。',
+ ing:[['大米',50,'g','约4汤匙'],['黄芪',10,'g','约5片'],['山药',120,'g','约1小段'],['红枣',15,'g','4颗']],
+ steps:['黄芪用纱布包好（煮完取出）。','大米加 8 倍水和黄芪包，大火烧开转小火 20 分钟。','取出黄芪包，下山药丁、红枣再煮 15 分钟。','煮到粥稠山药软即可。'],
+ tip:'黄芪要用纱布包，否则碎渣混在粥里口感差。这是最温和的补气早餐。'},
+
+{id:'md_shashenyuzhu',name:'沙参玉竹瘦肉汤',kind:'med',src:'pork',spicy:0,t:70,veg:100,kcal:240,prot:22,dark:false,se:'au',gentle:true,
+ eff:'养阴润肺、生津止渴。适合秋燥干咳、咽干、皮肤干燥、熬夜后口干的人。',
+ warn:'脾胃虚寒、易腹泻、痰多清稀者不宜。',
+ ing:[['猪瘦肉',200,'g','约1小块'],['沙参',15,'g','约5根'],['玉竹',15,'g','约1小把'],['麦冬',8,'g','约10粒'],['无花果',15,'g','3个']],
+ steps:['瘦肉切块焯水冲净。','药材冲洗干净，无花果对半切。','全部材料加 1300ml 水，大火烧开转小火炖 60 分钟。','加盐调味。'],
+ tip:'秋天最该喝的一碗。清甜不腻，小孩也肯喝。'},
+
+{id:'md_chenpishanyao',name:'陈皮山药排骨汤',kind:'med',src:'pork',spicy:0,t:75,veg:180,kcal:300,prot:20,dark:false,se:'all',gentle:true,
+ eff:'健脾理气、助消化。适合饭后腹胀、食欲不振、大便不成形的人。',
+ warn:'胃酸过多者少用陈皮；阴虚燥咳者不宜。',
+ ing:[['猪肋排',200,'g','约7小块'],['山药',180,'g','约1段'],['陈皮',5,'g','1片'],['姜',8,'g','3片']],
+ steps:['陈皮泡软刮去白瓤；排骨焯水冲净。','排骨、陈皮、姜片加 1300ml 水，小火炖 45 分钟。','山药去皮切段下锅，再炖 20 分钟。','加盐调味。'],
+ tip:'陈皮理气，山药健脾，一补一行，不滞不燥。'},
+
+/* ================= 食疗 / 饮品补充 ================= */
+{id:'des_hongdouyimi',name:'红豆薏米水',kind:'des',src:'none',spicy:0,t:60,veg:0,kcal:90,prot:4,dark:true,se:'su',gentle:true,
+ eff:'利水消肿、健脾祛湿。适合湿气重、下肢浮肿、脸容易肿、舌苔厚腻的人。',
+ warn:'孕妇忌薏米；体质偏寒者把薏米干炒过再用；尿频者少喝。',
+ ing:[['红豆',40,'g','约3汤匙'],['薏米',40,'g','约3汤匙'],['芡实',15,'g','1汤匙']],
+ steps:['红豆、薏米提前泡 4 小时（或干炒 3 分钟去寒性）。','加 1200ml 水，大火烧开转小火煮 50 分钟。','只喝水也可，连豆一起吃更好。','不加糖，淡淡的最好。'],
+ tip:'薏米性寒，干锅炒到微黄再用，祛湿不伤脾。'},
+
+{id:'des_guilongzao',name:'桂圆红枣茶',kind:'des',src:'none',spicy:0,t:20,veg:0,kcal:110,prot:2,dark:true,se:'wi,au',gentle:true,
+ eff:'补血安神、养心健脾。适合气血不足、手脚凉、睡眠浅、经后体虚的人。',
+ warn:'易上火、口干舌燥、感冒期间不宜；糖尿病人不加糖。',
+ ing:[['桂圆肉',15,'g','约8粒'],['红枣',20,'g','5颗'],['枸杞',5,'g','1小撮']],
+ steps:['红枣去核撕开，桂圆肉冲洗。','加 600ml 水，大火烧开转小火煮 15 分钟。','加枸杞焖 3 分钟。','可反复冲泡。'],
+ tip:'红枣去核不易上火。冬天每天一杯，手脚会暖起来。'},
+
+{id:'des_juhuagouqi',name:'菊花枸杞茶',kind:'des',src:'none',spicy:0,t:8,veg:0,kcal:20,prot:1,dark:true,se:'all',gentle:true,
+ eff:'清肝明目、缓解眼疲劳。适合长时间看屏幕、眼睛干涩、头晕头胀的人。',
+ warn:'性偏凉，脾胃虚寒、易腹泻者少喝；风寒感冒初期不宜。',
+ ing:[['菊花',5,'g','约1小把'],['枸杞',8,'g','约15粒']],
+ steps:['菊花、枸杞放入杯中。','冲入 85℃ 热水（不要沸水，菊花会苦）。','焖 3 分钟即可饮用。','可续水 3 次。'],
+ tip:'最省事的护眼茶。枸杞最后放，久泡会烂。'},
+
+{id:'des_dongguacha',name:'冬瓜茶',kind:'des',src:'none',spicy:0,t:90,veg:0,kcal:100,prot:1,dark:false,se:'su',gentle:true,
+ eff:'消暑解渴、利水消肿。夏天出汗多、水肿、口干时最合适。',
+ warn:'性偏凉，脾胃虚寒者不宜冰饮；糖尿病人减糖。',
+ ing:[['冬瓜',500,'g','约1圈'],['红糖',80,'g','约4汤匙'],['姜',10,'g','3片']],
+ steps:['冬瓜连皮切小块（皮是利尿的关键，别削）。','一层冬瓜一层红糖铺好，腌 1 小时出汁。','连汁带瓜加姜片小火熬 60 分钟至浓稠。','滤出汤汁，喝时兑水稀释。'],
+ tip:'冬瓜皮别削，利水成分主要在皮里。熬好的浓缩汁冷藏能放两周。'},
+
+{id:'des_bingfen',name:'冰粉',kind:'des',src:'none',spicy:0,t:30,veg:0,kcal:130,prot:1,dark:false,se:'su',gentle:true,
+ eff:'清热解暑、生津解渴。成都夏天必备，吃火锅后来一碗最舒服。',
+ warn:'含糖较多，糖尿病人少量；脾胃虚寒者不要冰镇。',
+ ing:[['冰粉粉',10,'g','约1汤匙'],['红糖',30,'g','约2汤匙'],['花生碎',10,'g','1汤匙'],['山楂片',5,'g','2片'],['葡萄干',8,'g','1小撮']],
+ steps:['冰粉粉用 500ml 沸水冲开，搅匀无颗粒。','放凉后冷藏 2 小时至凝固。','红糖加水熬成红糖水，放凉。','冰粉切块，浇红糖水，撒花生碎、山楂片、葡萄干。'],
+ tip:'成都人的夏天。冰粉粉超市有卖，一包能做一大盆。'},
+
+{id:'des_yangzhi',name:'杨枝甘露',kind:'des',src:'none',spicy:0,t:30,veg:0,kcal:220,prot:3,dark:true,se:'su',gentle:true,
+ eff:'生津润燥、补充维生素。夏天没胃口、口干时清爽开胃。',
+ warn:'含糖和椰浆较高，糖尿病人、减脂期少量。',
+ ing:[['芒果',200,'g','约1个'],['西柚',100,'g','约1/4个'],['西米',30,'g','约2汤匙'],['椰浆',100,'ml','半小盒'],['牛奶',100,'ml','半盒']],
+ steps:['西米沸水煮 12 分钟至透明，焖 5 分钟，过凉水。','芒果一半打成果泥，一半切丁；西柚剥出果粒。','果泥加椰浆、牛奶拌匀。','加入西米、芒果丁、西柚粒，冷藏 1 小时。'],
+ tip:'西米要煮到中间没有白点。西柚有点苦，但正是它平衡了甜腻。'},
+
+{id:'des_guihuatangou',name:'桂花糖藕',kind:'des',src:'none',spicy:0,t:120,veg:0,kcal:200,prot:3,dark:false,se:'au,wi',gentle:true,
+ eff:'健脾开胃、润燥。适合秋燥口干、食欲不振的人，也是宴客甜点。',
+ warn:'含糖较高，糖尿病人少量；糯米不易消化，老人小孩适量。',
+ ing:[['莲藕',400,'g','约2节'],['糯米',80,'g','约半碗'],['冰糖',50,'g','约1小把'],['干桂花',3,'g','1小撮'],['红枣',15,'g','4颗']],
+ steps:['糯米提前泡 2 小时。','莲藕切去一端当盖，把糯米灌入藕孔（边灌边用筷子戳实）。','盖回藕盖用牙签固定。','加冰糖、红枣和 1000ml 水，小火煮 90 分钟。','晾凉切片，淋汁撒桂花。'],
+ tip:'糯米要塞实但不能太紧（煮了会膨胀）。凉了再切才不散。'},
+
+{id:'des_jiuniangdan',name:'酒酿蛋',kind:'des',src:'egg',spicy:0,t:15,veg:0,kcal:240,prot:10,dark:false,se:'wi,sp',gentle:true,
+ eff:'温中补气、活血通经。适合经期后、产后调理、手脚冰凉的女性。',
+ warn:'含微量酒精，孕妇、儿童、酒精过敏者不宜；驾车前不要喝。',
+ ing:[['酒酿',150,'g','约半碗'],['鸡蛋',1,'个','1个'],['红糖',10,'g','1小块'],['枸杞',3,'g','1小撮']],
+ steps:['锅中 400ml 水烧开，加红糖化开。','加酒酿，小火煮 2 分钟（不要大滚）。','打入鸡蛋煮成荷包蛋（约 3 分钟）。','加枸杞即可。'],
+ tip:'经期结束后连喝三天，暖宫补血。酒酿一滚就关火，酒香才在。'},
+
+{id:'des_yinmubaihe',name:'银耳莲子百合羹',kind:'des',src:'none',spicy:0,t:70,veg:0,kcal:160,prot:3,dark:false,se:'au,wi',gentle:true,
+ eff:'润肺止咳、清心安神。适合秋燥干咳、睡眠不好、心烦的人。',
+ warn:'痰多清稀、脾胃虚寒者少喝；银耳必须煮透，隔夜不要吃。',
+ ing:[['干银耳',10,'g','约1/3朵'],['莲子',25,'g','约12粒'],['干百合',15,'g','1小把'],['冰糖',20,'g','1小块'],['枸杞',3,'g','1小撮']],
+ steps:['银耳泡 1 小时撕小朵；莲子去芯、百合泡软。','银耳加 800ml 水，小火炖 40 分钟出胶。','加莲子、百合再炖 25 分钟。','加冰糖、枸杞煮 5 分钟。'],
+ tip:'银耳撕得越碎越容易出胶。莲子芯一定去掉，否则发苦。'},
+
 ];
+
+/* 合并 data/recipes.js 里的扩展菜谱（如果有） */
+if(typeof window !== 'undefined' && Array.isArray(window.RECIPES_EXTRA)){
+  const _ids = new Set(DB.map(d => d.id));
+  window.RECIPES_EXTRA.forEach(d => { if(d && d.id && !_ids.has(d.id)){ DB.push(d); _ids.add(d.id); } });
+}
 
 /* ============================================================
    价格表（元 / 500g，成都 2026-11 菜市场零售参考）
    ============================================================ */
 const PRICE = {
+  '鲜五花肉':13,'猪五花肉':13,'猪前腿肉':12,'青尖椒':5,'红薯粉丝':10,'红薯粉条':10,'虾':28,
+  '藕片':4.8,'胡萝卜丝':3.1,'葱姜丝':4,'豆瓣酱':10,'鸡翅中':15,'可乐':4,'鲤鱼':6,'鳊鱼':9,
+  '豆干':6,'干香菇':40,'紫薯':4,'火腿丁':30,'青豆':8,'米饭':3,'猪油':15,'豆芽':3,
+  '韩式辣酱':20,'黄豆酱':10,'酸豆角':8,'酥花生':12,'白菜':2,'糯米':5,'牛肉片':45,
+  '猪肉丝':15,'烙饼':6,'杜仲':60,'蒜片':8,'葱花':4,'小米辣圈':10,
+  '无花果':20,'西柚':8,'芒果':8,'西米':10,'冰粉粉':20,'葡萄干':15,'山楂片':20,
+  '烧卖皮':6,'凉皮':6,'河粉':5,'年糕':8,'碱水面':5,'宽面':5,'饺子皮':6,'隔夜米饭':3,'热米饭':3,
+
+  '黄辣丁':18,'蛤蜊':12,'猪腰':12,'口蘑':13,'淡奶油':25,'金枪鱼罐头':30,'手抓饼皮':10,'饺子':12,
+  '花卷':6,'腊八米':8,'玉米面':5,'鸡蛋灌饼皮':8,
+
+  '西葫芦':3,'皮蛋':10,'日本豆腐':6,'橄榄菜':15,'香干':6,'茭白':8,'腊肠':35,'娃娃菜':4,
+  '菜心':5,'油麦菜':4.3,'海带丝':8,'苋菜':5,'芥蓝':6,'杏鲍菇':7,'芦笋':15,'茶树菇':12,
+  '松仁':60,'玉米粒':8,'椒盐':10,'小葱':5,'大白菜心':3,
+
+  '兔肉':25,'黄酒':8,'梅干菜':12,'百叶结':8,'红葱头':8,'荸荠':6,'糍粑辣椒':15,'酸汤料':20,
+  '麻辣香锅底料':30,'咖喱块':25,'椰浆':12,'奥尔良腌料':30,'九层塔':30,'宽粉条':10,'手工宽面':5,
+  '土鸡':22,'猪大排':16,'白芸豆':8,'螺丝椒':5,'二荆条':8,'青红椒':6,'前腿肉':12,'红薯淀粉':5,
+  '土豆淀粉':6,'龙井茶':100,'咸肉':30,'菠萝':5,'五香粉':40,'孜然粒':40,'孜然':40,
+
   '羊肉片':40,'猪瘦肉':14,'黄油':45,'沙姜粉':60,'老姜':6,'空心菜':5,'黄豆':6,
   /* 肉禽蛋 */
   '五花肉':13,'猪后腿肉':11,'后腿肉':11,'猪里脊':15,'猪肉片':13,'猪肉末':12,'猪肋排':21,'猪梅肉':16,
@@ -1840,20 +2883,35 @@ const PRICE = {
 const SEASON = new Set(['郫县豆瓣','甜面酱','豆豉','姜','生姜','姜蒜','蒜','葱','大葱','葱花','香菜','小米辣',
   '花椒','花椒面','干辣椒','辣椒面','辣椒油','香油','菜籽油','橄榄油','香醋','生抽','老抽','蒸鱼豉油','料酒',
   '白糖','冰糖','红糖','蜂蜜','淀粉','番茄酱','芝麻酱','蚝油','叉烧酱','剁椒','味淋','黑胡椒','白胡椒',
-  '八角','桂皮','盐','食盐','面粉','豆腐乳','白芝麻','吉利丁片','黄油','沙姜粉']);
+  '八角','桂皮','盐','食盐','面粉','豆腐乳','白芝麻','吉利丁片','黄油','沙姜粉',
+  '黄酒','梅干菜','糍粑辣椒','酸汤料','麻辣香锅底料','咖喱块','奥尔良腌料','红薯淀粉','土豆淀粉',
+  '五香粉','孜然粒','孜然','椒盐','小葱','橄榄菜','淡奶油','豆瓣酱','黄豆酱','韩式辣酱','可乐','猪油']);
 const MEATSET = new Set(['五花肉','猪后腿肉','后腿肉','猪里脊','猪肉片','猪肉末','猪肋排','猪梅肉','腊肉','猪肝',
   '猪蹄','猪肚','牛腩','牛里脊','牛肉末','羊肉','鸡肉','三黄鸡','鸡腿肉','鸡腿','鸡胸肉','乌鸡','鸡杂','鸭肉',
-  '鸡蛋','蛋清','咸鸭蛋','羊肉片','猪瘦肉']);
+  '鸡蛋','蛋清','咸鸭蛋','羊肉片','猪瘦肉','兔肉','土鸡','猪大排','前腿肉','咸肉','黄辣丁','蛤蜊','猪腰',
+  '鲜五花肉','猪五花肉','猪前腿肉','鸡翅中','鲤鱼','鳊鱼','虾','牛肉片','猪肉丝']);
 const FISHSET = new Set(['鲈鱼','鲫鱼','草鱼','鱼头','带鱼','小黄鱼','龙利鱼柳','鲜虾','虾仁','小河虾','鲜贝','虾皮','紫菜']);
-const TOFUSET = new Set(['嫩豆腐','老豆腐','豆腐皮','血旺','魔芋']);
+const TOFUSET = new Set(['嫩豆腐','老豆腐','豆腐皮','血旺','魔芋','百叶结','豆干']);
 const HERB = new Set(['黄芪','当归','党参','玉竹','沙参','麦冬','五指毛桃','天麻','川芎','白芷','茯苓','白术',
   '陈皮','罗汉果','菊花','乌梅','甘草','桂圆肉','桑葚干','干百合','莲子','芡实','薏米','红枣','枸杞',
-  '黑豆','核桃仁','红衣花生','干桂花','山楂干','干银耳','红豆','绿豆','黑芝麻粉','黄豆']);
+  '黑豆','核桃仁','红衣花生','干桂花','山楂干','干银耳','红豆','绿豆','黑芝麻粉','黄豆','白芸豆','龙井茶',
+  '杜仲','酸豆角']);
 const STAPLE = new Set(['大米','小米','糯米粉','面条','抄手皮','馄饨','馒头','紫薯馒头','包子','全麦面包',
   '蒸肉米粉','燕麦片','豆浆','牛奶','全脂牛奶','苹果','雪梨','橘子','柚子','橙子','柠檬','黄桃','蓝莓',
-  '榨菜','花生米','花生碎','火腿片','沙拉酱','啤酒','酒酿','小圆子']);
+  '榨菜','花生米','花生碎','火腿片','沙拉酱','啤酒','酒酿','小圆子','椰浆','宽粉条','手工宽面','菠萝','松仁','玉米粒',
+  '金枪鱼罐头','手抓饼皮','饺子','花卷','腊八米','玉米面','鸡蛋灌饼皮','无花果','西柚','芒果','西米',
+  '冰粉粉','葡萄干','山楂片','烧卖皮','凉皮','河粉','年糕','碱水面','宽面','饺子皮','隔夜米饭','热米饭',
+  '红薯粉丝','红薯粉条','青豆','酥花生','糯米','火腿丁','紫薯','米饭','烙饼']);
 const IGNORE = new Set(['温水']);
-const ALIAS = {'木耳':'干木耳','鲜香菇':'香菇','青笋':'莴笋','后腿肉':'猪后腿肉','生姜':'姜','老姜':'姜'};
+const ALIAS = {
+  '木耳':'干木耳','鲜香菇':'香菇','干香菇':'香菇','青笋':'莴笋','后腿肉':'猪后腿肉',
+  '生姜':'姜','老姜':'姜','蒜片':'蒜','葱花':'葱','葱姜丝':'葱','小米辣圈':'小米辣',
+  '鲜五花肉':'五花肉','猪五花肉':'五花肉','猪前腿肉':'前腿肉','青尖椒':'青椒',
+  '红薯粉丝':'宽粉条','红薯粉条':'宽粉条','藕片':'莲藕','胡萝卜丝':'胡萝卜',
+  '豆瓣酱':'郫县豆瓣','豆干':'香干','紫薯':'红薯','火腿丁':'火腿片','豆芽':'绿豆芽',
+  '牛肉片':'牛里脊','猪肉丝':'猪里脊','虾':'鲜虾','米饭':'大米','烙饼':'面粉',
+  '白菜':'大白菜','糯米':'大米'
+};
 const normName = nm => ALIAS[nm] || nm;
 const isVegItem = nm => !SEASON.has(nm) && !MEATSET.has(nm) && !FISHSET.has(nm) && !TOFUSET.has(nm)
   && !STAPLE.has(nm) && !HERB.has(nm) && !IGNORE.has(nm);
@@ -1923,7 +2981,7 @@ function shuffle(arr, rnd){
   return a;
 }
 /* bf / des 按 1 人份；热菜、汤、药膳按 2 人份一盘 */
-const baseOf = d => (d.kind === 'bf' || d.kind === 'des') ? 1 : 2;
+const baseOf = d => (d.kind === 'bf' || d.kind === 'des' || d.kind === 'staple') ? 1 : 2;
 const pKcal = d => d.kcal / baseOf(d);
 const pProt = d => d.prot / baseOf(d);
 const pVeg  = d => d.veg / baseOf(d);
@@ -2004,7 +3062,7 @@ function buildPlanOnce(cfg, seed){
   const by = k => pool.filter(d => d.kind === k);
 
   let meats = by('meat'), halves = by('half'), vegs = by('veg');
-  let soups = by('soup'), bfs = by('bf'), meds = by('med'), desserts = by('des');
+  let soups = by('soup'), bfs = by('bf').concat(by('staple')), meds = by('med'), desserts = by('des');
 
   /* 池子太小则放宽季节限制 */
   const need = {meat:14, half:4, veg:14, soup:7, bf:7, med:2, des:4};
@@ -2016,7 +3074,7 @@ function buildPlanOnce(cfg, seed){
     if(halves.length < 3) halves = rv('half');
     if(vegs.length < 8) vegs = rv('veg');
     if(soups.length < 3) soups = rv('soup');
-    if(bfs.length < 3) bfs = rv('bf');
+    if(bfs.length < 3) bfs = rv('bf').concat(rv('staple'));
     if(meds.length < 1) meds = rv('med');
     if(desserts.length < 2) desserts = rv('des');
   }
@@ -2103,7 +3161,15 @@ function buildPlanOnce(cfg, seed){
   }
 
   /* 早餐 */
-  const bfPool = shuffle(bfs, rnd);
+  // 早餐池：普通早餐与主食交替，避免连着几天都是面条/炒饭
+  const bfPlain = shuffle(bfs.filter(d => d.kind === 'bf'), rnd);
+  const bfStaple = shuffle(bfs.filter(d => d.kind === 'staple'), rnd);
+  const bfPool = [];
+  for(let i = 0; i < Math.max(bfPlain.length, bfStaple.length); i++){
+    if(bfPlain[i]) bfPool.push(bfPlain[i]);
+    if(bfStaple[i] && i % 2 === 0) bfPool.push(bfStaple[i]);
+  }
+  for(const x of bfStaple) if(!bfPool.includes(x)) bfPool.push(x);
   const bfOut = [];
   for(let d = 0; d < 7; d++) bfOut[d] = cfg.mode === 'full' ? (bfPool[d % Math.max(1, bfPool.length)] || null) : null;
 
@@ -2392,6 +3458,7 @@ function render(plan, seed){
   document.getElementById('result').innerHTML = html;
   renderAppendix(season);
   bindEvents();
+  if(document.getElementById('libBody')) renderLib();
 }
 
 /* 附录：药膳 + 甜品食疗 */
@@ -2667,8 +3734,333 @@ document.getElementById('btnCopy').onclick = () => {
 document.getElementById('mask').onclick = e => { if(e.target.id === 'mask') closeDish(); };
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDish(); });
 
+
+/* ============================================================
+   全菜谱库 · 按已有主材反查
+   ============================================================ */
+const FLT = { q:'', kind:'all', se:'cur', src:'all', have:new Set(), mode:'any' };
+const KIND_NAME = {meat:'荤菜', half:'半荤', veg:'素菜', soup:'汤', bf:'早餐', staple:'主食', med:'药膳', des:'食疗'};
+const SRC_NAME = {pork:'猪肉', beef:'牛肉', lamb:'羊肉', chicken:'鸡', duck:'鸭', fish:'鱼', shrimp:'虾贝', egg:'蛋', tofu:'豆制品', none:'素'};
+
+/* 高频主料（非调味料），用于"我有这些食材" */
+function mainIngredients(limit = 48){
+  const freq = new Map();
+  DB.forEach(d => d.ing.forEach(it => {
+    const nm = normName(it[0]);
+    if(SEASON.has(it[0]) || IGNORE.has(it[0])) return;
+    freq.set(nm, (freq.get(nm) || 0) + 1);
+  }));
+  return [...freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit).map(x => x[0]);
+}
+
+function initFilterUI(){
+  document.getElementById('libCount').textContent = DB.length;
+
+  const kindSel = document.getElementById('fltKind');
+  kindSel.innerHTML = '<option value="all">全部类别</option>' +
+    Object.entries(KIND_NAME).map(([k, n]) => `<option value="${k}">${n}</option>`).join('');
+
+  const seSel = document.getElementById('fltSe');
+  seSel.innerHTML = '<option value="cur">当前时令</option><option value="all">全年可用</option>' +
+    '<option value="sp">春季</option><option value="su">夏季</option><option value="au">秋季</option><option value="wi">冬季</option>';
+
+  const srcSel = document.getElementById('fltSrc');
+  srcSel.innerHTML = '<option value="all">全部主材</option>' +
+    Object.entries(SRC_NAME).map(([k, n]) => `<option value="${k}">${n}</option>`).join('');
+
+  const haveBox = document.getElementById('chipsHave');
+  haveBox.innerHTML = mainIngredients().map(n => `<div class="ct-chip" data-n="${n}">${n}</div>`).join('');
+  haveBox.querySelectorAll('.ct-chip').forEach(c => {
+    c.onclick = () => {
+      const n = c.dataset.n;
+      if(FLT.have.has(n)){ FLT.have.delete(n); c.classList.remove('on'); }
+      else { FLT.have.add(n); c.classList.add('on'); }
+      updateHaveCount();
+      renderLib();
+    };
+  });
+
+  document.getElementById('fltQ').oninput = e => { FLT.q = e.target.value.trim(); renderLib(); };
+  kindSel.onchange = e => { FLT.kind = e.target.value; renderLib(); };
+  seSel.onchange = e => { FLT.se = e.target.value; renderLib(); };
+  srcSel.onchange = e => { FLT.src = e.target.value; renderLib(); };
+
+  document.querySelectorAll('#segHaveMode button').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('#segHaveMode button').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+      FLT.mode = btn.dataset.v;
+      renderLib();
+    };
+  });
+
+  document.getElementById('btnResetFilter').onclick = () => {
+    FLT.q = ''; FLT.kind = 'all'; FLT.se = 'cur'; FLT.src = 'all'; FLT.have.clear(); FLT.mode = 'any';
+    document.getElementById('fltQ').value = '';
+    document.getElementById('fltKind').value = 'all';
+    document.getElementById('fltSe').value = 'cur';
+    document.getElementById('fltSrc').value = 'all';
+    document.getElementById('segHaveMode').querySelectorAll('button').forEach((x, i) => x.classList.toggle('on', i === 1));
+    document.querySelectorAll('#chipsHave .ct-chip').forEach(x => x.classList.remove('on'));
+    updateHaveCount();
+    renderLib();
+  };
+}
+
+function updateHaveCount(){
+  const el = document.getElementById('haveCount');
+  el.textContent = FLT.have.size ? `已选 ${FLT.have.size} 样` : '未选择';
+}
+
+function curSeason(){ return CURRENT ? CURRENT.season : currentSeason(); }
+
+function filteredRecipes(){
+  const se = FLT.se === 'cur' ? curSeason() : FLT.se;
+  const q = FLT.q.toLowerCase();
+  return DB.filter(d => {
+    if(FLT.kind !== 'all' && d.kind !== FLT.kind) return false;
+    if(se !== 'all' && d.se !== 'all' && !d.se.split(',').includes(se)) return false;
+    if(FLT.src !== 'all' && d.src !== FLT.src) return false;
+    if(q){
+      const hit = d.name.toLowerCase().includes(q) || d.ing.some(it => it[0].toLowerCase().includes(q));
+      if(!hit) return false;
+    }
+    if(FLT.have.size){
+      const mains = d.ing.map(it => normName(it[0])).filter(n => !SEASON.has(n) && !IGNORE.has(n));
+      if(FLT.mode === 'all'){
+        if(!mains.length || !mains.every(n => FLT.have.has(n))) return false;
+      } else {
+        if(!mains.some(n => FLT.have.has(n))) return false;
+      }
+    }
+    return true;
+  });
+}
+
+function renderLib(){
+  const rows = filteredRecipes();
+  document.getElementById('libCount').textContent = DB.length;
+  const body = document.getElementById('libBody');
+  if(!rows.length){
+    body.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:34px;color:var(--dim2)">
+      没有符合条件的菜。试试切到「包含任一即可」，或者清空筛选。</td></tr>`;
+  } else {
+    body.innerHTML = rows.map(d => {
+      const seTxt = d.se === 'all' ? '全年' : d.se.split(',').map(x => SEASON_NAME[x]).join('·');
+      const spTxt = SPICY_LABEL[d.spicy];
+      const eq = d.src === 'none' ? '素' : (SRC_NAME[d.src] || '—');
+      const fit = d.gentle ? '老人小孩' : '成人';
+      return `<tr data-dish="${d.id}">
+        <td class="nmc">${d.name}${d.id.startsWith('cu_') ? ' <span class="badge" style="background:rgba(45,212,191,.16);color:#6FE3D5">我的</span>' : ''}</td>
+        <td><span class="badge k-${d.kind}">${KIND_NAME[d.kind] || d.kind}</span></td>
+        <td>${eq}</td>
+        <td>${seTxt}</td>
+        <td>${spTxt}</td>
+        <td>${d.t} 分</td>
+        <td>${Math.round(pKcal(d))} kcal</td>
+        <td>${pProt(d).toFixed(1)} g</td>
+        <td>${fit}</td>
+      </tr>`;
+    }).join('');
+    body.querySelectorAll('tr[data-dish]').forEach(tr => {
+      tr.onclick = () => openDish(tr.dataset.dish);
+    });
+  }
+  const tot = filteredRecipes().length;
+  document.getElementById('libStat').textContent =
+    `显示 ${tot} / ${DB.length} 道 · 当前时令：${SEASON_FULL[curSeason()]}`;
+}
+
+/* ============================================================
+   我的菜谱 · 本地增删 + 导入导出
+   ============================================================ */
+const MY_KEY = 'sm_custom_recipes_v1';
+
+function loadMyRecipes(){
+  try{
+    const raw = localStorage.getItem(MY_KEY);
+    if(!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  }catch{ return []; }
+}
+function saveMyRecipes(arr){
+  try{ localStorage.setItem(MY_KEY, JSON.stringify(arr)); }catch(e){ toast('本地存储已满，无法保存'); }
+}
+function mergeIntoDB(list){
+  const ids = new Set(DB.map(d => d.id));
+  let added = 0;
+  for(const r of list){
+    if(!r || !r.id || ids.has(r.id)) continue;
+    DB.push(r); ids.add(r.id); added++;
+  }
+  return added;
+}
+
+function renderMyList(){
+  const list = loadMyRecipes();
+  document.getElementById('myCount').textContent = list.length;
+  const box = document.getElementById('myList');
+  if(!list.length){
+    box.innerHTML = '<div class="empty-tip">还没有自定义菜谱。用上面的表单加一个，它会立刻进入配餐池和全菜谱库。</div>';
+    return;
+  }
+  box.innerHTML = list.map((r, i) => `
+    <div class="my-item">
+      <span class="badge k-${r.kind}">${KIND_NAME[r.kind] || r.kind}</span>
+      <span class="n">${r.name}</span>
+      <span class="t">${r.t} 分 · ${Math.round(r.kcal)} kcal · ${r.se === 'all' ? '全年' : r.se}</span>
+      <button class="mini" data-del="${i}">删除</button>
+    </div>`).join('');
+  box.querySelectorAll('[data-del]').forEach(btn => {
+    btn.onclick = () => {
+      const arr = loadMyRecipes();
+      const name = arr[+btn.dataset.del].name;
+      arr.splice(+btn.dataset.del, 1);
+      saveMyRecipes(arr);
+      // 从 DB 移除
+      const idx = DB.findIndex(d => d.id === 'cu_' + name);
+      if(idx >= 0) DB.splice(idx, 1);
+      renderMyList(); renderLib(); regen();
+      toast('已删除：' + name);
+    };
+  });
+}
+
+function parseIngredients(text){
+  const out = [];
+  for(const line of text.split('\n')){
+    const t = line.trim();
+    if(!t) continue;
+    const parts = t.split(/[,，\t]/).map(x => x.trim());
+    if(parts.length < 2) continue;
+    const [nm, q, u, life] = parts;
+    out.push([nm, Number(q) || 0, u || 'g', life || '']);
+  }
+  return out;
+}
+
+function addRecipeFromForm(){
+  const name = document.getElementById('fName').value.trim();
+  const ingText = document.getElementById('fIng').value.trim();
+  const stepsText = document.getElementById('fSteps').value.trim();
+  if(!name){ toast('请填菜名'); return; }
+  if(!ingText || !stepsText){ toast('食材和步骤都要填'); return; }
+
+  const ing = parseIngredients(ingText);
+  const steps = stepsText.split('\n').map(x => x.trim()).filter(Boolean);
+  if(!ing.length || !steps.length){ toast('食材或步骤格式不对'); return; }
+  if(loadMyRecipes().some(r => r.name === name)){ toast('已有同名菜谱：' + name); return; }
+
+  const recipe = {
+    id: 'cu_' + name,
+    name,
+    kind: document.getElementById('fKind').value,
+    src: document.getElementById('fSrc').value,
+    spicy: +document.getElementById('fSpicy').value,
+    t: +document.getElementById('fTime').value || 20,
+    veg: +document.getElementById('fVeg').value || 0,
+    kcal: +document.getElementById('fKcal').value || 300,
+    prot: +document.getElementById('fProt').value || 15,
+    dark: ing.some(i => /菠菜|油菜|豌豆尖|胡萝卜|番茄|南瓜|茄子|木耳|韭菜|芹菜|青椒|苋菜|茼蒿|西兰花|菜心|芥蓝|紫菜/.test(i[0])),
+    se: document.getElementById('fSeason').value,
+    gentle: document.getElementById('fGentle').value === '1',
+    ing,
+    steps,
+    tip: document.getElementById('fTip').value.trim() || '按自己的经验掌握火候。'
+  };
+
+  const arr = loadMyRecipes();
+  arr.push(recipe);
+  saveMyRecipes(arr);
+  mergeIntoDB([recipe]);
+  renderMyList(); renderLib(); regen();
+  document.getElementById('fName').value = '';
+  document.getElementById('fIng').value = '';
+  document.getElementById('fSteps').value = '';
+  document.getElementById('fTip').value = '';
+  toast('已添加：' + name + '（已进入配餐池）');
+}
+
+function exportRecipes(){
+  const list = loadMyRecipes();
+  if(!list.length){ toast('还没有自定义菜谱可导出'); return; }
+  const payload = {
+    schema: 'seasonal-menu-recipes',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    count: list.length,
+    recipes: list
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'recipes-custom-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  toast('已导出 ' + list.length + ' 道菜谱');
+}
+
+function importRecipes(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const data = JSON.parse(e.target.result);
+      const incoming = Array.isArray(data) ? data : (data.recipes || []);
+      if(!incoming.length){ toast('文件里没有菜谱'); return; }
+      const cur = loadMyRecipes();
+      const names = new Set(cur.map(r => r.name));
+      let added = 0;
+      for(const r of incoming){
+        if(!r || !r.name || names.has(r.name)) continue;
+        cur.push(r); names.add(r.name); added++;
+      }
+      saveMyRecipes(cur);
+      mergeIntoDB(cur);
+      renderMyList(); renderLib(); regen();
+      toast(`导入完成，新增 ${added} 道`);
+    }catch(err){ toast('文件格式不对：需为本工具导出的 JSON'); }
+  };
+  reader.readAsText(file);
+}
+
+function bindMyRecipeUI(){
+  document.getElementById('btnAddRecipe').onclick = addRecipeFromForm;
+  document.getElementById('btnExportRecipes').onclick = exportRecipes;
+  document.getElementById('btnImportRecipes').onclick = () => document.getElementById('fileImport').click();
+  document.getElementById('fileImport').onchange = e => {
+    if(e.target.files[0]) importRecipes(e.target.files[0]);
+    e.target.value = '';
+  };
+  document.getElementById('btnFillDemo').onclick = () => {
+    document.getElementById('fName').value = '香菇滑蛋';
+    document.getElementById('fKind').value = 'half';
+    document.getElementById('fSrc').value = 'egg';
+    document.getElementById('fSpicy').value = '0';
+    document.getElementById('fTime').value = '12';
+    document.getElementById('fVeg').value = '80';
+    document.getElementById('fKcal').value = '230';
+    document.getElementById('fProt').value = '15';
+    document.getElementById('fGentle').value = '1';
+    document.getElementById('fIng').value = '鸡蛋,3,个,3个\n鲜香菇,80,g,约4朵\n葱,10,g,1根\n生抽,8,ml,2茶匙';
+    document.getElementById('fSteps').value = '香菇切薄片，鸡蛋加少许盐打散\n热锅下油，香菇炒 2 分钟至出香\n倒入蛋液，等底部凝固后用铲子推成大块\n加生抽、葱花，翻匀出锅';
+    document.getElementById('fTip').value = '香菇先炒干水汽再下蛋，否则出汤把蛋泡老';
+  };
+}
+
+/* 启动时把已有自定义菜谱并入 DB */
+function bootCustomRecipes(){
+  const list = loadMyRecipes();
+  if(list.length) mergeIntoDB(list);
+}
+
 /* 启动 */
+bootCustomRecipes();
 initConfig();
+initFilterUI();
+bindMyRecipeUI();
+renderMyList();
+renderLib();
 regen(20261123);
 </script>
 </body>
